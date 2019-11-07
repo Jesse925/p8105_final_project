@@ -34,6 +34,10 @@ of vehicle accident and multiple related factors.
 
 ### The anticipated data sources
 
+NYPD Motor Vehicle Collisions dataset from NYC OpenData website:
+(<https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions-Crashes/h9gi-nx95>
+)
+
 ### The planned analyses / visualizations / coding challenges
 
 **Planned analyses:** Analyze the distributions of vehicle accident in
