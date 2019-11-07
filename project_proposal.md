@@ -14,7 +14,22 @@ vehicle collisions/crashes in New York City (NYC)
 
   - The motivation for this project
 
+This dataset is generated based on the police report (MV104-AN) and the
+records of Motor Vehicle Collision have been modified daily according to
+NYPD since May, 7th, 2014. The “Collision” here includes the situation
+where someone is injured or killed, or where there is at least $1000
+worth of damage. The density of vehicles in NYC is larger compared to
+other cities in the US and the safety of motor vehicle driving becomes
+one of the most important topics for NYC citizens. Therefore, we would
+like to reveal the distribution of motor vehicle accidents in NYC
+located in different areas and use the factor CONTRIBUTING FACTOR 1 to 5
+to predict the number of passing-bys that would be killed or injured.
+
   - The intended final products
+
+A website as well as a full report showing vehicle accident rate in each
+borough in NYC at different times and relationships between incidences
+of vehicle accident and multiple related factors.
 
   - The anticipated data sources
 
