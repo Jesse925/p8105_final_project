@@ -4,7 +4,13 @@ P8105 Final Project Proposal
 
   - The group members (names and UNIs)
 
+Weiwei Qi: wq2151; Qimin Zhang: qz2392; Junxian Chen: jc5314; Xinyu
+Shen: xs2384; Bingkun Luo: bl2789.
+
   - The tentative project title
+
+Analyses of the distribution and possible influence factors of motor
+vehicle collisions/crashes in New York City (NYC)
 
   - The motivation for this project
 
