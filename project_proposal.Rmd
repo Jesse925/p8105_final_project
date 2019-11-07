@@ -4,10 +4,6 @@ date: "11/6/2019"
 output: github_document
 ---
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 2dc4c2f5e748486a793e90e35f51bc34c4f5ecc2
 ### The group members (names and UNIs)
 
 Weiwei Qi: wq2151; Qimin Zhang: qz2392; Junxian Chen: jc5314; Xinyu Shen: xs2384; Bingkun Luo: bl2789.
@@ -27,13 +23,8 @@ Report showing vehicle accident distribution in each borough in NYC over differe
 
 ### The anticipated data sources
 
-<<<<<<< HEAD
 NYPD Motor Vehicle Collisions dataset from NYC OpenData website:
 (https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions-Crashes/h9gi-nx95 )
-=======
-### The anticipated data sources
->>>>>>> 2dc4c2f5e748486a793e90e35f51bc34c4f5ecc2
-
 
 ### The planned analyses / visualizations / coding challenges
 
