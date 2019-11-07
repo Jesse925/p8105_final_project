@@ -21,8 +21,10 @@ This dataset is generated based on the police report (MV104-AN) and the records 
 
 A website as well as a full report showing vehicle accident rate in each borough in NYC at different times and relationships between incidences of vehicle accident and multiple related factors.
 
-
 ### The anticipated data sources
+
+NYPD Motor Vehicle Collisions dataset from NYC OpenData website:
+(https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions-Crashes/h9gi-nx95 )
 
 
 ### The planned analyses / visualizations / coding challenges
