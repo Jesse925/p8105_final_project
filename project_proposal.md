@@ -2,7 +2,10 @@ P8105 Final Project Proposal
 ================
 11/6/2019
 
-### The group members (names and UNIs)
+# \<\<\<\<\<\<\< HEAD
+
+> > > > > > > 2dc4c2f5e748486a793e90e35f51bc34c4f5ecc2 \#\#\# The group
+> > > > > > > members (names and UNIs)
 
 Weiwei Qi: wq2151; Qimin Zhang: qz2392; Junxian Chen: jc5314; Xinyu
 Shen: xs2384; Bingkun Luo: bl2789.
@@ -28,9 +31,12 @@ injured.
 
 ### The intended final products
 
-A website as well as a full report showing vehicle accident rate in each
-borough in NYC at different times and relationships between incidences
-of vehicle accident and multiple related factors.
+Report showing vehicle accident distribution in each borough in NYC over
+different periods and anaylsis for the relationships between incidences
+and multiple related factors,such as Contributing factor, Vehicle
+type,etc. Nevertheless, we are going to extend out report as a
+intercative website, showing graphs for better understanding of our
+discoveries and assessments.
 
 ### The anticipated data sources
 
@@ -54,14 +60,18 @@ useful prediction?
 
 ### The planned timeline
 
-Nov.7 - Nov. 14: Tidy the dataset, start doing the planned analyses.
+  - Nov.7 - Nov. 14: Tidy the dataset, start doing the planned analyses.
 
-Nov.14 - Nov. 21: Keep working on the analyses and start doing planned
-visualizations using the obtained results.
+\<\<\<\<\<\<\< HEAD Nov.14 - Nov. 21: Keep working on the analyses and
+start doing planned visualizations using the obtained results. =======
 
-Nov.21 - Nov.28: Start making the website and writing the report.
+  - Nov.14 - Nov. 21: Keep working on the analyses and start doing
+    planned visualizations using the obtained results. \>\>\>\>\>\>\>
+    2dc4c2f5e748486a793e90e35f51bc34c4f5ecc2
 
-Nov.28 - Dce.5: Finalize the report/website, finish making the
-screencast.
+  - Nov.21 - Nov.28: Start making the website and writing the report.
 
-Dec. 5: Submission of the report/website/screencast.
+  - Nov.28 - Dce.5: Finalize the report/website, finish making the
+    screencast.
+
+  - Dec. 5: Submission of the report/website/screencast.
