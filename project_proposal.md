@@ -27,9 +27,12 @@ to predict the number of passing-bys that would be killed or injured.
 
 ### The intended final products
 
-A website as well as a full report showing vehicle accident distribution
-in each borough in NYC at different period.Also relationships between
-incidences and multiple related factors.
+Report showing vehicle accident distribution in each borough in NYC over
+different periods and anaylsis for the relationships between incidences
+and multiple related factors,such as Contributing factor, Vehicle
+type,etc. Nevertheless, we are going to extend out report as a
+intercative website, showing graphs for better understanding of our
+discoveries and assessments.
 
 ### The anticipated data sources
 
