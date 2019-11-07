@@ -27,9 +27,12 @@ to predict the number of passing-bys that would be killed or injured.
 
 ### The intended final products
 
-A website as well as a full report showing vehicle accident rate in each
-borough in NYC at different times and relationships between incidences
-of vehicle accident and multiple related factors.
+Report showing vehicle accident distribution in each borough in NYC over
+different periods and anaylsis for the relationships between incidences
+and multiple related factors,such as Contributing factor, Vehicle
+type,etc. Nevertheless, we are going to extend out report as a
+intercative website, showing graphs for better understanding of our
+discoveries and assessments.
 
 ### The anticipated data sources
 
@@ -49,14 +52,14 @@ useful predictions?
 
 ### The planned timeline
 
-Nov.7 - Nov. 14: Tidy the dataset, start doing the planned analyses.
+  - Nov.7 - Nov. 14: Tidy the dataset, start doing the planned analyses.
 
-Nov.14 - Nov. 21: Keep working on the analyses and start doing planned
-visualizations using the obtained results.
+  - Nov.14 - Nov. 21: Keep working on the analyses and start doing
+    planned visualizations using the obtained results.
 
-Nov.21 - Nov.28: Start making the website and writing the report.
+  - Nov.21 - Nov.28: Start making the website and writing the report.
 
-Nov.28 - Dce.5: Finalize the report/website, finish making the
-screencast.
+  - Nov.28 - Dce.5: Finalize the report/website, finish making the
+    screencast.
 
-Dec. 5: Submission of the report/website/screencast.
+  - Dec. 5: Submission of the report/website/screencast.
