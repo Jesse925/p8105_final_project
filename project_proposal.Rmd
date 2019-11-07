@@ -37,13 +37,6 @@ NYPD Motor Vehicle Collisions dataset from NYC OpenData website:
 
 * Nov.7 - Nov. 14: Tidy the dataset, start doing the planned analyses.
 
-<<<<<<< HEAD
-Nov.14 - Nov. 21: Keep working on the analyses and start doing planned visualizations using the obtained results.
-=======
-
-* Nov.14 - Nov. 21: Keep working on the analyses and start doing planned visualizations using the obtained results.
->>>>>>> 2dc4c2f5e748486a793e90e35f51bc34c4f5ecc2
-
 * Nov.21 - Nov.28: Start making the website and writing the report.
 
 * Nov.28 - Dce.5: Finalize the report/website, finish making the screencast.

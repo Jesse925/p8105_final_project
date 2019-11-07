@@ -2,10 +2,7 @@ P8105 Final Project Proposal
 ================
 11/6/2019
 
-# \<\<\<\<\<\<\< HEAD
-
-> > > > > > > 2dc4c2f5e748486a793e90e35f51bc34c4f5ecc2 \#\#\# The group
-> > > > > > > members (names and UNIs)
+### The group members (names and UNIs)
 
 Weiwei Qi: wq2151; Qimin Zhang: qz2392; Junxian Chen: jc5314; Xinyu
 Shen: xs2384; Bingkun Luo: bl2789.
@@ -61,13 +58,6 @@ useful prediction?
 ### The planned timeline
 
   - Nov.7 - Nov. 14: Tidy the dataset, start doing the planned analyses.
-
-\<\<\<\<\<\<\< HEAD Nov.14 - Nov. 21: Keep working on the analyses and
-start doing planned visualizations using the obtained results. =======
-
-  - Nov.14 - Nov. 21: Keep working on the analyses and start doing
-    planned visualizations using the obtained results. \>\>\>\>\>\>\>
-    2dc4c2f5e748486a793e90e35f51bc34c4f5ecc2
 
   - Nov.21 - Nov.28: Start making the website and writing the report.
 
