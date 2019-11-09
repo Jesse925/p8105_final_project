@@ -16,10 +16,8 @@ navbar:
       href: mailto:wwqi4real@gmail.com
     - icon: fa-github fa-lg
       href: http://github.com/wwqi4realGitHub/
-    - icon: fa-linkedin fa-lg
-      href: https://www.linkedin.com/in/weiwei-qi-539677164/
-    - icon: fa-code fa-lg
-      href: https://sites.google.com/view/cumcdatasciencegroup/home
+    - icon: fa-database fa-lg
+      href: https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions-Crashes/h9gi-nx95
 output:
   html_document:
     theme: flatly
