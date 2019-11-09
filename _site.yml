@@ -5,8 +5,6 @@ navbar:
   left:
     - text: "About"
       href: about.html
-    - text: "Resume"
-      href: resume.html
   right:
     - icon: fa-chart-bar fa-lg
       menu:
