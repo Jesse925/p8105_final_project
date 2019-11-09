@@ -1,0 +1,29 @@
+name: "My personal website"
+output_dir: "."
+navbar:
+  title: "Home"
+  left:
+    - text: "About"
+      href: about.html
+    - text: "Resume"
+      href: resume.html
+  right:
+    - icon: fa-chart-bar fa-lg
+      menu:
+      - text: "Ploty"
+        href: plotly.html
+      - text: "Dashboard"
+        href: dashboard.html
+    - icon: fa-envelope fa-lg
+      href: mailto:wwqi4real@gmail.com
+    - icon: fa-github fa-lg
+      href: http://github.com/wwqi4realGitHub/
+    - icon: fa-linkedin fa-lg
+      href: https://www.linkedin.com/in/weiwei-qi-539677164/
+    - icon: fa-code fa-lg
+      href: https://sites.google.com/view/cumcdatasciencegroup/home
+output:
+  html_document:
+    theme: flatly
+    include:
+      after_body: footer.html
