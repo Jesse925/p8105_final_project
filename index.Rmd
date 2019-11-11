@@ -18,7 +18,7 @@ The dataset is generated based on the police report (MV104-AN) and the records o
 
 ### Group member
 
-- [Weiwei Qi](https://wwqi4realgithub.github.io/): wq2151; 
+- Weiwei Qi: wq2151; 
 - Qimin Zhang: qz2392; 
 - Junxian Chen: jc5314; 
 - Xinyu Shen: xs2384; 

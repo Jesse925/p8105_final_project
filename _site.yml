@@ -7,11 +7,7 @@ navbar:
       href: about.html
   right:
     - icon: fa-chart-bar fa-lg
-      menu:
-      - text: "Ploty"
-        href: plotly.html
-      - text: "Dashboard"
-        href: dashboard.html
+      href: visualization.html
     - icon: fa-envelope fa-lg
       href: mailto:wwqi4real@gmail.com
     - icon: fa-github fa-lg
