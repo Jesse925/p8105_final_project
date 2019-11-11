@@ -1,0 +1,25 @@
+---
+title: "Data Analysis"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+#
+#
+
+First to read data from the website. It may take a minute.
+
+```{r}
+start_time <- Sys.time()
+
+data = read.csv("https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=2000000")
+
+end_time <- Sys.time()
+
+end_time - start_time
+```
+
+
+#### This website is intended for p8105 Data Science Final Project only. 
