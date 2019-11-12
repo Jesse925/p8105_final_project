@@ -9,12 +9,17 @@ output:
 #
 #
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
 First to read data from the website. It may take a minute.
 
 ```{r}
 start_time <- Sys.time()
 
-data = read.csv("https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=2000000")
+raw_data = read_csv("https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=2000000")
 
 end_time <- Sys.time()
 
