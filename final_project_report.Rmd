@@ -1,0 +1,37 @@
+---
+title: "Analyses of motor vehicle collisions and crashes in New York City"
+author: "Junxian Chen (jc5314)"
+date: "11/10/2019"
+output: html_document
+---
+
+```{r, include = FALSE}
+library(readxl)
+library(tidyverse)
+library(patchwork)
+library(httr)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+  message = FALSE,
+	fig.width = 8, 
+  fig.height = 6,
+  out.width = "90%"
+)
+theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
+```
+
+```{r}
+nyc_crash = 
+  GET("https://data.cityofnewyork.us/resource/h9gi-nx95.csv") %>% 
+  content("parsed")
+```
+
+```{r}
+nyc_water = 
+  GET("https://data.cityofnewyork.us/resource/h9gi-nx95.json") %>% 
+  content("text") %>%
+  jsonlite::fromJSON() %>%
+  as_tibble()
+```
+
