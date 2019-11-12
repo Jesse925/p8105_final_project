@@ -46,11 +46,20 @@ NYPD Motor Vehicle Collisions dataset from NYC OpenData website:
 **Planned analyses:** Analyze the distributions of vehicle accident in
 different boroughs in NYC. Analyze the associations between each vehicle
 accident with reasons, times, locations, etc. Try to find out factor
-importance for each variable.
+importance for each variable. Logistic regression.
 
-**Planned visualizations:** Accident heat map indicating the location
-and time of incidence happened in each area in NYC. Plots showing
-comparisons of incidence rates in different boroughs.
+**Planned visualizations:**
+
+1)  Accident heat map indicating the location and time of incidence
+    happened in each area in NYC.
+
+2)  Vehicle type vs. crash incident rate
+
+3)  Time vs. crash incident rate
+
+4)  Incident reason vs. injury/death rate (bar chart)
+
+5)  TBD (Boxplot)
 
 **Challenges:** Is it possible to find a statistical model to make any
 useful prediction?
