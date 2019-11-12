@@ -1,0 +1,32 @@
+---
+title: "Meeting memo"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+11/12/2019 memo
+
+## plots: 
+
+#### heatmap: x - longitude, y - latitude, color = number of accident
+
+#### density plot: x - time(ie. 12am to 12 pm), y - accidents ... 
+
+#### bar plot: x - accidents type, y - kill/injury, number of ppl
+
+#### barplot: x - vehicle type, y - accidents rate
+
+#### barplot: x - accidents factor, y - injury
+
+#### logistic regression: factors; 
+
+
+## logistic regression: 
+
+#### dataset size: 

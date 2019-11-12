@@ -8,10 +8,10 @@ navbar:
   right:
     - icon: fa-chart-bar fa-lg
       href: visualization.html
-    - icon: fa-envelope fa-lg
-      href: mailto:wwqi4real@gmail.com
     - icon: fa-github fa-lg
-      href: http://github.com/wwqi4realGitHub/
+      href: https://github.com/Jesse925/p8105_final_project
+    - text: Memo
+      href: memo.html
     - icon: fa-database fa-lg
       href: https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions-Crashes/h9gi-nx95
 output:
