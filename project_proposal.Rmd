@@ -27,7 +27,7 @@ NYPD Motor Vehicle Collisions dataset from NYC OpenData website:
 
 ### The planned analyses / visualizations / coding challenges
 
-**Planned analyses:** Analyze the distributions of vehicle accident in different boroughs in NYC. Analyze the associations between each vehicle accident with reasons, times, locations, etc. Try to find out factor importance for each variable.
+**Planned analyses:** Analyze the distributions of vehicle accident in different boroughs in NYC. Analyze the associations between each vehicle accident with reasons, times, locations, etc. Try to find out factor importance for each variable. Logistic regression.
 
 **Planned visualizations:** 
 
