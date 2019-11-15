@@ -30,3 +30,26 @@ knitr::opts_chunk$set(echo = TRUE)
 ## logistic regression: 
 
 #### dataset size: 
+
+11/15/2019 TA meeting
+
+**regression and model**
+
+**data size isn't a major concern**
+
+**drop_na and filter**: good to go
+
+**show all relative code(eg. API)**
+
+**don't show too many plots**
+
+**interaction**: Shiny (could be tricky and time-consuming)
+
+**video recording could be quick**
+
+## update: "crash dataset" might have crashed
+
+Backup plan: 
+
+[Restaurant score](https://data.sfgov.org/Health-and-Social-Services/Restaurant-Scores-LIVES-Standard/pyih-qa8i)
+
