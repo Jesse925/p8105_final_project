@@ -49,7 +49,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## update: "crash dataset" might have crashed
 
-Backup plan: 
+Backup plan 1: 
 
 [Restaurant score](https://data.sfgov.org/Health-and-Social-Services/Restaurant-Scores-LIVES-Standard/pyih-qa8i)
 
+Backup plan 2: 
+
+[California Housing price](https://www.kaggle.com/camnugent/california-housing-prices)
+
+ideas: crime, education, company, healthcare... interaction with original dataset (price)
