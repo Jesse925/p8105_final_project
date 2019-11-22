@@ -14,13 +14,20 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 552c8c4546315c30a8b191c63a1f61ba99e1bc33
 First to read data from the website. It may take a minute.
 
 ```{r message=FALSE, warning=FALSE}
 start_time <- Sys.time()
 
+<<<<<<< HEAD
 data = read_csv("https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=2000000")
+=======
+raw_data = read_csv("https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=2000000")
+>>>>>>> 552c8c4546315c30a8b191c63a1f61ba99e1bc33
 
 end_time <- Sys.time()
 

@@ -1,0 +1,60 @@
+---
+title: "Meeting memo"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+11/12/2019 memo
+
+## plots: 
+
+#### heatmap: x - longitude, y - latitude, color = number of accident
+
+#### density plot: x - time(ie. 12am to 12 pm), y - accidents ... 
+
+#### bar plot: x - accidents type, y - kill/injury, number of ppl
+
+#### barplot: x - vehicle type, y - accidents rate
+
+#### barplot: x - accidents factor, y - injury
+
+#### logistic regression: factors; 
+
+
+## logistic regression: 
+
+#### dataset size: 
+
+11/15/2019 TA meeting
+
+**regression and model**
+
+**data size isn't a major concern**
+
+**drop_na and filter**: good to go
+
+**show all relative code(eg. API)**
+
+**don't show too many plots**
+
+**interaction**: Shiny (could be tricky and time-consuming)
+
+**video recording could be quick**
+
+## update: "crash dataset" might have crashed
+
+Backup plan 1: 
+
+[Restaurant score](https://data.sfgov.org/Health-and-Social-Services/Restaurant-Scores-LIVES-Standard/pyih-qa8i)
+
+Backup plan 2: 
+
+[California Housing price](https://www.kaggle.com/camnugent/california-housing-prices)
+
+ideas: crime, education, company, healthcare... interaction with original dataset (price)

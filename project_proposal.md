@@ -9,55 +9,61 @@ Shen: xs2384; Bingkun Luo: bl2789.
 
 ### The tentative project title
 
-Analyses of the distribution and possible influence factors of motor
-vehicle collisions/crashes in New York City (NYC)
+Analyses in drug use and related death in Connecticut
 
 ### The motivation for this project
 
-The dataset is generated based on the police report (MV104-AN) and the
-records of Motor Vehicle Collision have been modified daily according to
-NYPD since May, 7th, 2014. The “Collision” here includes the situation
-where someone is injured or killed, or where there is at least $1000
-worth of damage. The density of vehicles in NYC is larger compared to
-other cities in the US and the safety of motor vehicle driving becomes
-one of the most important topics for NYC citizens. Therefore, we would
-like to reveal the distribution of motor vehicle accidents in NYC
-located in different areas and use the factor `CONTRIBUTING FACTOR 1` to
-`5` to predict the number of passing-bys that would be killed or
-injured.
+Illicit drug use in the United States has been increasing and the number
+of related death is also growing. Therefore, studying the relationship
+between drug use and related death is important to discourage drug use
+and prevent death. In this project, we are going to analyze the data in
+drug use and related death in Connecticut from 2012 to 2018 and intend
+to discover some critical factors in drug use that will arise high
+chance to be dead.
 
 ### The intended final products
 
-Report showing vehicle accident distribution in each borough in NYC over
-different periods and anaylsis for the relationships between incidences
-and multiple related factors,such as Contributing factor, Vehicle
-type,etc. Nevertheless, we are going to extend out report as a
-intercative website, showing graphs for better understanding of our
-discoveries and assessments.
+Visualization plots showing association between drug use and related
+death, including location, race, gender, and gender specific.
+
+Interactive Shiny plots allowing readers to control race, gender, or age
+group and see corresponding information of related death.
 
 ### The anticipated data sources
 
-NYPD Motor Vehicle Collisions dataset from NYC OpenData website:
-(<https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions-Crashes/h9gi-nx95>
-)
+Accidental Drug Related Deaths 2012-2018 from DATA.GOV which contains
+lists of each accidental death associated with drug overdose in
+Connecticut from 2012 to 2018.
+(<https://catalog.data.gov/dataset/accidental-drug-related-deaths-january-2012-sept-2015>)
 
 ### The planned analyses / visualizations / coding challenges
 
-**Planned analyses:** Analyze the distributions of vehicle accident in
-different boroughs in NYC. Analyze the associations between each vehicle
-accident with reasons, times, locations, etc. Try to find out factor
-importance for each variable.
+**Planned analyses:** Analyze the associations between race, gender,
+age, drug use and related death. Try to find out important factor that
+will reduce death in drug use. Build regression model.
 
-**Planned visualizations:** Accident heat map indicating the location
-and time of incidence happened in each area in NYC. Plots showing
-comparisons of incidence rates in different boroughs.
+**Planned visualizations:**
 
-**Challenges:** Is it possible to find a statistical model to make any
-useful prediction?
+1)  Dates versus uumber of drug use related death to see the pattern of
+    death over different time (e.x. any seasonal trend)
+
+2)  Heat map showing distribution of death location
+
+3)  Distribution of race, gender, and sex in drug use and related death
+
+4)  Number of death for each kind of drug
+
+5)  Plots using Shiny tool.
+
+**Challenges:** Data manipulation and regression model construction may
+be challenged.
 
 ### The planned timeline
 
   - Nov.7 - Nov. 14: Tidy the dataset, start doing the planned analyses.
+
+  - Nov.14 - Nov. 21: Keep working on the analyses and start doing
+    planned visualizations using the obtained results.
 
   - Nov.21 - Nov.28: Start making the website and writing the report.
 
