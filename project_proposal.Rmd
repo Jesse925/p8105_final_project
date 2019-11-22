@@ -26,19 +26,19 @@ Accidental Drug Related Deaths 2012-2018  from DATA.GOV which contains lists of 
 
 ### The planned analyses / visualizations / coding challenges
 
-**Planned analyses:** Analyze the distributions of vehicle accident in different boroughs in NYC. Analyze the associations between each vehicle accident with reasons, times, locations, etc. Try to find out factor importance for each variable. Logistic regression.
+**Planned analyses:** Analyze the associations between race, gender, age, drug use and related death.  Try to find out important factor that will reduce death in drug use. Build regression model.
 
 **Planned visualizations:** 
 
-1) Accident heat map indicating the location and time of incidence happened in each area in NYC. 
+(1) Dates versus uumber of drug use related death to see the pattern of death over different time (e.x. any seasonal trend)
 
-2) Vehicle type vs. crash incident rate
+(2) Heat map showing distribution of death location
 
-3) Time vs. crash incident rate
+(3) Distribution of race, gender, and sex in drug use and related death
 
-4) Incident reason vs. injury/death rate (bar chart)
+(4) Number of death for each kinds of drug
 
-5) Shiny plots.
+(4) Shiny plots.
 
 **Challenges:** 
 
