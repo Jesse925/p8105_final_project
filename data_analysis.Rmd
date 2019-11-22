@@ -20,6 +20,7 @@ library(tidyverse)
 >>>>>>> 552c8c4546315c30a8b191c63a1f61ba99e1bc33
 First to read data from the website. It may take a minute.
 
+<<<<<<< HEAD
 ```{r message=FALSE, warning=FALSE}
 start_time <- Sys.time()
 
@@ -28,10 +29,14 @@ data = read_csv("https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=200
 =======
 raw_data = read_csv("https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=2000000")
 >>>>>>> 552c8c4546315c30a8b191c63a1f61ba99e1bc33
+=======
+```{r}
+drug_df = read.csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% janitor::clean_names()
 
-end_time <- Sys.time()
+length(unique(drug_df$date))
+>>>>>>> 74837bc42ccdfc2eed33ad42fbc1f753e02f8f4a
 
-end_time - start_time
+
 ```
 
 ```{r}
