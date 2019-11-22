@@ -17,13 +17,11 @@ library(tidyverse)
 First to read data from the website. It may take a minute.
 
 ```{r}
-start_time <- Sys.time()
+drug_df = read.csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% janitor::clean_names()
 
-raw_data = read_csv("https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=2000000")
+length(unique(drug_df$date))
 
-end_time <- Sys.time()
 
-end_time - start_time
 ```
 
 
