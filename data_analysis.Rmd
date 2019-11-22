@@ -9,17 +9,76 @@ output:
 #
 #
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
 First to read data from the website. It may take a minute.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 start_time <- Sys.time()
 
-data = read.csv("https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=2000000")
+data = read_csv("https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=2000000")
 
 end_time <- Sys.time()
 
 end_time - start_time
 ```
 
+```{r}
+data =
+data %>% 
+  mutate(
+    date = as.Date(date),
+    date = as.character(date)
+  ) %>% 
+  separate(date, into = c("year", "month", "day"), convert = TRUE)
+```
+
+```{r}
+data %>% 
+  filter(
+    !is.na(latitude),
+    month == 12,
+    day == 25
+  ) %>% 
+  select(-zip_code, -location, -on_street_name, -off_street_name, -cross_street_name) %>% 
+  ggplot(aes(x = latitude, y = longitude, size = number_of_persons_killed)) +
+  geom_point(alpha = .5)
+```
+
+```{r}
+data %>% 
+  filter(number_of_persons_injured != 0)
+```
+
+```{r}
+data %>% 
+  filter(
+    contributing_factor_vehicle_1 != "Unspecified"
+  )
+```
+
+```{r}
+nyc_building = read_csv("https://data.cityofnewyork.us/resource/hg8x-zxpr.csv?$limit=2000000")
+```
+
+```{r}
+nyc_building %>% 
+  filter(project_name != "CONFIDENTIAL")
+```
+
+```{r message=FALSE, warning=FALSE}
+drug = read_csv("../p8105_final_project/Accidental_Drug_Related_Deaths_2012-2018.csv")
+```
+
+```{r}
+drug %>% 
+  filter(DateType == "DateofDeath")
+```
+
 
 #### This website is intended for p8105 Data Science Final Project only. 
+
