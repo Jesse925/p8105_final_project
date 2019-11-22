@@ -18,7 +18,9 @@ Illicit drug use in the United States has been increasing and the number of rela
 
 ### The intended final products
 
+Visualization plots showing association between drug use and related death, including location, race, gender, and gender specific.
 
+Interactive Shiny plots allowing readers to control race, gender, or age group and see corresponding information of related death.
 
 ### The anticipated data sources
 
@@ -40,7 +42,7 @@ Accidental Drug Related Deaths 2012-2018  from DATA.GOV which contains lists of 
 
 (4) Shiny plots.
 
-**Challenges:** 
+**Challenges:** Data manipulation and regression model construction may be challenged.
 
 ### The planned timeline
 
