@@ -51,9 +51,9 @@ will reduce death in drug use. Build regression model.
 
 3)  Distribution of race, gender, and sex in drug use and related death
 
-4)  Number of death for each kinds of drug
+4)  Number of death for each kind of drug
 
-5)  Shiny plots.
+5)  Plots using Shiny tool.
 
 **Challenges:** Data manipulation and regression model construction may
 be challenged.

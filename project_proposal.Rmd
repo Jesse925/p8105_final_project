@@ -38,9 +38,9 @@ Accidental Drug Related Deaths 2012-2018  from DATA.GOV which contains lists of 
 
 (3) Distribution of race, gender, and sex in drug use and related death
 
-(4) Number of death for each kinds of drug
+(4) Number of death for each kind of drug
 
-(4) Shiny plots.
+(4) Plots using Shiny tool.
 
 **Challenges:** Data manipulation and regression model construction may be challenged.
 
