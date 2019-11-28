@@ -1,59 +1,126 @@
 ---
-title: "shiny template"
-author: "wq2151"
-date: "11/27/2019"
-output: html_document
+title: "Don't do drugs! - Map of drug related death"
+output: 
+  flexdashboard::flex_dashboard:
+    theme: flatly
+    social: menu
+    orientation: columns
+    vertical_layout: fill
+    source_code: embed
 runtime: shiny
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+library(flexdashboard)
+library(leaflet)
+library(tidyverse)
+library(shiny)
+
+
+drug_df = 
+  read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>%
+  janitor::clean_names() %>% 
+  mutate(
+    date = as.character(date)
+  ) %>% 
+  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
+  mutate(
+    year = unlist(strsplit(year, " "))[1],
+    year = ifelse(is.na(month), NA, as.numeric(year)),
+    day = as.numeric(day),
+    month = factor(month.name[as.numeric(month)], levels = month.name),
+    race = as.factor(race),
+    sex = as.factor(sex)
+  ) %>% 
+  separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
+  separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
+  mutate(
+    inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
+    inj_long = as.numeric(str_remove(inj_long, "\\)")),
+    injury_city = str_remove(injury_city, "\\,")
+  ) %>% 
+  select(-date_type) %>% 
+  pivot_longer(
+    heroin:any_opioid,
+    names_to = "drug_name",
+    values_to = "drug_use") %>% 
+  drop_na(drug_use) %>% 
+  select(-drug_use)
+
+new_drug_df = 
+  drug_df %>% 
+  group_by(id) %>% 
+  mutate(drug_name = as.factor(drug_name), 
+         drug_name = sort(drug_name)) %>% 
+  mutate(
+    drug_names = paste(drug_name, collapse = ", "), 
+    drug_number = length(drug_name)
+  ) %>% 
+  select(-drug_name) %>% distinct()
 ```
 
-This R Markdown document is made interactive using Shiny. Unlike the more traditional workflow of creating static reports, you can now create documents that allow your readers to change the assumptions underlying your analysis and see the results immediately. 
+Column {.sidebar}
+-----------------------------------------------------------------------
 
-To learn more, see [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
+```{r echo=FALSE}
+# for chart A
+# races = new_drug_df %>% distinct(race) %>% pull()
 
-## Inputs and Outputs
+races = new_drug_df %>% pull(race) %>% levels()
 
-You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change.  This demonstrates how a standard R plot can be made interactive by wrapping it in the Shiny `renderPlot` function. The `selectInput` and `sliderInput` functions create the input widgets used to drive the plot.
+selectInput(
+  # give the input a `name`: "boro_choice" in case you need to access it later
+  # in html doc, it's actually `class_id`
+  "race_choice", 
+  label = h3("Select race"),
+  choices = races, selected = "White")
 
-```{r eruptions, echo=FALSE}
-inputPanel(
-  selectInput("n_breaks", label = "Number of bins:",
-              choices = c(10, 20, 35, 50), selected = 20),
-  
-  sliderInput("bw_adjust", label = "Bandwidth adjustment:",
-              min = 0.2, max = 2, value = 1, step = 0.2)
-)
+drug_numbers = new_drug_df %>% pull(drug_number) %>% as.factor() %>% levels()
 
-renderPlot({
-  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
-       xlab = "Duration (minutes)", main = "Geyser eruption duration")
-  
-  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
-  lines(dens, col = "blue")
-})
+selectInput(
+  "drug_number_choice", 
+  label = h3("Select the number of drug used"),
+  choices = drug_numbers, selected = "3")
 ```
 
-## Embedded Application
+Column {data-width=650}
+-----------------------------------------------------------------------
 
-It's also possible to embed an entire Shiny application within an R Markdown document using the `shinyAppDir` function. This example embeds a Shiny application located in another directory:
+### Geolocation of injury city
 
-```{r tabsets, echo=FALSE}
-shinyAppDir(
-  system.file("examples/06_tabsets", package = "shiny"),
-  options = list(
-    width = "100%", height = 550
-  )
-)
+```{r echo=FALSE, warning=FALSE}
+renderLeaflet({
+    # Use leaflet() here, and only include aspects of the map that
+    # won't need to change dynamically (at least, not unless the
+    # entire map is being torn down and recreated).
+    new_drug_df %>% 
+    filter(
+      race == input[["race_choice"]], 
+      drug_number == input$drug_number_choice
+    ) %>% 
+    leaflet() %>% addTiles() %>%
+    addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
+    addCircles(lat = ~inj_lat, lng = ~inj_long, radius = 5) %>% 
+    addCircleMarkers(lat = ~inj_lat, lng = ~inj_long, radius = 5, popup = paste(new_drug_df$injury_city, new_drug_df$drug_names,  sep = ""))
+  })
 ```
 
-Note the use of the `height` parameter to determine how much vertical space the embedded application should occupy.
+Column {data-width=350}
+-----------------------------------------------------------------------
 
-You can also use the `shinyApp` function to define an application inline rather then in an external directory.
+### Chart B
 
-In all of R code chunks above the `echo = FALSE` attribute is used. This is to prevent the R code within the chunk from rendering in the document alongside the Shiny components.
+```{r}
+drug_df %>% 
+  group_by(id) %>% 
+  summarise(number_of_drug_use = n()) %>% 
+  ggplot() +
+  geom_bar(aes(x = number_of_drug_use))
+```
 
+### Chart C
 
-
+```{r}
+new_drug_df %>% ggplot() +
+  geom_bar(aes(x = drug_number))
+```
