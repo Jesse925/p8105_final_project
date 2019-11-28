@@ -2,11 +2,8 @@
 title: "Don't do drugs! - Map of drug related death"
 output: 
   flexdashboard::flex_dashboard:
-    theme: flatly
-    social: menu
     orientation: columns
     vertical_layout: fill
-    source_code: embed
 runtime: shiny
 ---
 
@@ -15,6 +12,7 @@ library(flexdashboard)
 library(leaflet)
 library(tidyverse)
 library(shiny)
+library(plotly)
 
 
 drug_df = 
@@ -56,13 +54,14 @@ new_drug_df =
     drug_names = paste(drug_name, collapse = ", "), 
     drug_number = length(drug_name)
   ) %>% 
-  select(-drug_name) %>% distinct()
+  select(-drug_name) %>% 
+  distinct()
 ```
 
 Column {.sidebar}
 -----------------------------------------------------------------------
 
-```{r echo=FALSE}
+```{r}
 # for chart A
 # races = new_drug_df %>% distinct(race) %>% pull()
 
@@ -88,7 +87,7 @@ Column {data-width=650}
 
 ### Geolocation of injury city
 
-```{r echo=FALSE, warning=FALSE}
+```{r}
 renderLeaflet({
     # Use leaflet() here, and only include aspects of the map that
     # won't need to change dynamically (at least, not unless the
