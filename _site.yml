@@ -8,8 +8,10 @@ navbar:
   right:
     - icon: fa-chart-bar fa-lg
       menu:
-      - text: plot
+      - text: "plot"
         href: plot.html
+      - text: "interactive map"
+        href: shiny_template.html
     - icon: fa-github fa-lg
       href: https://github.com/Jesse925/p8105_final_project
     - text: Memo

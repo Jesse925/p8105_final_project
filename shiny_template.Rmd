@@ -1,5 +1,6 @@
 ---
 title: "Don't do drugs! - Map of drug related death"
+author: "Weiwei Qi, wq2151"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -7,13 +8,12 @@ output:
 runtime: shiny
 ---
 
-```{r setup, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+```{r setup, include=FALSE}
 library(flexdashboard)
 library(leaflet)
 library(tidyverse)
 library(shiny)
 library(plotly)
-
 
 drug_df = 
   read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>%
@@ -63,8 +63,6 @@ Column {.sidebar}
 
 ```{r}
 # for chart A
-# races = new_drug_df %>% distinct(race) %>% pull()
-
 races = new_drug_df %>% pull(race) %>% levels()
 
 selectInput(
@@ -82,7 +80,7 @@ selectInput(
   choices = drug_numbers, selected = "3")
 ```
 
-Column {data-width=650}
+Column {data-width=600}
 -----------------------------------------------------------------------
 
 ### Geolocation of injury city
@@ -92,19 +90,45 @@ renderLeaflet({
     # Use leaflet() here, and only include aspects of the map that
     # won't need to change dynamically (at least, not unless the
     # entire map is being torn down and recreated).
-    new_drug_df %>% 
+    new_drug_df %>%
     filter(
-      race == input[["race_choice"]], 
+      race == input[["race_choice"]],
       drug_number == input$drug_number_choice
-    ) %>% 
+    ) %>%
     leaflet() %>% addTiles() %>%
-    addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
-    addCircles(lat = ~inj_lat, lng = ~inj_long, radius = 5) %>% 
-    addCircleMarkers(lat = ~inj_lat, lng = ~inj_long, radius = 5, popup = paste(new_drug_df$injury_city, new_drug_df$drug_names,  sep = ""))
+    addProviderTiles(providers$Esri.NatGeoWorldMap) %>%
+    # addCircles(lat = ~inj_lat, lng = ~inj_long, radius = 5, color = "red") %>%
+    addCircleMarkers(
+      lat = ~inj_lat, lng = ~inj_long,
+      radius = 3,
+      popup = paste(
+        new_drug_df$sex,
+        new_drug_df$race,
+        new_drug_df$injury_city,
+        new_drug_df$drug_names, sep = ", "
+      )
+    )
   })
+
+# leaflet() %>% addTiles() %>%
+#     addProviderTiles(providers$Esri.NatGeoWorldMap) %>%
+#     # addCircles(lat = ~inj_lat, lng = ~inj_long, radius = 5, color = "red") %>%
+#     addCircleMarkers(
+#       data = new_drug_df, 
+#       lat = ~inj_lat, lng = ~inj_long, 
+#       radius = 3, 
+#       popup = paste(
+#         new_drug_df$sex, 
+#         new_drug_df$race, 
+#         new_drug_df$injury_city, 
+#         new_drug_df$drug_names, sep = ", "
+#       )
+#     )
+
+# rmarkdown::render("dashboard.Rmd", output_format = "flexdashboard::flex_dashboard")
 ```
 
-Column {data-width=350}
+Column {data-width=400}
 -----------------------------------------------------------------------
 
 ### Chart B
