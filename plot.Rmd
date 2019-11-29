@@ -11,31 +11,40 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(plotly)
 ```
 
 
-
-#### Data
+## Data
 
 
 ```{r}
-drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% janitor::clean_names() %>% mutate(
-  date = as.character(date)
-) %>% separate(date, into = c("month", "day", "year"), sep = "/") %>% mutate(
-  year = unlist(strsplit(year, " "))[1],
-  year = ifelse(is.na(month), NA, as.numeric(year)),
-  day = as.numeric(day),
-  month = factor(month.name[as.numeric(month)], levels = month.name),
-  race = as.factor(race),
-  sex = as.factor(sex)
-) %>% separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% separate(injury_geo, into = c("inj_longitude", "inj_latitude"), sep = ",") %>% mutate(
-  inj_longitude = as.numeric(str_remove(inj_longitude, "\\(")),
-  inj_latitude = as.numeric(str_remove(inj_latitude, "\\)")),
-  injury_city = str_remove(injury_city, "\\,")
-) %>% select(-date_type)
+drug_df = 
+  read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>%
+  janitor::clean_names() %>% 
+  mutate(
+    date = as.character(date)
+  ) %>% 
+  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
+  mutate(
+    year = unlist(strsplit(year, " "))[1],
+    year = ifelse(is.na(month), NA, as.numeric(year)),
+    day = as.numeric(day),
+    month = factor(month.name[as.numeric(month)], levels = month.name),
+    race = as.factor(race),
+    sex = as.factor(sex)
+  ) %>% 
+  separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
+  separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
+  mutate(
+    inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
+    inj_long = as.numeric(str_remove(inj_long, "\\)")),
+    injury_city = str_remove(injury_city, "\\,")
+  ) %>% 
+  select(-date_type)
 ```
 
-#### bar plot: count vs age group with race group
+## 1. Bar plot: count vs age group with race group
 
 
 ```{r}
@@ -50,8 +59,8 @@ drug_df %>% .[!is.na(drug_df$age), ]  %>%  mutate(
 ```
 
 
+## 2. Volin plot: Fatalcases causing by drug between gender
 
-#### Volin plot: Fatalcases causing by drug between gender
 ```{r include=FALSE}
 #all opiates are opioids, not all opioids are opiates.
 drug_df = 
@@ -92,10 +101,6 @@ V_plot = drug_df %>%
          arrange(desc(count))
 
 
-         
-
-
-
 Top10 = V_plot %>%
         group_by(drug)%>% 
         summarise(count = n())%>%
@@ -103,15 +108,10 @@ Top10 = V_plot %>%
         arrange(desc(count))
   
 #kableExtra::kable(Top10)
-
 ```
 
 ```{r warning=FALSE}
-library(plotly)
-
-
-
-V =  V_plot %>%
+V = V_plot %>%
   plot_ly(type = 'violin') %>%
   add_trace(
     x = ~drug[V_plot$sex == 'Male'],y = ~age[V_plot$sex == 'Male'],
@@ -133,7 +133,6 @@ V =  V_plot %>%
           color = ""
         ))) %>% 
   layout(
-    
     xaxis = list(title = "use of drug ",rangeslider = list(type = "drug")),
     yaxis = list(title = "Distribution among Ages ",zeroline = F),
     violingap = 0.5,
@@ -144,3 +143,6 @@ V =  V_plot %>%
 
 V
 ```
+
+## 3. Spaghetti plot: no. of death vs. time (group by types of drug)
+
