@@ -1,7 +1,7 @@
 ---
 title: "Don't do drugs! - Map of drug related death"
 author: "Weiwei Qi, wq2151"
-output: 
+output:
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
@@ -126,6 +126,10 @@ renderLeaflet({
 #     )
 
 # rmarkdown::render("dashboard.Rmd", output_format = "flexdashboard::flex_dashboard")
+
+
+## use this cmd in console to deply the rmd interactive file with shinyapps.io
+# rsconnect::deployDoc('shiny_template.rmd')
 ```
 
 Column {data-width=400}
