@@ -49,3 +49,102 @@ drug_df %>% .[!is.na(drug_df$age), ]  %>%  mutate(
 
 ```
 
+
+
+#### Volin plot: Fatalcases causing by drug between gender
+```{r include=FALSE}
+#all opiates are opioids, not all opioids are opiates.
+drug_df = 
+  read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>%
+  janitor::clean_names() %>% 
+  mutate(
+    date = as.character(date)
+  ) %>% 
+  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
+  mutate(
+    year = unlist(strsplit(year, " "))[1],
+    year = ifelse(is.na(month), NA, as.numeric(year)),
+    day = as.numeric(day),
+    month = factor(month.name[as.numeric(month)], levels = month.name),
+    race = as.factor(race),
+    sex = as.factor(sex)
+  ) %>% 
+  separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
+  separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
+  mutate(
+    inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
+    inj_long = as.numeric(str_remove(inj_long, "\\)")),
+    injury_city = str_remove(injury_city, "\\,")
+  ) %>% 
+  select(-date_type) %>% 
+  pivot_longer(
+    heroin:any_opioid,
+    names_to = "drug_name",
+    values_to = "drug_use") %>% 
+  drop_na(drug_use)
+
+V_plot = drug_df %>%
+         mutate(drug = as.factor(drug_name))%>%
+         group_by(drug)%>%
+         mutate(count = n())%>%
+         select(age,race,sex,drug,count)%>%
+         drop_na()%>%
+         arrange(desc(count))
+
+levels(pull(V_plot,drug))
+
+levels(V_plot$drug) = c("amphet","opioid","benzodiazepine","cocaine", "ethanol" ,      "fentanyl&analogue","fentanyl&analogue","heroin","hydrocodone",        
+"hydromorphone" ,"methadone" ,"morphine_not_heroin",
+"opioid", "other","oxycodone","oxymorphone","tramad")
+         
+
+
+
+Top10 = V_plot %>%
+        group_by(drug)%>% 
+        summarise(count = n())%>%
+        top_n(10)%>%
+        arrange(desc(count))
+  
+#kableExtra::kable(Top10)
+
+```
+
+```{r warning=FALSE}
+library(plotly)
+
+
+
+V =  V_plot %>%
+  plot_ly(type = 'violin') %>%
+  add_trace(
+    x = ~drug[V_plot$sex == 'Male'],y = ~age[V_plot$sex == 'Male'],
+    legendgroup = 'Male',scalegroup = 'Male',name = 'Male',
+    side = 'negative',
+    box = list(visible = T),
+    meanline = list(visible = T),
+    line = list(color = '')) %>%
+  add_trace(
+    x = ~drug[V_plot$sex == 'Female'],y = ~age[V_plot$sex == 'Female'],
+    legendgroup = 'Female',scalegroup = 'Female',name = 'Female',
+    side = 'positive',
+    box = list(visible = T),
+    meanline = list(visible = T),
+    line = list(color = ''),
+    marker = list(
+        line = list(
+          width = 2,
+          color = ""
+        ))) %>% 
+  layout(
+    
+    xaxis = list(title = "use of drug ",rangeslider = list(type = "drug")),
+    yaxis = list(title = "Distribution among Ages ",zeroline = F),
+    violingap = 0.5,
+    violingroupgap = 0,
+    violinmode = 'overlay',
+    colorway = c('#cd7eaf','blue')
+    )
+
+V
+```
