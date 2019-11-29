@@ -91,11 +91,7 @@ V_plot = drug_df %>%
          drop_na()%>%
          arrange(desc(count))
 
-levels(pull(V_plot,drug))
 
-levels(V_plot$drug) = c("amphet","opioid","benzodiazepine","cocaine", "ethanol" ,      "fentanyl&analogue","fentanyl&analogue","heroin","hydrocodone",        
-"hydromorphone" ,"methadone" ,"morphine_not_heroin",
-"opioid", "other","oxycodone","oxymorphone","tramad")
          
 
 
