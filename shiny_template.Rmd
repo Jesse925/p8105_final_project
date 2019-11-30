@@ -44,11 +44,15 @@ new_drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>
   select(-drug_name) %>% 
   distinct()
 
-year_d = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
-  janitor::clean_names() %>% 
-  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
-  separate(year, into = c("year", "del", "del_"), sep = " ") %>% 
-  select(-del, -del_)
+new_drug_df = new_drug_df %>% 
+  mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>% 
+  group_by(inj_geo_tidy) %>% 
+  mutate(inj_geo_count = n())
+  
+
+# nlevels(as.factor(geo_df$inj_geo_tidy))
+# # some different location may have same count, so their levels are different
+# nlevels(as.factor(geo_df$inj_geo_count))
 ```
 
 Column {.sidebar}
@@ -82,19 +86,20 @@ sliderInput(
 
 genders = new_drug_df %>% pull(sex) %>% as.factor() %>% levels()
 
-
 radioButtons(
   "gender_choice", 
   label = h3("Choose gender"),
   choices = genders, selected = "Male")
 ```
 
-Column {data-width=600}
+Column {data-width=550}
 -----------------------------------------------------------------------
 
 ### Geolocation of injury city
 
 ```{r}
+pal <- colorFactor(c("brown", "black"), domain = c(1:2, 3:8))
+
 renderLeaflet({
     # Use leaflet() here, and only include aspects of the map that
     # won't need to change dynamically (at least, not unless the
@@ -103,45 +108,69 @@ renderLeaflet({
     filter(
       race == input[["race_choice"]],
       drug_number == input$drug_number_choice, 
-      year == input$year_range, 
-      genders == input$gender_choice
+      year %in% input$year_range[1]:input$year_range[2],
+      sex == input$gender_choice
     ) %>%
     leaflet() %>% addTiles() %>%
-    addProviderTiles(providers$Esri.NatGeoWorldMap) %>%
+    addProviderTiles(providers$CartoDB.Positron) %>%
     # addCircles(lat = ~inj_lat, lng = ~inj_long, radius = 5, color = "red") %>%
     addCircleMarkers(
       lat = ~inj_lat, lng = ~inj_long,
-      radius = 3,
+      radius = ~sqrt(inj_geo_count/2), 
+      color = ~pal(drug_number),
       popup = paste(
-        new_drug_df$sex,
-        new_drug_df$race,
-        new_drug_df$injury_city,
-        new_drug_df$drug_names, sep = ", "
+        new_drug_df$drug_names
       )
     )
   })
 
+# below is for testing without runing the whole document again
+
+# pal <- colorFactor(c("red", "black"), domain = c(1:2, 3:8))
+# 
+# leaflet(data = new_drug_df) %>% addTiles() %>%
+#     addProviderTiles(providers$CartoDB.Positron) %>%
+#     # addCircles(lat = ~inj_lat, lng = ~inj_long, radius = 5, color = "red") %>%
+#     addCircleMarkers(
+#       lat = ~inj_lat, lng = ~inj_long,
+#       radius = ~sqrt(inj_geo_count/2),
+#       color = ~drug_number,
+#       popup = paste(
+#         new_drug_df$drug_names
+#       )
+#     )
+      
+      
 ## use this cmd in console to deply the rmd interactive file with shinyapps.io
 # rsconnect::deployDoc('shiny_template.rmd')
 ```
 
-Column {data-width=400}
+Column {data-width=450}
 -----------------------------------------------------------------------
 
 ### Chart B
 
 ```{r}
-p = new_drug_df %>% 
+new_drug_df %>% 
   ggplot() +
-  geom_bar(aes(x = age)) + 
-  facet_wrap(race~sex)
+  geom_bar(aes(x = age))
 
-ggplotly(p)
+renderPlotly({
+  new_drug_df %>% 
+    filter(
+      race == input[["race_choice"]],
+      drug_number == input$drug_number_choice, 
+      year %in% input$year_range[1]:input$year_range[2],
+      sex == input$gender_choice
+    ) %>% 
+    # mutate(text_label = str_c("Year: ", year, '\nDrug(s): ', drug_names)) %>% 
+    ggplot() +
+    geom_bar(aes(x = age))
+})
 ```
 
 ### Chart C
 
 ```{r}
-new_drug_df %>% ggplot() +
-  geom_bar(aes(x = drug_number))
+
 ```
