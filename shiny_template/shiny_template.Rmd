@@ -23,7 +23,7 @@ new_drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>
   select(-del, -del_) %>% 
   separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
   separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
-    mutate(
+  mutate(
     inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
     inj_long = as.numeric(str_remove(inj_long, "\\)")),
     injury_city = str_remove(injury_city, "\\,")
@@ -54,6 +54,18 @@ new_drug_df = new_drug_df %>%
   mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>% 
   group_by(inj_geo_tidy) %>% 
   mutate(inj_geo_count = n())
+
+# # add geo location of place of death
+# new_drug_df_death = new_drug_df %>% 
+#   separate(death_city_geo, into = c("death_city_sep", "death_geo"), sep = "CT") %>% 
+#   separate(death_geo, into = c("death_lat", "death_long"), sep = ",") %>% 
+#   mutate(
+#     death_lat = as.numeric(str_remove(death_lat, "\\(")),
+#     death_long = as.numeric(str_remove(death_long, "\\)")),
+#     death_city_sep = str_remove(death_city_sep, "\\,")
+#   )
+  
+  
   
 
 # nlevels(as.factor(geo_df$inj_geo_tidy))
@@ -230,10 +242,6 @@ Column {data-width=450}
 ### Age distribution on various factors
 
 ```{r}
-new_drug_df %>% 
-  ggplot() +
-  geom_bar(aes(x = age))
-
 renderPlotly({
   sub_drug_df() %>% 
     filter(
