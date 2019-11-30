@@ -10,14 +10,14 @@ navbar:
       menu:
       - text: "plot"
         href: plot.html
-      - text: "interactive map"
+      - text: "Interactive Map"
         href: shiny_template.html
     - icon: fa-github fa-lg
       href: https://github.com/Jesse925/p8105_final_project
     - text: Memo
       href: memo.html
     - icon: fa-database fa-lg
-      href: https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions-Crashes/h9gi-nx95
+      href: https://catalog.data.gov/dataset/accidental-drug-related-deaths-january-2012-sept-2015
 output:
   html_document:
     theme: flatly

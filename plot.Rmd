@@ -123,7 +123,7 @@ voline_plot =
 
 voline_plot %>%
   filter(drug_name == "fentanyl"|drug_name =="opioid"|drug_name =="heroin") %>%
-  arrange(count)%>%
+  arrange(count) %>%
   plot_ly(drug_type = 'violin',orientation ="h") %>%
   add_trace(
     y = ~drug_name[voline_plot$sex == 'Male'], x = ~age[voline_plot$sex == 'Male'],
