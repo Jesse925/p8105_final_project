@@ -1,6 +1,6 @@
 ---
-title: "plot"
-author: "Xinyu Shen xs2384"
+title: "Project Report"
+author: "Bingkun Luo, Junxian Chen, Qimin Zhang, Weiwei Qi, Xinyu Shen"
 date: "2019/11/23"
 output:
     html_document:
