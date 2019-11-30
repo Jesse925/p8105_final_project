@@ -3,9 +3,7 @@ title: "Project Report"
 author: "Bingkun Luo, Junxian Chen, Qimin Zhang, Weiwei Qi, Xinyu Shen"
 date: "2019/11/23"
 output:
-    html_document:
-    toc: true
-    toc_float: true
+    html_document
 ---
 
 ```{r setup, include=FALSE}
