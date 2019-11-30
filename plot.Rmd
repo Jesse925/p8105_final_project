@@ -232,6 +232,8 @@ ggplotly(spaghetti_plot1)
 ```
 
 
+
+
 ```{r}
 spaghetti_plot2 = 
   drug_df %>% 
@@ -245,6 +247,27 @@ spaghetti_plot2 =
   ylab("Number of death") 
 
 ggplotly(spaghetti_plot2)
+```
+
+
+```{r}
+n_plot = drug_df %>% 
+    drop_na(date) %>% 
+    arrange(date) %>% 
+    group_by(date, drug_type,year,month) %>% 
+    count()  
+map = ggplot(n_plot ,aes(x = month, y = year)) + 
+    geom_point(aes(color = drug_type, size = n), alpha = 0.2) +
+    scale_color_manual(values = c( "yellow",'#cd7eaf','green','#f3cec9')) +
+    scale_size(range = c(2, 12))+
+    theme_light()
+ggplotly(map)
+
+line = ggplot(n_plot,aes(x = date, y = drug_type)) + 
+   geom_point(aes(color = drug_type, size = n), alpha = 0.5) +
+   scale_color_manual(values = c("#00AFBB", "#E7B800", "#FC4E07","yellow")) +
+   scale_size(range = c(0.5, 12))
+ ggplotly(line)
 ```
 
 
@@ -277,4 +300,8 @@ drug_df %>%
   ylab("Number of death") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10), panel.background = element_blank()) 
 ``` 
+
+
+
+
 
