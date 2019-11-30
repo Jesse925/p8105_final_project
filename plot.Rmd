@@ -1,6 +1,6 @@
 ---
-title: "plot"
-author: "Xinyu Shen xs2384"
+title: "Project Report"
+author: "Bingkun Luo, Junxian Chen, Qimin Zhang, Weiwei Qi, Xinyu Shen"
 date: "2019/11/23"
 output:
     html_document:
@@ -28,23 +28,14 @@ theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
 
 ```{r}
 drug_df = 
-  read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>%
+  read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
   janitor::clean_names() %>% 
-  mutate(
-    date = as.character(date)
-  ) %>% 
   separate(date, into = c("month", "day", "year"), sep = "/") %>% 
-  mutate(
-    year = unlist(strsplit(year, " "))[1],
-    year = ifelse(is.na(month), NA, as.numeric(year)),
-    day = as.numeric(day),
-    month = factor(month.name[as.numeric(month)], levels = month.name),
-    race = as.factor(race),
-    sex = as.factor(sex)
-  ) %>% 
+  separate(year, into = c("year", "del", "del_"), sep = " ") %>% 
+  select(-del, -del_) %>% 
   separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
   separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
-  mutate(
+    mutate(
     inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
     inj_long = as.numeric(str_remove(inj_long, "\\)")),
     injury_city = str_remove(injury_city, "\\,")
@@ -85,7 +76,8 @@ drug_df %>%
 ```
 
 
-## 2. Volin plot: Fatalcases causing by drug between gender
+## 2. Volin plot: Gender difference in drug-related deaths {.tabset}
+
 
 ```{r include=FALSE}
 #all opiates are opioids, not all opioids are opiates.
@@ -95,26 +87,121 @@ drug_df =
     heroin:any_opioid,
     names_to = "drug_name",
     values_to = "drug_use") %>% 
-  drop_na(drug_use)
+    drop_na(drug_use)
+
 
 voline_plot = drug_df %>%
-         mutate(drug = as.factor(drug_name)) %>%
+         mutate(drug_name = case_when(drug_name == "any_opioid"~"opioid",
+                                      drug_name == "opiate_nos" ~ "opioid",
+                                      drug_name == "fentanyl_analogue" ~ "fentanyl",
+                                      TRUE ~ as.character(drug_name)),
+                
+                type = case_when(drug_name == "heroin" ~ "Natural drugs",
+                                 drug_name == "cocaine" ~ "Natural drugs",
+                                 drug_name == "morphine_not_heroin" ~ "Natural drugs",
+                                 drug_name == "ethanol"~"Alcohol",
+                                 drug_name == "hydrocodone" ~ "POM",
+                                 drug_name == "oxymorphone" ~ "POM",
+                                 drug_name == "hydromorphone" ~ "POM",
+                                 drug_name == "amphet" ~ "POM",
+                                 drug_name == "tramad" ~ "POM",
+                                 drug_name == "methadone" ~ "POM",
+                                 drug_name == "oxycodone" ~ "POM",
+                                 drug_name == "benzodiazepine" ~ "POM",
+                                 drug_name == "opioid" ~ "POM",
+                                 drug_name == "fentanyl" ~ "POM",
+                                  TRUE ~ as.character(drug_name)))%>%
+  
+         mutate(drug = as.factor(drug_name),
+                type = as.factor(type)) %>%
          group_by(drug) %>%
          mutate(count = n()) %>%
-         select(age, race, sex, drug, count) %>%
+         select(age, race, sex, drug, count,type) %>%
          drop_na() %>%
          arrange(desc(count))
 
-Top10 = voline_plot %>%
-        group_by(drug) %>% 
-        summarise(count = n()) %>%
-        top_n(10) %>%
-        arrange(desc(count))
-  
-#kableExtra::kable(Top10)
+
 ```
 
-```{r warning=FALSE}
+### Top 3 Fatalized Drug
+
+```{r echo=FALSE, warning=FALSE}
+
+voline_plot %>%
+  filter(drug == "fentanyl"|drug =="opioid"|drug =="heroin")%>%
+  arrange(count)%>%
+  plot_ly(type = 'violin',orientation ="h") %>%
+  add_trace(
+    y = ~drug[voline_plot$sex == 'Male'], x = ~age[voline_plot$sex == 'Male'],
+    legendgroup = 'Male', scalegroup = 'Male', name = 'Male',
+    side = 'negative',
+    box = list(visible = T),
+    meanline = list(visible = T),
+    line = list(color = '')) %>%
+  add_trace(
+    y = ~drug[voline_plot$sex == 'Female'], x = ~age[voline_plot$sex == 'Female'],
+    legendgroup = 'Female', scalegroup = 'Female', name = 'Female',
+    side = 'positive',
+    box = list(visible = T),
+    meanline = list(visible = T),
+    line = list(color = ''),
+    marker = list(
+        line = list(
+          width = 2,
+          color = ""
+        ))) %>% 
+  layout(
+    xaxis = list(title = "Distribution among Ages"),
+    yaxis = list(title = "Use of Drug", zeroline = F),
+    violingap = 0.5,
+    violingroupgap = 0,
+    violinmode = 'overlay',
+    colorway = c('#cd7eaf','blue')
+    )
+```
+
+
+### Major Source of Drug
+
+```{r echo=FALSE, warning=FALSE}
+
+voline_plot %>%
+  plot_ly(type = 'violin') %>%
+  add_trace(
+    x = ~type[voline_plot$sex == 'Male'], y = ~age[voline_plot$sex == 'Male'],
+    legendgroup = 'Male', scalegroup = 'Male', name = 'Male',
+    side = 'negative',
+    box = list(visible = T),
+    meanline = list(visible = T),
+    line = list(color = '')) %>%
+  add_trace(
+    x = ~type[voline_plot$sex == 'Female'], y = ~age[voline_plot$sex == 'Female'],
+    legendgroup = 'Female', scalegroup = 'Female', name = 'Female',
+    side = 'positive',
+    box = list(visible = T),
+    meanline = list(visible = T),
+    line = list(color = ''),
+    marker = list(
+        line = list(
+          width = 2,
+          color = ""
+        ))) %>% 
+  layout(
+    xaxis = list(title = "Types of Drug "),
+    yaxis = list(title = "Distribution among Ages ", zeroline = F),
+    violingap = 0.5,
+    violingroupgap = 0,
+    violinmode = 'overlay',
+    colorway = c('#cd7eaf','blue')
+    )
+
+```
+
+
+
+### All Types of Drug
+
+```{r echo=FALSE, warning=FALSE}
 voline_plot %>%
   plot_ly(type = 'violin') %>%
   add_trace(
@@ -137,14 +224,18 @@ voline_plot %>%
           color = ""
         ))) %>% 
   layout(
-    xaxis = list(title = "use of drug ", rangeslider = list(type = "drug")),
+    xaxis = list(title = "Use of Drug ",rangeslider = list(type = "drug")),
     yaxis = list(title = "Distribution among Ages ", zeroline = F),
     violingap = 0.5,
     violingroupgap = 0,
     violinmode = 'overlay',
     colorway = c('#cd7eaf','blue')
     )
+
 ```
+
+
+
 
 
 ## 3. Spaghetti plot: no. of death vs. time (group by types of drug)
@@ -152,8 +243,7 @@ voline_plot %>%
 ```{r}
 spaghetti_plot = drug_df %>% 
   mutate(
-    month = match(pull(drug_df, month), month.name), 
-    date = as.Date(with(drug_df, paste(year, as.numeric(month), day, sep = "-")), "%Y-%m-%d")
+    date = as.Date(with(drug_df, paste(year, month, day, sep = "-")), "%Y-%m-%d")
   ) %>% 
   drop_na(date) %>% 
   arrange(date) %>% 
