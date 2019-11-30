@@ -116,12 +116,11 @@ voline_plot =
 
 ### Top 3 Fatalized Drug
 
-
 ```{r echo=FALSE, warning=FALSE}
 voline_plot %>%
   filter(drug_name == "fentanyl" | drug_name == "opioid" | drug_name == "heroin") %>%
   arrange(count) %>%
-  plot_ly(drug_type = 'violin',orientation = "h") %>%
+  plot_ly(type = 'violin', orientation = "h") %>%
   add_trace(
     y = ~drug_name[voline_plot$sex == 'Male'], x = ~age[voline_plot$sex == 'Male'],
     legendgroup = 'Male', scalegroup = 'Male', name = 'Male',
