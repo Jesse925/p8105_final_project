@@ -1,26 +1,18 @@
 ---
-title: "Data Analysis"
+title: "Shiny Dashboard"
 output: 
-  html_document:
-    toc: true
-    toc_float: true
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
 ---
 
-#
-#
-
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library(flexdashboard)
 library(tidyverse)
+library(viridis)
+library(plotly)
 ```
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 552c8c4546315c30a8b191c63a1f61ba99e1bc33
-First to read data from the website. It may take a minute.
-
-<<<<<<< HEAD
 
 ```{r message=FALSE, warning=FALSE}
 drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% janitor::clean_names() %>% mutate(
@@ -41,5 +33,56 @@ drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% ja
                                           values_to = "drug_use") %>% drop_na(drug_use)
 ```
 
-#### This website is intended for p8105 Data Science Final Project only. 
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+race = drug_df %>% distinct(race) %>% pull()
+
+# selectInput widget
+selectInput(
+  "race_choice", 
+  label = h3("Select race"),
+  choices = race, selected = "Black")
+
+sex = drug_df %>% distinct(sex) %>% pull()
+
+# selectInput widget
+selectInput(
+  "sex_choice", 
+  label = h3("Select sex"),
+  choices = sex, selected = "Female")
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+drug_df %>% 
+  filter(
+    race == input$race_choice, 
+    sex == input$sex_choice) %>%
+  count(drug_name) %>% 
+  mutate(drug_name = fct_reorder(drug_name, n)) %>% 
+  plot_ly(x = ~drug_name, y = ~n, color = ~drug_name, type = "bar")
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
 
