@@ -6,10 +6,10 @@ navbar:
     - text: "About"
       href: about.html
   right:
+    - text: "Project Report"
+      href: plot.html
     - icon: fa-chart-bar fa-lg
       menu:
-      - text: "plot"
-        href: plot.html
       - text: "Interactive Map"
         href: shiny_template.html
     - icon: fa-github fa-lg
