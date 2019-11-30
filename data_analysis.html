@@ -348,23 +348,30 @@ div.tocify {
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="visualization.html">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-chart-bar fa-lg"></span>
      
-  </a>
-</li>
-<li>
-  <a href="mailto:wwqi4real@gmail.com">
-    <span class="fa fa-envelope fa-lg"></span>
      
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="plot.html">plot</a>
+    </li>
+    <li>
+      <a href="shiny_template.html">interactive map</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="http://github.com/wwqi4realGitHub/">
+  <a href="https://github.com/Jesse925/p8105_final_project">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
+</li>
+<li>
+  <a href="memo.html">Memo</a>
 </li>
 <li>
   <a href="https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions-Crashes/h9gi-nx95">
@@ -386,12 +393,8 @@ div.tocify {
 </div>
 
 
-<div id="section" class="section level1">
-<h1></h1>
-</div>
-<div id="section-1" class="section level1">
-<h1></h1>
 <p>First to read data from the website. It may take a minute.</p>
+<<<<<<< HEAD
 <pre class="r"><code>start_time &lt;- Sys.time()
 
 data = read.csv(&quot;https://data.cityofnewyork.us/resource/h9gi-nx95.csv?$limit=2000000&quot;)
@@ -404,10 +407,48 @@ end_time - start_time</code></pre>
 <h4>This website is intended for p8105 Data Science Final Project only.</h4>
 </div>
 </div>
+=======
+<pre class="r"><code>drug_df = 
+  read_csv(&quot;./data/Accidental_Drug_Related_Deaths_2012-2018.csv&quot;) %&gt;%
+  janitor::clean_names() %&gt;% 
+  mutate(
+    date = as.character(date)
+  ) %&gt;% 
+  separate(date, into = c(&quot;month&quot;, &quot;day&quot;, &quot;year&quot;), sep = &quot;/&quot;) %&gt;% 
+  mutate(
+    year = unlist(strsplit(year, &quot; &quot;))[1],
+    year = ifelse(is.na(month), NA, as.numeric(year)),
+    day = as.numeric(day),
+    month = factor(month.name[as.numeric(month)], levels = month.name),
+    race = as.factor(race),
+    sex = as.factor(sex)
+  ) %&gt;% 
+  separate(injury_city_geo, into = c(&quot;injury_city&quot;, &quot;injury_geo&quot;), sep = &quot;CT&quot;) %&gt;% 
+  separate(injury_geo, into = c(&quot;inj_lat&quot;, &quot;inj_long&quot;), sep = &quot;,&quot;) %&gt;% 
+  mutate(
+    inj_lat = as.numeric(str_remove(inj_lat, &quot;\\(&quot;)),
+    inj_long = as.numeric(str_remove(inj_long, &quot;\\)&quot;)),
+    injury_city = str_remove(injury_city, &quot;\\,&quot;)
+  ) %&gt;% 
+  select(-date_type) %&gt;% 
+  pivot_longer(
+    heroin:any_opioid,
+    names_to = &quot;drug_name&quot;,
+    values_to = &quot;drug_use&quot;) %&gt;% 
+  drop_na(drug_use)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   Age = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Additional pieces discarded in 9 rows [267,
+## 1069, 1482, 1812, 2121, 3003, 3036, 5077, 5105].</code></pre>
+>>>>>>> db84d573e399c7856091518f940092c4eaa84c30
 
 <br><br>
 <footer>
-    <p align="center">Copyright &copy; 2019, Weiwei Qi, All rights reserved.</p>
+    <p align="center">Copyright &copy; 2019, DS final projesct group, All rights reserved.</p>
 </footer>
 
 

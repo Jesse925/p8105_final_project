@@ -1,0 +1,147 @@
+---
+title: "Don't do drugs! - Map of drug related death"
+author: "Weiwei Qi, wq2151"
+output:
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(leaflet)
+library(tidyverse)
+library(shiny)
+library(plotly)
+
+new_drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
+  separate(year, into = c("year", "del", "del_"), sep = " ") %>% 
+  select(-del, -del_) %>% 
+  separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
+  separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
+    mutate(
+    inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
+    inj_long = as.numeric(str_remove(inj_long, "\\)")),
+    injury_city = str_remove(injury_city, "\\,")
+  ) %>% 
+  select(-date_type) %>% 
+    pivot_longer(
+    heroin:any_opioid,
+    names_to = "drug_name",
+    values_to = "drug_use") %>% 
+  drop_na(drug_use) %>% 
+  select(-drug_use) %>% 
+  group_by(id) %>% 
+  mutate(drug_name = as.factor(drug_name), 
+         drug_name = sort(drug_name)) %>% 
+  mutate(
+    drug_names = paste(drug_name, collapse = ", "), 
+    drug_number = length(drug_name)
+  ) %>% 
+  select(-drug_name) %>% 
+  distinct()
+
+year_d = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
+  separate(year, into = c("year", "del", "del_"), sep = " ") %>% 
+  select(-del, -del_)
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+# for chart A
+races = new_drug_df %>% pull(race) %>% as.factor() %>% levels()
+
+selectInput(
+  # give the input a `name`: "boro_choice" in case you need to access it later
+  # in html doc, it's actually `class_id`
+  "race_choice", 
+  label = h3("Select race"),
+  choices = races, selected = "White")
+
+drug_numbers = new_drug_df %>% pull(drug_number) %>% as.factor() %>% levels()
+
+selectInput(
+  "drug_number_choice", 
+  label = h3("Select the number of drug used"),
+  choices = drug_numbers, selected = "3")
+
+min_year = new_drug_df %>% pull(year) %>% min(na.rm = T) %>% as.numeric()
+max_year = new_drug_df %>% pull(year) %>% max(na.rm = T) %>% as.numeric()
+
+sliderInput(
+  "year_range", 
+  label = h3("Choose year range"), 
+  min = min_year, max = max_year, value = c(2012, 2018))
+
+genders = new_drug_df %>% pull(sex) %>% as.factor() %>% levels()
+
+
+radioButtons(
+  "gender_choice", 
+  label = h3("Choose gender"),
+  choices = genders, selected = "Male")
+```
+
+Column {data-width=600}
+-----------------------------------------------------------------------
+
+### Geolocation of injury city
+
+```{r}
+renderLeaflet({
+    # Use leaflet() here, and only include aspects of the map that
+    # won't need to change dynamically (at least, not unless the
+    # entire map is being torn down and recreated).
+    new_drug_df %>%
+    filter(
+      race == input[["race_choice"]],
+      drug_number == input$drug_number_choice, 
+      year == input$year_range, 
+      genders == input$gender_choice
+    ) %>%
+    leaflet() %>% addTiles() %>%
+    addProviderTiles(providers$Esri.NatGeoWorldMap) %>%
+    # addCircles(lat = ~inj_lat, lng = ~inj_long, radius = 5, color = "red") %>%
+    addCircleMarkers(
+      lat = ~inj_lat, lng = ~inj_long,
+      radius = 3,
+      popup = paste(
+        new_drug_df$sex,
+        new_drug_df$race,
+        new_drug_df$injury_city,
+        new_drug_df$drug_names, sep = ", "
+      )
+    )
+  })
+
+## use this cmd in console to deply the rmd interactive file with shinyapps.io
+# rsconnect::deployDoc('shiny_template.rmd')
+```
+
+Column {data-width=400}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+p = new_drug_df %>% 
+  ggplot() +
+  geom_bar(aes(x = age)) + 
+  facet_wrap(race~sex)
+
+ggplotly(p)
+```
+
+### Chart C
+
+```{r}
+new_drug_df %>% ggplot() +
+  geom_bar(aes(x = drug_number))
+```

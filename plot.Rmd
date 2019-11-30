@@ -1,0 +1,180 @@
+---
+title: "Project Report"
+author: "Bingkun Luo, Junxian Chen, Qimin Zhang, Weiwei Qi, Xinyu Shen"
+date: "2019/11/23"
+output:
+    html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(plotly)
+
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+  message = FALSE,
+	fig.width = 8, 
+  fig.height = 6,
+  out.width = "90%"
+)
+theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
+```
+
+
+## Data
+
+```{r}
+drug_df = 
+  read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
+  separate(year, into = c("year", "del", "del_"), sep = " ") %>% 
+  select(-del, -del_) %>% 
+  separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
+  separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
+    mutate(
+    inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
+    inj_long = as.numeric(str_remove(inj_long, "\\)")),
+    injury_city = str_remove(injury_city, "\\,")
+  ) %>% 
+  select(-date_type)
+```
+
+## 1. Bar plot: count vs age group with race group
+
+
+```{r}
+drug_df = 
+  drug_df %>% 
+  .[!is.na(drug_df$race), ] 
+
+drug_df %>% 
+  .[!is.na(drug_df$age), ] %>%  
+  mutate(
+  age_group = ifelse(
+    age < 18, "<18", ifelse(
+      age < 30 & age >= 18, "18~30", ifelse(
+        age < 40 & age >= 30, "30~40", ifelse(
+          age < 50 & age >= 40, "40~50", ifelse(
+            age < 60 & age >= 50, "50~60", ifelse(
+              age < 70 & age >= 60, "60~70", "70+"))))))) %>% 
+  mutate(age_group = as.factor(age_group)) %>% 
+  ggplot(aes(x = age_group, fill = race)) + 
+  geom_histogram(stat = "count", width = 0.6) + 
+  labs(
+    title = "Age group vs Death count", 
+    x = "Age group", 
+    y = "Death count due to drugs") + 
+  theme_bw() + 
+  theme(
+    plot.title = element_text(hjust = 0.5), 
+    legend.text = element_text(size = 8)) + 
+  guides(col = guide_legend(nrow = 2))
+```
+
+
+## 2. Volin plot: Fatalcases causing by drug between gender
+
+```{r include=FALSE}
+#all opiates are opioids, not all opioids are opiates.
+drug_df = 
+  drug_df %>% 
+  pivot_longer(
+    heroin:any_opioid,
+    names_to = "drug_name",
+    values_to = "drug_use") %>% 
+  drop_na(drug_use) 
+
+voline_plot = drug_df %>%
+         mutate(drug = as.factor(drug_name)) %>%
+         group_by(drug) %>%
+         mutate(count = n()) %>%
+         select(age, race, sex, drug, count) %>%
+         drop_na() %>%
+         arrange(desc(count))
+
+Top10 = voline_plot %>%
+        group_by(drug) %>% 
+        summarise(count = n()) %>%
+        top_n(10) %>%
+        arrange(desc(count))
+  
+#kableExtra::kable(Top10)
+```
+
+```{r warning=FALSE}
+voline_plot %>%
+  plot_ly(type = 'violin') %>%
+  add_trace(
+    x = ~drug[voline_plot$sex == 'Male'], y = ~age[voline_plot$sex == 'Male'],
+    legendgroup = 'Male', scalegroup = 'Male', name = 'Male',
+    side = 'negative',
+    box = list(visible = T),
+    meanline = list(visible = T),
+    line = list(color = '')) %>%
+  add_trace(
+    x = ~drug[voline_plot$sex == 'Female'], y = ~age[voline_plot$sex == 'Female'],
+    legendgroup = 'Female', scalegroup = 'Female', name = 'Female',
+    side = 'positive',
+    box = list(visible = T),
+    meanline = list(visible = T),
+    line = list(color = ''),
+    marker = list(
+        line = list(
+          width = 2,
+          color = ""
+        ))) %>% 
+  layout(
+    xaxis = list(title = "use of drug ", rangeslider = list(type = "drug")),
+    yaxis = list(title = "Distribution among Ages ", zeroline = F),
+    violingap = 0.5,
+    violingroupgap = 0,
+    violinmode = 'overlay',
+    colorway = c('#cd7eaf','blue')
+    )
+```
+
+
+## 3. Spaghetti plot: no. of death vs. time (group by types of drug)
+
+```{r}
+spaghetti_plot = drug_df %>% 
+  mutate(
+    date = as.Date(with(drug_df, paste(year, month, day, sep = "-")), "%Y-%m-%d")
+  ) %>% 
+  drop_na(date) %>% 
+  arrange(date) %>% 
+  group_by(date, drug_name) %>% 
+  count() %>% 
+  ggplot(aes(x = date, y = n, color = drug_name)) +
+  geom_line() +
+  xlab("Date") +
+  ylab("Number of death") 
+
+ggplotly(spaghetti_plot)
+```
+
+
+## 4. Heat map showing the number of death in each drug type across the year
+
+```{r}
+drug_df %>% 
+  mutate(
+    month = match(pull(drug_df, month), month.name), 
+    date = as.Date(with(drug_df, paste(year, as.numeric(month), day, sep = "-")), "%Y-%m-%d")
+  ) %>% 
+  drop_na(date) %>% 
+  arrange(date) %>% 
+  group_by(date, drug_name) %>% 
+  count() %>% 
+  ggplot(aes(x = drug_name, y = date)) +
+  geom_bin2d() +
+  scale_fill_gradient(low = "white", high = "steelblue") +
+  xlab("Date") +
+  ylab("Number of death") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10), panel.background = element_blank()) 
+``` 
+
