@@ -28,23 +28,14 @@ theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
 
 ```{r}
 drug_df = 
-  read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>%
+  read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
   janitor::clean_names() %>% 
-  mutate(
-    date = as.character(date)
-  ) %>% 
   separate(date, into = c("month", "day", "year"), sep = "/") %>% 
-  mutate(
-    year = unlist(strsplit(year, " "))[1],
-    year = ifelse(is.na(month), NA, as.numeric(year)),
-    day = as.numeric(day),
-    month = factor(month.name[as.numeric(month)], levels = month.name),
-    race = as.factor(race),
-    sex = as.factor(sex)
-  ) %>% 
+  separate(year, into = c("year", "del", "del_"), sep = " ") %>% 
+  select(-del, -del_) %>% 
   separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
   separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
-  mutate(
+    mutate(
     inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
     inj_long = as.numeric(str_remove(inj_long, "\\)")),
     injury_city = str_remove(injury_city, "\\,")
@@ -95,7 +86,7 @@ drug_df =
     heroin:any_opioid,
     names_to = "drug_name",
     values_to = "drug_use") %>% 
-  drop_na(drug_use)
+  drop_na(drug_use) 
 
 voline_plot = drug_df %>%
          mutate(drug = as.factor(drug_name)) %>%
@@ -152,8 +143,7 @@ voline_plot %>%
 ```{r}
 spaghetti_plot = drug_df %>% 
   mutate(
-    month = match(pull(drug_df, month), month.name), 
-    date = as.Date(with(drug_df, paste(year, as.numeric(month), day, sep = "-")), "%Y-%m-%d")
+    date = as.Date(with(drug_df, paste(year, month, day, sep = "-")), "%Y-%m-%d")
   ) %>% 
   drop_na(date) %>% 
   arrange(date) %>% 
