@@ -119,12 +119,12 @@ voline_plot =
 
 ### Top 3 Fatalized Drug
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=TRUE, warning=FALSE}
 
 voline_plot %>%
-  filter(drug_name == "fentanyl"|drug_name =="opioid"|drug_name =="heroin") %>%
-  arrange(count) %>%
-  plot_ly(drug_type = 'violin',orientation ="h") %>%
+  filter(drug_name == "fentanyl"|drug_name =="opioid"|drug_name =="heroin")%>%
+  arrange(count)%>%
+  plot_ly(type = 'violin',orientation ="h") %>%
   add_trace(
     y = ~drug_name[voline_plot$sex == 'Male'], x = ~age[voline_plot$sex == 'Male'],
     legendgroup = 'Male', scalegroup = 'Male', name = 'Male',
@@ -160,20 +160,20 @@ voline_plot %>%
 ```{r echo=FALSE, warning=FALSE}
 
 voline_plot %>%
-  plot_ly(drug_type = 'violin') %>%
+  plot_ly(type = 'violin') %>%
   add_trace(
     x = ~drug_type[voline_plot$sex == 'Male'], y = ~age[voline_plot$sex == 'Male'],
     legendgroup = 'Male', scalegroup = 'Male', name = 'Male',
     side = 'negative',
-    box = list(visible = T),
-    meanline = list(visible = T),
+    box = list(visible = F),
+    meanline = list(visible = T,color = 'black'),
     line = list(color = '')) %>%
   add_trace(
     x = ~drug_type[voline_plot$sex == 'Female'], y = ~age[voline_plot$sex == 'Female'],
     legendgroup = 'Female', scalegroup = 'Female', name = 'Female',
     side = 'positive',
-    box = list(visible = T),
-    meanline = list(visible = T),
+    box = list(visible = F),
+    meanline = list(visible = T,color = "red"),
     line = list(color = ''),
     marker = list(
         line = list(
@@ -188,22 +188,24 @@ voline_plot %>%
     violinmode = 'overlay',
     colorway = c('#cd7eaf','blue')
     )
+
 ```
 
 
 
 ### All Types of Drug
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=TRUE, warning=FALSE}
 voline_plot %>%
-  plot_ly(drug_type = 'violin') %>%
+  plot_ly(type = 'violin') %>%
   add_trace(
     x = ~drug_name[voline_plot$sex == 'Male'], y = ~age[voline_plot$sex == 'Male'],
     legendgroup = 'Male', scalegroup = 'Male', name = 'Male',
     side = 'negative',
     box = list(visible = T),
     meanline = list(visible = T),
-    line = list(color = '')) %>%
+    line = list(color = ''),
+    marker = list(line = list(width = 2,color = "purple"))) %>%
   add_trace(
     x = ~drug_name[voline_plot$sex == 'Female'], y = ~age[voline_plot$sex == 'Female'],
     legendgroup = 'Female', scalegroup = 'Female', name = 'Female',
@@ -211,11 +213,7 @@ voline_plot %>%
     box = list(visible = T),
     meanline = list(visible = T),
     line = list(color = ''),
-    marker = list(
-        line = list(
-          width = 2,
-          color = ""
-        ))) %>% 
+    marker = list(line = list(width = 2,color = ""))) %>% 
   layout(
     xaxis = list(title = "Use of Drug ",rangeslider = list(type = "drug_name")),
     yaxis = list(title = "Distribution among Ages ", zeroline = F),
