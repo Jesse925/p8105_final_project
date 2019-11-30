@@ -11,37 +11,81 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 552c8c4546315c30a8b191c63a1f61ba99e1bc33
+
+```{r}
+# Latest upated by Junxian Chen on 29/11/29
+drug_df = 
+  read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
+  separate(year, into = c("year", "del", "del_"), sep = " ") %>% 
+  select(-del, -del_) %>% 
+  separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
+  separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
+    mutate(
+    inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
+    inj_long = as.numeric(str_remove(inj_long, "\\)")),
+    injury_city = str_remove(injury_city, "\\,")
+  ) %>% 
+  select(-date_type) %>% 
+  pivot_longer(
+    heroin:any_opioid,
+    names_to = "drug_name",
+    values_to = "drug_use") %>%  
+    drop_na(drug_use) %>%
+  mutate(date = as.Date(with(., paste(year, month, day, sep = "-")), "%Y-%m-%d"),
+         drug_name = case_when(drug_name == "any_opioid" ~ "opioid",
+                          drug_name == "opiate_nos" ~ "opioid",
+                          drug_name == "fentanyl_analogue" ~ "fentanyl",
+                          TRUE ~ as.character(drug_name)),
+         drug_type = case_when(drug_name == "heroin" ~ "Natural drugs",
+                            drug_name == "cocaine" ~ "Natural drugs",
+                            drug_name == "morphine_not_heroin" ~ "Natural drugs",
+                            drug_name == "ethanol" ~ "Alcohol",
+                            drug_name == "hydrocodone" ~ "POM",
+                            drug_name == "oxymorphone" ~ "POM",
+                            drug_name == "hydromorphone" ~ "POM",
+                            drug_name == "amphet" ~ "POM",
+                            drug_name == "tramad" ~ "POM",
+                            drug_name == "methadone" ~ "POM",
+                            drug_name == "oxycodone" ~ "POM",
+                            drug_name == "benzodiazepine" ~ "POM",
+                            drug_name == "opioid" ~ "POM",
+                            drug_name == "fentanyl" ~ "POM",
+                            TRUE ~ as.character(drug_name)),
+           drug_name = as.factor(drug_name),
+           drug_type = as.factor(drug_type))
+```
+
+
+
+
 First to read data from the website. It may take a minute.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 ```{r message=FALSE, warning=FALSE}
-drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% janitor::clean_names() %>% mutate(
-  date = as.character(date)
-) %>% separate(date, into = c("month", "day", "year"), sep = "/") %>% mutate(
-  year = unlist(strsplit(year, " "))[1],
-  year = ifelse(is.na(month), NA, as.numeric(year)),
-  day = as.numeric(day),
-  month = factor(month.name[as.numeric(month)], levels = month.name),
-  race = as.factor(race),
-  sex = as.factor(sex)
-) %>% separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% separate(injury_geo, into = c("inj_latitude", "inj_longitude"), sep = ",") %>% mutate(
-  inj_latitude = as.numeric(str_remove(inj_latitude, "\\(")),
-  inj_longitude = as.numeric(str_remove(inj_longitude, "\\)")),
-  injury_city = str_remove(injury_city, "\\,")
-) %>% select(-date_type) %>% pivot_longer(heroin:any_opioid,
-                                          names_to = "drug_name",
-                                          values_to = "drug_use") %>% drop_na(drug_use)
+# By Xinyu Shen
+# drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% janitor::clean_names() %>% mutate(
+#   date = as.character(date)
+# ) %>% separate(date, into = c("month", "day", "year"), sep = "/") %>% mutate(
+#   year = unlist(strsplit(year, " "))[1],
+#   year = ifelse(is.na(month), NA, as.numeric(year)),
+#   day = as.numeric(day),
+#   month = factor(month.name[as.numeric(month)], levels = month.name),
+#   race = as.factor(race),
+#   sex = as.factor(sex)
+# ) %>% separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% separate(injury_geo, into = c("inj_latitude", "inj_longitude"), sep = ",") %>% mutate(
+#   inj_latitude = as.numeric(str_remove(inj_latitude, "\\(")),
+#   inj_longitude = as.numeric(str_remove(inj_longitude, "\\)")),
+#   injury_city = str_remove(injury_city, "\\,")
+# ) %>% select(-date_type) %>% pivot_longer(heroin:any_opioid,
+#                                           names_to = "drug_name",
+#                                           values_to = "drug_use") %>% drop_na(drug_use)
 ```
 
 #### This website is intended for p8105 Data Science Final Project only. 
 
-=======
+
 ```{r}
 # drug_df = 
 #   read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>%
@@ -77,26 +121,26 @@ drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% ja
 # correct some issues about all years being 2014
 # and drugs are now combined in "one" rows
 # Under certain circumstances, maybe you only need to copy part of the code below for you analysis purposes. 
-drug_df = 
-  read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
-  janitor::clean_names() %>% 
-  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
-  separate(year, into = c("year", "del", "del_"), sep = " ") %>% 
-  select(-del, -del_) %>% 
-  separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
-  separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
-    mutate(
-    inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
-    inj_long = as.numeric(str_remove(inj_long, "\\)")),
-    injury_city = str_remove(injury_city, "\\,")
-  ) %>% 
-  select(-date_type) %>% 
-    pivot_longer(
-    heroin:any_opioid,
-    names_to = "drug_name",
-    values_to = "drug_use") %>% 
-  drop_na(drug_use) %>% 
-  select(-drug_use) 
+# drug_df = 
+#   read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
+#   janitor::clean_names() %>% 
+#   separate(date, into = c("month", "day", "year"), sep = "/") %>% 
+#   separate(year, into = c("year", "del", "del_"), sep = " ") %>% 
+#   select(-del, -del_) %>% 
+#   separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
+#   separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
+#     mutate(
+#     inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
+#     inj_long = as.numeric(str_remove(inj_long, "\\)")),
+#     injury_city = str_remove(injury_city, "\\,")
+#   ) %>% 
+#   select(-date_type) %>% 
+#     pivot_longer(
+#     heroin:any_opioid,
+#     names_to = "drug_name",
+#     values_to = "drug_use") %>% 
+#   drop_na(drug_use) %>% 
+#   select(-drug_use) 
   
 
   # # below combine the drugs and un-longer the df above
@@ -111,4 +155,4 @@ drug_df =
   # distinct()
 ```
 
->>>>>>> db84d573e399c7856091518f940092c4eaa84c30
+
