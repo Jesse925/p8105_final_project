@@ -172,7 +172,6 @@ renderPlotly({
 ### Chart C
 
 ```{r}
-<<<<<<< HEAD
 new_drug_df %>% ggplot() +
   geom_bar(aes(x = drug_number))
 ```
@@ -197,7 +196,7 @@ drug_df = read_csv("./Accidental_Drug_Related_Deaths_2012-2018.csv") %>% janitor
                                           names_to = "drug_name",
                                           values_to = "drug_use") %>% drop_na(drug_use)
 
-renderPlotly({ 
+renderPlotly({
   drug_df %>%
   filter(
     race == input$race_choice, 
