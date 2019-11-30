@@ -11,10 +11,10 @@ navbar:
       - text: "plot"
         href: plot.html
       - text: "Interactive Map"
-        href: shiny_template.html
+        href: https://wq4rstudio.shinyapps.io/shiny_template/
     - icon: fa-github fa-lg
       href: https://github.com/Jesse925/p8105_final_project
-    - text: Memo
+    - text: "Meeting Memo"
       href: memo.html
     - icon: fa-database fa-lg
       href: https://catalog.data.gov/dataset/accidental-drug-related-deaths-january-2012-sept-2015
