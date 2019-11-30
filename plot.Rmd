@@ -24,9 +24,7 @@ theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
 ```
 
 
-## Data
-
-```{r}
+```{r, include=FALSE}
 drug_df = 
   read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
   janitor::clean_names() %>% 
@@ -119,7 +117,6 @@ voline_plot =
 ### Top 3 Fatalized Drug
 
 ```{r echo=FALSE, warning=FALSE}
-
 voline_plot %>%
   filter(drug_name == "fentanyl" | drug_name == "opioid" | drug_name == "heroin") %>%
   arrange(count) %>%
