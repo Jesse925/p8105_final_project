@@ -43,7 +43,12 @@ new_drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>
     drug_number = length(drug_name)
   ) %>% 
   select(-drug_name) %>% 
-  distinct()
+  distinct() %>% 
+  mutate(
+    month = as.numeric(month), 
+    day = as.numeric(day), 
+    year = as.numeric(year)
+  )
 
 new_drug_df = new_drug_df %>% 
   mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>% 
@@ -60,7 +65,7 @@ Column {.sidebar}
 -----------------------------------------------------------------------
 
 ```{r}
-## A compromise option
+## A compromise option(can only choose all for all options or strata for all options)
 # shows = c("All", "Strata")
 # 
 # selectInput(
@@ -82,7 +87,7 @@ selectInput(
 
 # drug_numbers = new_drug_df %>% pull(drug_number) %>% as.factor() %>% levels()
 # drug_numbers = append(drug_numbers, "All", after = 0)
-drug_numbers = c("All", unique(new_drug_df$drug_number))
+drug_numbers = c("All", unique(sort(new_drug_df$drug_number)))
 
 selectInput(
   "drug_number_choice", 
@@ -121,90 +126,47 @@ sub_drug_df = reactive({
       if (input$gender_choice == "All") {
         new_drug_df
       } else {
-        new_drug_df %>% filter(year %in% input$year_range[1]:input$year_range[2], 
-                               sex == input$gender_choice)
+        new_drug_df %>% filter(sex == input$gender_choice)
       }
     } else {
       if (input$gender_choice == "All") {
-        new_drug_df %>% filter(drug_number == input$drug_number_choice, 
-                               year %in% input$year_range[1]:input$year_range[2])
+        new_drug_df %>% filter(drug_number == input$drug_number_choice)
       } else {
         new_drug_df %>% filter(drug_number == input$drug_number_choice, 
-                               year %in% input$year_range[1]:input$year_range[2], 
                                sex == input$gender_choice)
       }
     }
   } else {
     if (input$drug_number_choice == "All") {
       if (input$gender_choice == "All") {
-        new_drug_df %>% filter(race == input$race_choice, 
-                               year %in% input$year_range[1]:input$year_range[2])
+        new_drug_df %>% filter(race == input$race_choice)
       } else {
         new_drug_df %>% filter(race == input$race_choice, 
-                               year %in% input$year_range[1]:input$year_range[2], 
                                sex == input$gender_choice)
       }
     } else {
       if (input$gender_choice == "All") {
         new_drug_df %>% filter(race == input$race_choice, 
-                               drug_number == input$drug_number_choice, 
-                               year %in% input$year_range[1]:input$year_range[2])
+                               drug_number == input$drug_number_choice)
       } else {
         new_drug_df %>% filter(race == input$race_choice,
                                drug_number == input$drug_number_choice, 
-                               year %in% input$year_range[1]:input$year_range[2],
                                sex == input$gender_choice)
       }
     }
   }
   
 })
-```
 
-```{r}
-######################### reactive df ######################### 
-# sub_drug_df = reactive({
-#   if (input$race_choice == "All") {
-#     new_drug_df %>% filter(drug_number == input$drug_number_choice, 
-#                            year %in% input$year_range[1]:input$year_range[2],
-#                            sex == input$gender_choice)
+# map_choice = reactive({
+#   if (input$show_choice == "All") {
+#     new_drug_df
 #   } else {new_drug_df %>% filter(race == input$race_choice,
-#                            drug_number == input$drug_number_choice, 
-#                            year %in% input$year_range[1]:input$year_range[2],
-#                            sex == input$gender_choice)
-#   }
-#   
-#   if (input$drug_number_choice == "All") {
-#     new_drug_df %>% filter(race == input$race_choice,
-#                            year %in% input$year_range[1]:input$year_range[2],
-#                            sex == input$gender_choice)
-#   } else {new_drug_df %>% filter(race == input$race_choice,
-#                            drug_number == input$drug_number_choice,
-#                            year %in% input$year_range[1]:input$year_range[2],
-#                            sex == input$gender_choice)
-#   }
-# 
-#   if (input$gender_choice == "All") {
-#     new_drug_df %>% filter(race == input$race_choice,
-#                            drug_number == input$drug_number_choice,
-#                            year %in% input$year_range[1]:input$year_range[2])
-#   } else {new_drug_df %>% filter(race == input$race_choice,
-#                                  drug_number == input$drug_number_choice,
+#                                  drug_number == input$drug_number_choice, 
 #                                  year %in% input$year_range[1]:input$year_range[2],
 #                                  sex == input$gender_choice)
 #   }
-#   
 # })
-
-map_choice = reactive({
-  if (input$show_choice == "All") {
-    new_drug_df
-  } else {new_drug_df %>% filter(race == input$race_choice,
-                                 drug_number == input$drug_number_choice, 
-                                 year %in% input$year_range[1]:input$year_range[2],
-                                 sex == input$gender_choice)
-  }
-})
 
 ######################### plot ##########################
 pal <- colorNumeric(palette = "plasma", domain = new_drug_df$drug_number)
@@ -214,12 +176,9 @@ renderLeaflet({
     # won't need to change dynamically (at least, not unless the
     # entire map is being torn down and recreated).
     sub_drug_df() %>%
-    # filter(
-    #   race == input$race_choice,
-    #   drug_number == input$drug_number_choice, 
-    #   year %in% input$year_range[1]:input$year_range[2],
-    #   sex == input$gender_choice
-    # ) %>%
+    filter(
+      year %in% input$year_range[1]:input$year_range[2]
+    ) %>%
     leaflet() %>% addTiles() %>%
     addProviderTiles(providers$CartoDB.Positron) %>%
     # addCircles(lat = ~inj_lat, lng = ~inj_long, radius = 5, color = "red") %>%
@@ -276,12 +235,9 @@ new_drug_df %>%
   geom_bar(aes(x = age))
 
 renderPlotly({
-  new_drug_df %>% 
+  sub_drug_df() %>% 
     filter(
-      race == input$race_choice,
-      drug_number == input$drug_number_choice, 
-      year %in% input$year_range[1]:input$year_range[2],
-      sex == input$gender_choice
+      year %in% input$year_range[1]:input$year_range[2]
     ) %>% 
     # mutate(text_label = str_c("Year: ", year, '\nDrug(s): ', drug_names)) %>% 
     ggplot() +
