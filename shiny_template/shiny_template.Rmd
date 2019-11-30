@@ -172,7 +172,6 @@ renderPlotly({
 ### Chart C
 
 ```{r}
-<<<<<<< HEAD
 new_drug_df %>% ggplot() +
   geom_bar(aes(x = drug_number))
 ```
@@ -207,8 +206,3 @@ renderPlotly({
   plot_ly(x = ~drug_name, y = ~n, color = ~drug_name, type = "bar")
 })
 ```
-
-=======
-
-```
->>>>>>> 5eb443c004829f80280edd08ed09773102a4151a
