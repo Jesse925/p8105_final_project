@@ -145,3 +145,35 @@ ggplotly(p)
 new_drug_df %>% ggplot() +
   geom_bar(aes(x = drug_number))
 ```
+
+### Chart D
+
+```{r}
+drug_df = read_csv("./Accidental_Drug_Related_Deaths_2012-2018.csv") %>% janitor::clean_names() %>% mutate(
+  date = as.character(date)
+) %>% separate(date, into = c("month", "day", "year"), sep = "/") %>% mutate(
+  year = unlist(strsplit(year, " "))[1],
+  year = ifelse(is.na(month), NA, as.numeric(year)),
+  day = as.numeric(day),
+  month = factor(month.name[as.numeric(month)], levels = month.name),
+  race = as.factor(race),
+  sex = as.factor(sex)
+) %>% separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% separate(injury_geo, into = c("inj_latitude", "inj_longitude"), sep = ",") %>% mutate(
+  inj_latitude = as.numeric(str_remove(inj_latitude, "\\(")),
+  inj_longitude = as.numeric(str_remove(inj_longitude, "\\)")),
+  injury_city = str_remove(injury_city, "\\,")
+) %>% select(-date_type) %>% pivot_longer(heroin:any_opioid,
+                                          names_to = "drug_name",
+                                          values_to = "drug_use") %>% drop_na(drug_use)
+
+renderPlotly({ 
+  drug_df %>%
+  filter(
+    race == input$race_choice, 
+    sex == input$gender_choice) %>% 
+  count(drug_name) %>% 
+  mutate(drug_name = fct_reorder(drug_name, n)) %>% 
+  plot_ly(x = ~drug_name, y = ~n, color = ~drug_name, type = "bar")
+})
+```
+
