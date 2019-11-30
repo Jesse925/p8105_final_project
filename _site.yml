@@ -11,7 +11,7 @@ navbar:
     - icon: fa-chart-bar fa-lg
       menu:
       - text: "Interactive Map"
-        href: https://wq4rstudio.shinyapps.io/shiny_template/
+        href: https://wq4rstudio.shinyapps.io/shiny_template
     - icon: fa-github fa-lg
       href: https://github.com/Jesse925/p8105_final_project
     - text: "Meeting Memo"
