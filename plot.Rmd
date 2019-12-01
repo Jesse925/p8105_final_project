@@ -3,7 +3,10 @@ title: "Project Report"
 author: "Bingkun Luo, Junxian Chen, Qimin Zhang, Weiwei Qi, Xinyu Shen"
 date: "2019/11/23"
 output:
-    html_document
+    html_document:
+      code_folding: hide
+      toc: true
+      toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -22,6 +25,19 @@ theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
 ```
 
 
+<br>
+
+## Introduction
+<br>
+Illicit drug use in the United States has been increasing and the number of related death is also growing. In the United States, 70,200 people died from drug overdoses in 2017, which was an increase of about 10 percent over 2016. Since 2000, the U.S. drug overdose death rate has gone from 6.2 per 100,000 people in 2000 to 14.7 per 100,000 in 2014. It is unknown that which factors contribute most to the death caused by drugs. Therefore, studying the relationship between drug use and related death is important to discourage drug use and prevent death. In this project, we are going to analyze the data in drug use and related death in  Connecticut from 2012 to 2018 and intend to discover some critical factors in drug use that will arise high chance to be dead.
+<br>
+
+<br>
+
+## Data Collection
+
+<br>
+The dataset was obtained from an investigation by the Office of the Chief Medical Examiner which includes the toxicity report, death certificate, as well as a scene investigation. 
 ```{r, include=FALSE}
 drug_df = 
   read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
@@ -43,39 +59,55 @@ drug_df =
     values_to = "drug_use") %>%  
   drop_na(drug_use) %>%
   #all opiates are opioids, not all opioids are opiates.
-  mutate(date = as.Date(with(., paste(year, month, day, sep = "-")), "%Y-%m-%d"),
-         drug_name = case_when(drug_name == "any_opioid" ~ "opioid",
+  mutate(
+    date_in_month = zoo::as.yearmon(paste(year, month, sep = "-"), "%Y-%m"),
+    date = as.Date(with(., paste(year, month, day, sep = "-")), "%Y-%m-%d"),
+    drug_name = case_when(drug_name == "any_opioid" ~ "opioid",
                           drug_name == "opiate_nos" ~ "opioid",
                           drug_name == "fentanyl_analogue" ~ "fentanyl",
                           TRUE ~ as.character(drug_name)),
-         drug_type = case_when(drug_name == "heroin" ~ "Natural drugs",
-                            drug_name == "cocaine" ~ "Natural drugs",
-                            drug_name == "morphine_not_heroin" ~ "Natural drugs",
-                            drug_name == "ethanol" ~ "Alcohol",
-                            drug_name == "hydrocodone" ~ "POM",
-                            drug_name == "oxymorphone" ~ "POM",
-                            drug_name == "hydromorphone" ~ "POM",
-                            drug_name == "amphet" ~ "POM",
-                            drug_name == "tramad" ~ "POM",
-                            drug_name == "methadone" ~ "POM",
-                            drug_name == "oxycodone" ~ "POM",
-                            drug_name == "benzodiazepine" ~ "POM",
-                            drug_name == "opioid" ~ "POM",
-                            drug_name == "fentanyl" ~ "POM",
-                            TRUE ~ as.character(drug_name)),
-          drug_name = as.factor(drug_name),
-          drug_type = as.factor(drug_type))
+    drug_type = case_when(drug_name == "heroin" ~ "Natural drugs",
+                          drug_name == "cocaine" ~ "Natural drugs",
+                          drug_name == "morphine_not_heroin" ~ "Natural drugs",
+                          drug_name == "ethanol" ~ "Alcohol",
+                          drug_name == "hydrocodone" ~ "POM",
+                          drug_name == "oxymorphone" ~ "POM",
+                          drug_name == "hydromorphone" ~ "POM",
+                          drug_name == "amphet" ~ "POM",
+                          drug_name == "tramad" ~ "POM",
+                          drug_name == "methadone" ~ "POM",
+                          drug_name == "oxycodone" ~ "POM",
+                          drug_name == "benzodiazepine" ~ "POM",
+                          drug_name == "opioid" ~ "POM",
+                          drug_name == "fentanyl" ~ "POM",
+                          TRUE ~ as.character(drug_name)),
+    drug_name = as.factor(drug_name),
+    drug_type = as.factor(drug_type)
+  )
+
+
 ```
+The datasets contains `r length(unique(drug_df$id))` cases with `r length(names(drug_df))` columns. 
+<br>
 
+<br>
 
-## 1. Bar plot: count vs age group with race group
+## Main Analyses
+
+<br>
+
+#### 1. Bar plot: count vs age group with race group
+
+<br>
+Firstly, we want to know the distribution of drug related death according to ages and races. After droping 13 observations which doesn't have the race indicated, we conducted following bar plot.
+
 
 ```{r}
-drug_df = 
+drug_age_group = 
   drug_df %>% 
   .[!is.na(drug_df$race), ] 
 
-drug_df %>% 
+drug_age_group %>% 
   .[!is.na(drug_df$age), ] %>%  
   mutate(
   age_group = ifelse(
@@ -95,12 +127,23 @@ drug_df %>%
   theme_bw() + 
   theme(
     plot.title = element_text(hjust = 0.5), 
+    legend.position = "bottom",
     legend.text = element_text(size = 8)) + 
   guides(col = guide_legend(nrow = 2))
+
+
+
+
+
+
 ```
 
 
-## 2. Volin plot: Gender difference in drug-related deaths {.tabset}
+According to the plot above, we can see that the age group of 30 to 40 year old has most amount of death caused by drugs. The majority death caused by drugs happens from 18 years old to 60 years old, which having a significant decrease for people more than 60 years old. In aspect of race, the white has most death caused by drugs and hispanic white has second most death, through every age groups. 
+
+<br>
+
+#### 2. Volin plot: Gender difference in drug-related deaths {.tabset}
 
 ```{r include=FALSE}
 voline_plot = 
@@ -112,7 +155,7 @@ voline_plot =
   arrange(desc(count))
 ```
 
-### Top 3 Fatalized Drug
+#### Top 3 Fatalized Drug
 
 ```{r echo=FALSE, warning=FALSE}
 voline_plot %>%
@@ -148,7 +191,7 @@ voline_plot %>%
   )
 ```
 
-### Major Source of Drug
+#### Major Source of Drug
 
 ```{r echo=FALSE, warning=FALSE}
 voline_plot %>%
@@ -182,7 +225,7 @@ voline_plot %>%
     )
 ```
 
-### All Types of Drug
+#### All Types of Drug
 
 ```{r echo=TRUE, warning=FALSE}
 voline_plot %>%
@@ -214,32 +257,33 @@ voline_plot %>%
 ```
 
 
-## 3. Spaghetti plot: no. of death vs. time (group by types of drug)
+#### 3. Spaghetti plot: no. of death vs. time (group by types of drug)
 
 ```{r}
 spaghetti_plot1 = 
   drug_df %>% 
-  drop_na(date) %>% 
-  arrange(date) %>% 
-  group_by(date, drug_type) %>% 
+  drop_na(date_in_month) %>% 
+  arrange(date_in_month) %>% 
+  group_by(date_in_month, drug_type) %>% 
   count() %>% 
-  ggplot(aes(x = date, y = n, color = drug_type)) +
+  ggplot(aes(x = date_in_month, y = n, color = drug_type)) +
   geom_line() +
   xlab("Date") +
-  ylab("Number of death") 
+  ylab("Number of death") +
+  facet_grid(~drug_type)
 
-ggplotly(spaghetti_plot1)
+spaghetti_plot1
 ```
 
 
 ```{r}
 spaghetti_plot2 = 
   drug_df %>% 
-  drop_na(date) %>% 
-  arrange(date) %>% 
-  group_by(date, drug_name) %>% 
+  drop_na(date_in_month) %>% 
+  arrange(date_in_month) %>% 
+  group_by(date_in_month, drug_name) %>% 
   count() %>% 
-  ggplot(aes(x = date, y = n, color = drug_name)) +
+  ggplot(aes(x = date_in_month, y = n, color = drug_name)) +
   geom_line() +
   xlab("Date") +
   ylab("Number of death") 
@@ -248,7 +292,39 @@ ggplotly(spaghetti_plot2)
 ```
 
 
-## 4. Heat map showing the number of death in each drug type across the year
+```{r}
+n_plot = 
+  drug_df %>% 
+  drop_na(date) %>% 
+  arrange(date) %>% 
+  group_by(date, drug_type, year, month) %>% 
+  count() 
+
+map = 
+  ggplot(n_plot ,aes(x = month, y = year)) + 
+  geom_point(aes(color = drug_type, size = n), alpha = 0.2) +
+  scale_color_manual(values = c("yellow",'#cd7eaf','green','#f3cec9')) +
+  scale_size(range = c(2, 12)) +
+  theme_light() +
+  xlab("Month") +
+  ylab("Year")
+
+ggplotly(map)
+```
+
+
+```{r}
+line = 
+  ggplot(n_plot,aes(x = date, y = drug_type)) + 
+  geom_point(aes(color = drug_type, size = n), alpha = 0.5) +
+  scale_color_manual(values = c("#00AFBB", "#E7B800", "#FC4E07","yellow")) +
+  scale_size(range = c(0.5, 12))
+
+ggplotly(line)
+```
+
+
+#### 4. Heat map showing the number of death in each drug type across the year
 
 ```{r}
 drug_df %>% 
@@ -277,4 +353,13 @@ drug_df %>%
   ylab("Number of death") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10), panel.background = element_blank()) 
 ``` 
+
+
+## Results
+
+<br>
+
+## Discussion
+
+
 
