@@ -233,7 +233,7 @@ spaghetti_plot1 =
   ylab("Number of death") +
   facet_grid(~drug_type)
 
-ggplotly(spaghetti_plot1) 
+spaghetti_plot1
 ```
 
 
