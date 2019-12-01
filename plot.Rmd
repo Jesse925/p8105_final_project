@@ -3,7 +3,8 @@ title: "Project Report"
 author: "Bingkun Luo, Junxian Chen, Qimin Zhang, Weiwei Qi, Xinyu Shen"
 date: "2019/11/23"
 output:
-    html_document
+    html_document:
+      code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
