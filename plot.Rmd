@@ -98,6 +98,7 @@ drug_df %>%
   theme_bw() + 
   theme(
     plot.title = element_text(hjust = 0.5), 
+    legend.position = "bottom",
     legend.text = element_text(size = 8)) + 
   guides(col = guide_legend(nrow = 2))
 ```
@@ -229,9 +230,10 @@ spaghetti_plot1 =
   ggplot(aes(x = date_in_month, y = n, color = drug_type)) +
   geom_line() +
   xlab("Date") +
-  ylab("Number of death") 
+  ylab("Number of death") +
+  facet_grid(~drug_type)
 
-ggplotly(spaghetti_plot1)
+ggplotly(spaghetti_plot1) 
 ```
 
 
@@ -252,26 +254,34 @@ ggplotly(spaghetti_plot2)
 
 
 ```{r}
-n_plot = drug_df %>% 
-    drop_na(date) %>% 
-    arrange(date) %>% 
-    group_by(date, drug_type,year,month) %>% 
-    count()  
-map = ggplot(n_plot ,aes(x = month, y = year)) + 
-    geom_point(aes(color = drug_type, size = n), alpha = 0.2) +
-    scale_color_manual(values = c( "yellow",'#cd7eaf','green','#f3cec9')) +
-    scale_size(range = c(2, 12)) +
-    theme_light()
+n_plot = 
+  drug_df %>% 
+  drop_na(date) %>% 
+  arrange(date) %>% 
+  group_by(date, drug_type, year, month) %>% 
+  count() 
+
+map = 
+  ggplot(n_plot ,aes(x = month, y = year)) + 
+  geom_point(aes(color = drug_type, size = n), alpha = 0.2) +
+  scale_color_manual(values = c("yellow",'#cd7eaf','green','#f3cec9')) +
+  scale_size(range = c(2, 12)) +
+  theme_light() +
+  xlab("Month") +
+  ylab("Year")
+
 ggplotly(map)
 ```
 
 
 ```{r}
-line = ggplot(n_plot,aes(x = date, y = drug_type)) + 
-   geom_point(aes(color = drug_type, size = n), alpha = 0.5) +
-   scale_color_manual(values = c("#00AFBB", "#E7B800", "#FC4E07","yellow")) +
-   scale_size(range = c(0.5, 12))
- ggplotly(line)
+line = 
+  ggplot(n_plot,aes(x = date, y = drug_type)) + 
+  geom_point(aes(color = drug_type, size = n), alpha = 0.5) +
+  scale_color_manual(values = c("#00AFBB", "#E7B800", "#FC4E07","yellow")) +
+  scale_size(range = c(0.5, 12))
+
+ggplotly(line)
 ```
 
 
