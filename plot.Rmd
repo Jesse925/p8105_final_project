@@ -43,28 +43,31 @@ drug_df =
     values_to = "drug_use") %>%  
   drop_na(drug_use) %>%
   #all opiates are opioids, not all opioids are opiates.
-  mutate(date = as.Date(with(., paste(year, month, day, sep = "-")), "%Y-%m-%d"),
-         drug_name = case_when(drug_name == "any_opioid" ~ "opioid",
+  mutate(
+    date_in_month = zoo::as.yearmon(paste(year, month, sep = "-"), "%Y-%m"),
+    date = as.Date(with(., paste(year, month, day, sep = "-")), "%Y-%m-%d"),
+    drug_name = case_when(drug_name == "any_opioid" ~ "opioid",
                           drug_name == "opiate_nos" ~ "opioid",
                           drug_name == "fentanyl_analogue" ~ "fentanyl",
                           TRUE ~ as.character(drug_name)),
-         drug_type = case_when(drug_name == "heroin" ~ "Natural drugs",
-                            drug_name == "cocaine" ~ "Natural drugs",
-                            drug_name == "morphine_not_heroin" ~ "Natural drugs",
-                            drug_name == "ethanol" ~ "Alcohol",
-                            drug_name == "hydrocodone" ~ "POM",
-                            drug_name == "oxymorphone" ~ "POM",
-                            drug_name == "hydromorphone" ~ "POM",
-                            drug_name == "amphet" ~ "POM",
-                            drug_name == "tramad" ~ "POM",
-                            drug_name == "methadone" ~ "POM",
-                            drug_name == "oxycodone" ~ "POM",
-                            drug_name == "benzodiazepine" ~ "POM",
-                            drug_name == "opioid" ~ "POM",
-                            drug_name == "fentanyl" ~ "POM",
-                            TRUE ~ as.character(drug_name)),
-          drug_name = as.factor(drug_name),
-          drug_type = as.factor(drug_type))
+    drug_type = case_when(drug_name == "heroin" ~ "Natural drugs",
+                          drug_name == "cocaine" ~ "Natural drugs",
+                          drug_name == "morphine_not_heroin" ~ "Natural drugs",
+                          drug_name == "ethanol" ~ "Alcohol",
+                          drug_name == "hydrocodone" ~ "POM",
+                          drug_name == "oxymorphone" ~ "POM",
+                          drug_name == "hydromorphone" ~ "POM",
+                          drug_name == "amphet" ~ "POM",
+                          drug_name == "tramad" ~ "POM",
+                          drug_name == "methadone" ~ "POM",
+                          drug_name == "oxycodone" ~ "POM",
+                          drug_name == "benzodiazepine" ~ "POM",
+                          drug_name == "opioid" ~ "POM",
+                          drug_name == "fentanyl" ~ "POM",
+                          TRUE ~ as.character(drug_name)),
+    drug_name = as.factor(drug_name),
+    drug_type = as.factor(drug_type)
+  )
 ```
 
 
@@ -219,11 +222,11 @@ voline_plot %>%
 ```{r}
 spaghetti_plot1 = 
   drug_df %>% 
-  drop_na(date) %>% 
-  arrange(date) %>% 
-  group_by(date, drug_type) %>% 
+  drop_na(date_in_month) %>% 
+  arrange(date_in_month) %>% 
+  group_by(date_in_month, drug_type) %>% 
   count() %>% 
-  ggplot(aes(x = date, y = n, color = drug_type)) +
+  ggplot(aes(x = date_in_month, y = n, color = drug_type)) +
   geom_line() +
   xlab("Date") +
   ylab("Number of death") 
@@ -232,16 +235,14 @@ ggplotly(spaghetti_plot1)
 ```
 
 
-
-
 ```{r}
 spaghetti_plot2 = 
   drug_df %>% 
-  drop_na(date) %>% 
-  arrange(date) %>% 
-  group_by(date, drug_name) %>% 
+  drop_na(date_in_month) %>% 
+  arrange(date_in_month) %>% 
+  group_by(date_in_month, drug_name) %>% 
   count() %>% 
-  ggplot(aes(x = date, y = n, color = drug_name)) +
+  ggplot(aes(x = date_in_month, y = n, color = drug_name)) +
   geom_line() +
   xlab("Date") +
   ylab("Number of death") 
@@ -259,10 +260,13 @@ n_plot = drug_df %>%
 map = ggplot(n_plot ,aes(x = month, y = year)) + 
     geom_point(aes(color = drug_type, size = n), alpha = 0.2) +
     scale_color_manual(values = c( "yellow",'#cd7eaf','green','#f3cec9')) +
-    scale_size(range = c(2, 12))+
+    scale_size(range = c(2, 12)) +
     theme_light()
 ggplotly(map)
+```
 
+
+```{r}
 line = ggplot(n_plot,aes(x = date, y = drug_type)) + 
    geom_point(aes(color = drug_type, size = n), alpha = 0.5) +
    scale_color_manual(values = c("#00AFBB", "#E7B800", "#FC4E07","yellow")) +
