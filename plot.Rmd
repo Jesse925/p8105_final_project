@@ -38,6 +38,7 @@ Illicit drug use in the United States has been increasing and the number of rela
 
 <br>
 The dataset was obtained from an investigation by the Office of the Chief Medical Examiner which includes the toxicity report, death certificate, as well as a scene investigation. 
+
 ```{r, include=FALSE}
 drug_df = 
   read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
@@ -89,6 +90,22 @@ drug_df =
 ```
 The datasets contains `r length(unique(drug_df$id))` cases with `r length(names(drug_df))` columns. 
 <br>
+
+Some important factors:
+
+* `id`: Unique ID for each case.
+	
+* `month`, `day`, `year`: Date when the person died.
+	
+* `sex`: Gender of the dead.
+	
+* `age`: Age of the dead.
+	
+* `race`: Race of the dead.
+	
+* `inj_lat`: Latitude of the location where the person took the drug.
+	
+* `inj_long`: Longitude of the location where the person took the drug.
 
 <br>
 
@@ -395,7 +412,7 @@ ggplotly(map_4)%>%
 ```
 
 
-###  Heat map showing the number of death in each drug type across the year {.tabset}
+###  Death count in each drug type across the year {.tabset}
 
 #### Four Main Drug Types
 
@@ -433,6 +450,8 @@ heat_two = drug_df %>%
 ggplotly(heat_two)
 ``` 
 
+
+### Interactive map
 
 ## Results
 
