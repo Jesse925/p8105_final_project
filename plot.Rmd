@@ -96,7 +96,7 @@ The datasets contains `r length(unique(drug_df$id))` cases with `r length(names(
 
 <br>
 
-#### 1. Bar plot: count vs age group with race group
+###  Bar plot: count vs age group with race group
 
 <br>
 Firstly, we want to know the distribution of drug related death according to ages and races. After droping 13 observations which doesn't have the race indicated, we conducted following bar plot.
@@ -107,8 +107,8 @@ drug_age_group =
   drug_df %>% 
   .[!is.na(drug_df$race), ] 
 
-drug_age_group %>% 
-  .[!is.na(drug_df$age), ] %>%  
+bar_plot = drug_age_group %>% 
+  .[!is.na(drug_age_group$age), ] %>%  
   mutate(
   age_group = ifelse(
     age < 18, "<18", ifelse(
@@ -132,7 +132,15 @@ drug_age_group %>%
   guides(col = guide_legend(nrow = 2))
 
 
-
+ggplotly(bar_plot) %>%
+  layout(legend = list(
+      orientation = "h",
+      xanchor = "center",
+      yanchor = "top",
+      x=0.5,
+      y = -0.3
+    )
+  )
 
 
 
@@ -143,7 +151,7 @@ According to the plot above, we can see that the age group of 30 to 40 year old 
 
 <br>
 
-#### 2. Volin plot: Gender difference in drug-related deaths {.tabset}
+###  Volin plot: Gender difference in drug-related deaths {.tabset}
 
 ```{r include=FALSE}
 voline_plot = 
@@ -155,7 +163,7 @@ voline_plot =
   arrange(desc(count))
 ```
 
-##### Top 3 Fatalized Drug
+#### Top 3 Fatalized Drug
 
 ```{r echo=TRUE, warning=FALSE}
 voline_plot %>%
@@ -191,7 +199,7 @@ voline_plot %>%
   )
 ```
 
-##### Major Source of Drug
+#### Major Source of Drug
 
 ```{r echo=TRUE, warning=FALSE}
 voline_plot %>%
@@ -225,7 +233,7 @@ voline_plot %>%
     )
 ```
 
-##### All Types of Drug
+#### All Types of Drug
 
 ```{r echo=TRUE, warning=FALSE}
 voline_plot %>%
@@ -258,9 +266,9 @@ voline_plot %>%
 
 
 
-#### 3. Spaghetti plot: No. of death vs. Time {.tabset}
+###  Spaghetti plot: No. of death vs. Time {.tabset}
 
-##### Group by types of drug
+#### Group by types of drug
 
 
 ```{r}
@@ -279,7 +287,7 @@ spaghetti_plot1 =
 ggplotly(spaghetti_plot1)
 ```
 
-##### Prevalence of Drugs
+#### Prevalence of Drugs
 
 ```{r}
 spaghetti_plot2 = 
@@ -303,7 +311,7 @@ spaghetti_plot2 =
 spaghetti_plot2
 ```
 
-#### 4. Bubble plot: No. of death vs. Month (group by types of drug) {.tabset}
+###  Bubble plot: No. of death vs. Month (group by types of drug) {.tabset}
 
 ```{r}
 n_plot = 
@@ -315,7 +323,7 @@ n_plot =
 ```
 
 
-##### Type 1: POM
+#### Type 1: POM
 
 ```{r}
 
@@ -333,7 +341,7 @@ ggplotly(map_1)%>%
   layout(showlegend = FALSE)
 ```
 
-##### Type 2: Natural drugs
+#### Type 2: Natural drugs
 
 ```{r}
 map_2= n_plot%>%
@@ -350,7 +358,7 @@ ggplotly(map_2)%>%
   layout(showlegend = FALSE)
 ```
 
-##### Type 3: Alcohol
+#### Type 3: Alcohol
 
 ```{r}
 map_3= n_plot%>%
@@ -368,7 +376,7 @@ ggplotly(map_3)%>%
 
 ```
 
-##### Type 4: Others
+#### Type 4: Others
 
 ```{r}
 map_4= n_plot%>%
@@ -386,10 +394,12 @@ ggplotly(map_4)%>%
 ```
 
 
-#### 4. Heat map showing the number of death in each drug type across the year
+###  Heat map showing the number of death in each drug type across the year {.tabset}
+
+#### Four Main Drug Types
 
 ```{r}
-drug_df %>% 
+heat_one = drug_df %>% 
   drop_na(date) %>% 
   arrange(date) %>% 
   group_by(date, drug_type) %>% 
@@ -400,10 +410,14 @@ drug_df %>%
   xlab("Date") +
   ylab("Number of death") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10), panel.background = element_blank()) 
+
+ggplotly(heat_one)
 ``` 
 
+#### All Drug Types
+
 ```{r}
-drug_df %>% 
+heat_two = drug_df %>% 
   drop_na(date) %>% 
   arrange(date) %>% 
   group_by(date, drug_name) %>% 
@@ -414,6 +428,8 @@ drug_df %>%
   xlab("Date") +
   ylab("Number of death") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10), panel.background = element_blank()) 
+
+ggplotly(heat_two)
 ``` 
 
 
