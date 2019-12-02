@@ -216,8 +216,6 @@ sub_drug_df = reactive({
 
 ######################### plot ##########################
 
-pal <- colorNumeric(palette = "Blues", domain = new_drug_df$drug_number)
-
 pal <- colorFactor(palette = "plasma", 
                    domain = fct_rev(as.factor(new_drug_df$drug_number)))
 
