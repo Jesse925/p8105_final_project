@@ -50,10 +50,10 @@ new_drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>
     year = as.numeric(year)
   )
 
-new_drug_df = new_drug_df %>% 
-  mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>% 
-  group_by(inj_geo_tidy) %>% 
-  mutate(inj_geo_count = n())
+# new_drug_df = new_drug_df %>%
+#   mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>%
+#   group_by(inj_geo_tidy) %>%
+#   mutate(inj_geo_count = n())
 
 # # add geo location of place of death
 # new_drug_df_death = new_drug_df %>% 
@@ -136,34 +136,65 @@ sub_drug_df = reactive({
   if (input$race_choice == "All") {
     if (input$drug_number_choice == "All") {
       if (input$gender_choice == "All") {
-        new_drug_df
+        new_drug_df %>%
+          mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>%
+          group_by(inj_geo_tidy) %>%
+          mutate(inj_geo_count = n())
       } else {
-        new_drug_df %>% filter(sex == input$gender_choice)
+        new_drug_df %>% 
+          filter(sex == input$gender_choice) %>%
+          mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>%
+          group_by(inj_geo_tidy) %>%
+          mutate(inj_geo_count = n())
       }
     } else {
       if (input$gender_choice == "All") {
-        new_drug_df %>% filter(drug_number == input$drug_number_choice)
+        new_drug_df %>% 
+          filter(drug_number == input$drug_number_choice) %>%
+          mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>%
+          group_by(inj_geo_tidy) %>%
+          mutate(inj_geo_count = n())
       } else {
-        new_drug_df %>% filter(drug_number == input$drug_number_choice, 
-                               sex == input$gender_choice)
+        new_drug_df %>% 
+          filter(drug_number == input$drug_number_choice, 
+                               sex == input$gender_choice) %>%
+          mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>% 
+          group_by(inj_geo_tidy) %>%
+          mutate(inj_geo_count = n())
       }
     }
   } else {
     if (input$drug_number_choice == "All") {
       if (input$gender_choice == "All") {
-        new_drug_df %>% filter(race == input$race_choice)
+        new_drug_df %>% 
+          filter(race == input$race_choice) %>%
+          mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>%
+          group_by(inj_geo_tidy) %>%
+          mutate(inj_geo_count = n())
       } else {
-        new_drug_df %>% filter(race == input$race_choice, 
-                               sex == input$gender_choice)
+        new_drug_df %>% 
+          filter(race == input$race_choice, 
+                 sex == input$gender_choice) %>%
+          mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>%
+          group_by(inj_geo_tidy) %>%
+          mutate(inj_geo_count = n())
       }
     } else {
       if (input$gender_choice == "All") {
-        new_drug_df %>% filter(race == input$race_choice, 
-                               drug_number == input$drug_number_choice)
+        new_drug_df %>% 
+          filter(race == input$race_choice, 
+                 drug_number == input$drug_number_choice) %>%
+          mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>%
+          group_by(inj_geo_tidy) %>%
+          mutate(inj_geo_count = n())
       } else {
-        new_drug_df %>% filter(race == input$race_choice,
-                               drug_number == input$drug_number_choice, 
-                               sex == input$gender_choice)
+        new_drug_df %>% 
+          filter(race == input$race_choice,
+                 drug_number == input$drug_number_choice, 
+                 sex == input$gender_choice) %>%
+          mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>%
+          group_by(inj_geo_tidy) %>%
+          mutate(inj_geo_count = n())
       }
     }
   }
