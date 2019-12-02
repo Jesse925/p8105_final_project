@@ -267,10 +267,10 @@ renderLeaflet({
 # rsconnect::deployDoc('./shiny_template/shiny_template.rmd')
 ```
 
-Column {data-width=450}
+Column {data-width=450} {.tabset}
 -----------------------------------------------------------------------
 
-### Age distribution on various factors
+### Age distribution
 
 ```{r}
 renderPlotly({
@@ -299,7 +299,7 @@ renderPlotly({
 })
 ```
 
-### Race and gender distribution of different types of drug use
+### Drug distribution
 
 ```{r}
 drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
