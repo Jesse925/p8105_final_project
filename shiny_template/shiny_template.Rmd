@@ -103,7 +103,7 @@ drug_numbers = c("All", unique(sort(new_drug_df$drug_number)))
 
 selectInput(
   "drug_number_choice", 
-  label = h3("Select the number of drug used"),
+  label = h3("Select number of drug used"),
   choices = drug_numbers, selected = "All")
 
 
@@ -126,7 +126,7 @@ sliderInput(
   min = min_year, max = max_year, value = c(2012, 2018))
 ```
 
-Column {data-width=600}
+Column {data-width=500}
 -----------------------------------------------------------------------
 
 ### Geolocation of injury city
@@ -212,7 +212,7 @@ sub_drug_df = reactive({
 # })
 
 ######################### plot ##########################
-pal <- colorNumeric(palette = "plasma", domain = new_drug_df$drug_number)
+pal <- colorNumeric(palette = "Blues", domain = new_drug_df$drug_number)
 
 renderLeaflet({
     # Use leaflet() here, and only include aspects of the map that
@@ -271,9 +271,8 @@ renderLeaflet({
 # rsconnect::deployDoc('./shiny_template/shiny_template.rmd')
 ```
 
-Column {data-width=400}
+Column {data-width=300}
 -----------------------------------------------------------------------
-
 ### Age distribution
 
 ```{r}
@@ -303,7 +302,7 @@ renderPlotly({
 })
 ```
 
-### Drug distribution
+### Drug type distribution
 
 ```{r}
 drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
