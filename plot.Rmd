@@ -108,7 +108,7 @@ drug_age_group =
   .[!is.na(drug_df$race), ] 
 
 drug_age_group %>% 
-  .[!is.na(drug_df$age), ] %>%  
+  .[!is.na(drug_age_group$age), ] %>%  
   mutate(
   age_group = ifelse(
     age < 18, "<18", ifelse(
