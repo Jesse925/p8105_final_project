@@ -5,6 +5,6 @@ account: wq4rstudio
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1541139
-bundleId: 2633143
+bundleId: 2633886
 url: https://wq4rstudio.shinyapps.io/shiny_template/
-when: 1575310266.82404
+when: 1575328035.94938
