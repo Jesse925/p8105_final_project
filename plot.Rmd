@@ -117,7 +117,7 @@ Some important factors:
 
 
 <br>
-Firstly, we want to know the distribution of drug related death according to ages and races. After droping 13 observations which doesn't have the race indicated, we conducted following bar plot.
+There were ten races included in this visualization. The subjects which race cannot be identified were indicated as unknown. Thirteen observations which doesn’t indicate the race in the datasets were dropped.  
 
 
 ```{r}
@@ -165,7 +165,7 @@ ggplotly(bar_plot) %>%
 ```
 
 
-According to the plot above, we can see that the age group of 30 to 40 year old has most amount of death caused by drugs. The majority death caused by drugs happens from 18 years old to 60 years old, which having a significant decrease for people more than 60 years old. In aspect of race, the white has most death caused by drugs and hispanic white has second most death, through every age groups. 
+The age group of 30 to 40 year old have most amount of death caused by drugs. The majority death caused by drugs happens from 18 years old to 60 years old, which having a significant decrease for people more than 60 years old. In aspect of race, the white has most death caused by drugs. 2897 white people in age 30 to 40 died because of drugs, which is the most amount of death through any groups. And hispanic white has 499 death because of drugs, which is the second most death among all groups except white . People at middle age more likely died because of an overdose of drugs, compared to elders and younger people. 
 
 <br>
 
