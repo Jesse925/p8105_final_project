@@ -96,7 +96,8 @@ The datasets contains `r length(unique(drug_df$id))` cases with `r length(names(
 
 <br>
 
-###  Bar plot: count vs age group with race group
+### Death count among age and race group
+
 
 <br>
 Firstly, we want to know the distribution of drug related death according to ages and races. After droping 13 observations which doesn't have the race indicated, we conducted following bar plot.
@@ -151,7 +152,7 @@ According to the plot above, we can see that the age group of 30 to 40 year old 
 
 <br>
 
-###  Volin plot: Gender difference in drug-related deaths {.tabset}
+###  Gender difference in drug-related deaths {.tabset}
 
 ```{r include=FALSE}
 voline_plot = 
@@ -266,7 +267,7 @@ voline_plot %>%
 
 
 
-###  Spaghetti plot: No. of death vs. Time {.tabset}
+### Death counts across years {.tabset}
 
 #### Group by types of drug
 
@@ -311,7 +312,7 @@ spaghetti_plot2 =
 spaghetti_plot2
 ```
 
-###  Bubble plot: No. of death vs. Month (group by types of drug) {.tabset}
+### Death counts across month (group by types of drug) {.tabset}
 
 ```{r}
 n_plot = 
