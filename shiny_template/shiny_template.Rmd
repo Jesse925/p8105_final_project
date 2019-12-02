@@ -247,9 +247,24 @@ renderPlotly({
     filter(
       year %in% input$year_range[1]:input$year_range[2]
     ) %>% 
+    count(age) %>%
     # mutate(text_label = str_c("Year: ", year, '\nDrug(s): ', drug_names)) %>% 
-    ggplot() +
-    geom_bar(aes(x = age))
+    plot_ly(x = ~age, y = ~n, type = "bar") %>% 
+    layout(
+      xaxis = list(
+  title = "Age",
+  titlefont = list(
+  family = "Courier New, monospace",
+  size = 18,
+  color = "#7f7f7f"
+)), 
+  yaxis = list(
+  title = "Number of death",
+  titlefont = list(
+  family = "Courier New, monospace",
+  size = 18,
+  color = "#7f7f7f"
+)))
 })
 ```
 
@@ -299,6 +314,21 @@ renderPlotly({
   ) %>% 
   count(drug_name) %>% 
   mutate(drug_name = fct_reorder(drug_name, n)) %>% 
-  plot_ly(x = ~drug_name, y = ~n, color = ~drug_name, type = "bar")
+  plot_ly(x = ~drug_name, y = ~n, color = ~ drug_name, type = "bar", showlegend = FALSE) %>% 
+    layout(
+      xaxis = list(
+  title = "Drug name",
+  titlefont = list(
+  family = "Courier New, monospace",
+  size = 18,
+  color = "#7f7f7f"
+)), 
+  yaxis = list(
+  title = "Number of death",
+  titlefont = list(
+  family = "Courier New, monospace",
+  size = 18,
+  color = "#7f7f7f"
+)))
 })
 ```
