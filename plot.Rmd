@@ -107,7 +107,7 @@ drug_age_group =
   drug_df %>% 
   .[!is.na(drug_df$race), ] 
 
-drug_age_group %>% 
+bar_plot = drug_age_group %>% 
   .[!is.na(drug_age_group$age), ] %>%  
   mutate(
   age_group = ifelse(
@@ -132,7 +132,15 @@ drug_age_group %>%
   guides(col = guide_legend(nrow = 2))
 
 
-
+ggplotly(bar_plot) %>%
+  layout(legend = list(
+      orientation = "h",
+      xanchor = "center",
+      yanchor = "top",
+      x=0.5,
+      y = -0.3
+    )
+  )
 
 
 
