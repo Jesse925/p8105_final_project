@@ -133,11 +133,14 @@ Column {data-width=600}
 
 ```{r}
 ######################### reactive df ######################### 
+
+# function that get the number of ppl in the same geo location
 get_geo_ppl = function(df) {
   df %>% 
-  mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>%
-  group_by(inj_geo_tidy) %>%
-  mutate(inj_geo_count = n())
+    drop_na(age) %>% 
+    mutate(inj_geo_tidy = paste(inj_lat, inj_long, sep = ", ")) %>%
+    group_by(inj_geo_tidy) %>%
+    mutate(inj_geo_count = n())
 }
 
 sub_drug_df = reactive({
@@ -212,13 +215,15 @@ sub_drug_df = reactive({
 # })
 
 ######################### plot ##########################
-pal <- colorNumeric(palette = "plasma", domain = new_drug_df$drug_number)
+pal <- colorFactor(palette = "plasma", 
+                   domain = fct_rev(as.factor(new_drug_df$drug_number)))
 
 renderLeaflet({
     # Use leaflet() here, and only include aspects of the map that
     # won't need to change dynamically (at least, not unless the
     # entire map is being torn down and recreated).
     sub_drug_df() %>%
+    # !!! This filter can't be deleted, not sure why
     filter(
       year %in% input$year_range[1]:input$year_range[2]
     ) %>%
@@ -226,15 +231,16 @@ renderLeaflet({
     # addProviderTiles(providers$CartoDB.Positron) %>%
     addMarkers(
       lat = ~inj_lat, lng = ~inj_long,
-      clusterOptions = markerClusterOptions()) %>% 
+      clusterOptions = markerClusterOptions()
+    ) %>% 
     addCircleMarkers(
       lat = ~inj_lat, lng = ~inj_long,
       radius = ~(log(inj_geo_count))^2,
       color = ~pal(drug_number),
-      stroke = FALSE, 
-      popup = paste(new_drug_df$drug_names), 
-      fillOpacity = 0.5
-    ) %>% 
+      stroke = FALSE,
+      popup = paste(new_drug_df$drug_names),
+      fillOpacity = .5
+    ) %>%
     addLegend("bottomright", 
               title = "Number of Drugs", 
               values = ~drug_number, 
@@ -267,7 +273,7 @@ renderLeaflet({
 #               opacity = 1)
       
       
-## use this cmd in console to deply the rmd interactive file with shinyapps.io
+## use this cmd in console to deploy the rmd interactive file with shinyapps.io
 # rsconnect::deployDoc('./shiny_template/shiny_template.rmd')
 ```
 
