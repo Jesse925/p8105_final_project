@@ -155,9 +155,9 @@ voline_plot =
   arrange(desc(count))
 ```
 
-#### Top 3 Fatalized Drug
+##### Top 3 Fatalized Drug
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=TRUE, warning=FALSE}
 voline_plot %>%
   filter(drug_name == "fentanyl" | drug_name == "opioid" | drug_name == "heroin") %>%
   arrange(count) %>%
@@ -191,9 +191,9 @@ voline_plot %>%
   )
 ```
 
-#### Major Source of Drug
+##### Major Source of Drug
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=TRUE, warning=FALSE}
 voline_plot %>%
   plot_ly(type = 'violin') %>%
   add_trace(
@@ -225,7 +225,7 @@ voline_plot %>%
     )
 ```
 
-#### All Types of Drug
+##### All Types of Drug
 
 ```{r echo=TRUE, warning=FALSE}
 voline_plot %>%
@@ -257,7 +257,11 @@ voline_plot %>%
 ```
 
 
-#### 3. Spaghetti plot: no. of death vs. time (group by types of drug)
+
+#### 3. Spaghetti plot: No. of death vs. Time {.tabset}
+
+##### Group by types of drug
+
 
 ```{r}
 spaghetti_plot1 = 
@@ -269,12 +273,13 @@ spaghetti_plot1 =
   ggplot(aes(x = date_in_month, y = n, color = drug_type)) +
   geom_line() +
   xlab("Date") +
-  ylab("Number of death") +
-  facet_grid(~drug_type)
+  ylab("Number of death")+
+  theme_light()
 
-spaghetti_plot1
+ggplotly(spaghetti_plot1)
 ```
 
+##### Prevalence of Drugs
 
 ```{r}
 spaghetti_plot2 = 
@@ -286,11 +291,19 @@ spaghetti_plot2 =
   ggplot(aes(x = date_in_month, y = n, color = drug_name)) +
   geom_line() +
   xlab("Date") +
-  ylab("Number of death") 
+  ylab("Number of death") +
+  theme_light()+
+  facet_wrap(~drug_name,nrow = 3,scales = "fixed",shrink = TRUE)+
+  scale_x_continuous(breaks=c(2014,2018),
+                     labels=c("2014" = "14'","2018" = "18'" ))                            
+  
+  
 
-ggplotly(spaghetti_plot2)
+
+spaghetti_plot2
 ```
 
+#### 4. Bubble plot: No. of death vs. Month (group by types of drug) {.tabset}
 
 ```{r}
 n_plot = 
@@ -299,28 +312,77 @@ n_plot =
   arrange(date) %>% 
   group_by(date, drug_type, year, month) %>% 
   count() 
+```
 
-map = 
-  ggplot(n_plot ,aes(x = month, y = year)) + 
-  geom_point(aes(color = drug_type, size = n), alpha = 0.2) +
-  scale_color_manual(values = c("yellow",'#cd7eaf','green','#f3cec9')) +
+
+##### Type 1: POM
+
+```{r}
+
+map_1= n_plot%>%
+  filter(drug_type == "POM")%>%
+  ggplot(aes(x = month, y = year)) + 
+  geom_point(aes(color = drug_type,size = n), alpha = 0.2) +
+  scale_color_manual(values = c('#cd7eaf', '#a262a9', '#6f4d96', '#3d3b72')) +
+  scale_size(range = c(0.5, 12)) +
+  theme_light() +
+  xlab("Month") +
+  ylab("Year")
+
+ggplotly(map_1)%>%
+  layout(showlegend = FALSE)
+```
+
+##### Type 2: Natural drugs
+
+```{r}
+map_2= n_plot%>%
+  filter(drug_type == "Natural drugs")%>%
+  ggplot(aes(x = month, y = year)) + 
+  geom_point(aes(color = drug_type,size = n), alpha = 0.2) +
+  scale_color_manual(values = c('#a262a9', '#6f4d96', '#3d3b72')) +
   scale_size(range = c(2, 12)) +
   theme_light() +
   xlab("Month") +
   ylab("Year")
 
-ggplotly(map)
+ggplotly(map_2)%>%
+  layout(showlegend = FALSE)
 ```
 
+##### Type 3: Alcohol
 
 ```{r}
-line = 
-  ggplot(n_plot,aes(x = date, y = drug_type)) + 
-  geom_point(aes(color = drug_type, size = n), alpha = 0.5) +
-  scale_color_manual(values = c("#00AFBB", "#E7B800", "#FC4E07","yellow")) +
-  scale_size(range = c(0.5, 12))
+map_3= n_plot%>%
+  filter(drug_type == "Alcohol")%>%
+  ggplot(aes(x = month, y = year)) + 
+  geom_point(aes(color = drug_type,size = n), alpha = 0.2) +
+  scale_color_manual(values = c('#6f4d96')) +
+  scale_size(range = c(2, 12)) +
+  theme_light() +
+  xlab("Month") +
+  ylab("Year")
 
-ggplotly(line)
+ggplotly(map_3)%>%
+  layout(showlegend = FALSE)
+
+```
+
+##### Type 4: Others
+
+```{r}
+map_4= n_plot%>%
+  filter(drug_type == "other")%>%
+  ggplot(aes(x = month, y = year)) + 
+  geom_point(aes(color = drug_type,size = n), alpha = 0.2) +
+  scale_color_manual(values = c('#3d3b72')) +
+  scale_size(range = c(2, 12)) +
+  theme_light() +
+  xlab("Month") +
+  ylab("Year")
+
+ggplotly(map_4)%>%
+  layout(showlegend = FALSE)
 ```
 
 
