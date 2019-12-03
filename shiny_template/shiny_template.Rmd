@@ -216,8 +216,6 @@ sub_drug_df = reactive({
 
 ######################### plot ##########################
 
-pal <- colorNumeric(palette = "Blues", domain = new_drug_df$drug_number)
-
 pal <- colorFactor(palette = "plasma", 
                    domain = fct_rev(as.factor(new_drug_df$drug_number)))
 
@@ -233,10 +231,15 @@ renderLeaflet({
     ) %>%
     leaflet() %>% addTiles() %>%
     # addProviderTiles(providers$CartoDB.Positron) %>%
-    addMarkers(
-      lat = ~inj_lat, lng = ~inj_long,
-      clusterOptions = markerClusterOptions()
-    ) %>% 
+    addMarkers(lat = ~inj_lat, lng = ~inj_long,
+      clusterOptions = markerClusterOptions(iconCreateFunction =
+                                      JS("
+                                          function(cluster) {
+                                             return new L.DivIcon({
+                                               html: '<div style=\"background-color:rgba(77,77,77,0)\"><span>' + cluster.getChildCount() + '</div><span>',
+                                               className: 'marker-cluster'
+                                             });
+                                           }"))) %>% 
     addCircleMarkers(
       lat = ~inj_lat, lng = ~inj_long,
       radius = ~(log(inj_geo_count))^2,
@@ -292,7 +295,7 @@ renderPlotly({
       year %in% input$year_range[1]:input$year_range[2]
     ) %>%
     # mutate(text_label = str_c("Year: ", year, '\nDrug(s): ', drug_names)) %>% 
-    plot_ly(x = ~age, type = "histogram") %>% 
+  plot_ly(x = ~ age, type = "histogram") %>% 
     layout(
   xaxis = list(
   title = "Age",
