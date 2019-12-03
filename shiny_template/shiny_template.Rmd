@@ -236,7 +236,7 @@ renderLeaflet({
                                       JS("
                                           function(cluster) {
                                              return new L.DivIcon({
-                                               html: '<div style=\"background-color:rgba(77,77,77,0.1)\"><span>' + cluster.getChildCount() + '</div><span>',
+                                               html: '<div style=\"background-color:rgba(77,77,77,0.2)\"><span>' + cluster.getChildCount() + '</div><span>',
                                                className: 'marker-cluster'
                                              });
                                            }"))) %>% 
