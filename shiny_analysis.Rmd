@@ -1,0 +1,65 @@
+---
+title: "Untitled"
+author: "wq2151"
+date: "12/3/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(flexdashboard)
+library(leaflet)
+library(tidyverse)
+library(shiny)
+library(plotly)
+
+new_drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
+  janitor::clean_names() %>% 
+  separate(date, into = c("month", "day", "year"), sep = "/") %>% 
+  separate(year, into = c("year", "del", "del_"), sep = " ") %>% 
+  select(-del, -del_) %>% 
+  separate(injury_city_geo, into = c("injury_city", "injury_geo"), sep = "CT") %>% 
+  separate(injury_geo, into = c("inj_lat", "inj_long"), sep = ",") %>% 
+  mutate(
+    inj_lat = as.numeric(str_remove(inj_lat, "\\(")),
+    inj_long = as.numeric(str_remove(inj_long, "\\)")),
+    injury_city = str_remove(injury_city, "\\,")
+  ) %>% 
+  select(-date_type) %>% 
+    pivot_longer(
+    heroin:any_opioid,
+    names_to = "drug_name",
+    values_to = "drug_use") %>% 
+  drop_na(drug_use) %>% 
+  select(-drug_use) %>% 
+  group_by(id) %>% 
+  mutate(drug_name = as.factor(drug_name), 
+         drug_name = sort(drug_name)) %>% 
+  mutate(
+    drug_names = paste(drug_name, collapse = ", "), 
+    drug_number = length(drug_name)
+  ) %>% 
+  select(-drug_name) %>% 
+  distinct() %>% 
+  mutate(
+    month = as.numeric(month), 
+    day = as.numeric(day), 
+    year = as.numeric(year)
+  )
+```
+
+```{r}
+new_drug_df %>% 
+  ggplot(aes(x = age)) +
+  geom_bar() +
+  facet_wrap(~drug_number)
+
+new_drug_df %>% 
+  ggplot(aes(x = age)) +
+  geom_bar() +
+  facet_wrap(~year)
+
+new_drug_df %>% group_by(year) %>% count() %>% knitr::kable()
+```
+
