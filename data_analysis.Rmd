@@ -12,7 +12,7 @@ library(tidyverse)
 ```
 
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 # Latest upated by Junxian Chen on 29/11/29
 drug_df = 
   read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
@@ -56,9 +56,6 @@ drug_df =
            drug_name = as.factor(drug_name),
            drug_type = as.factor(drug_type))
 ```
-
-
-
 
 First to read data from the website. It may take a minute.
 
