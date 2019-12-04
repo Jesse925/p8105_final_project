@@ -14,7 +14,7 @@ library(leaflet)
 library(tidyverse)
 library(shiny)
 library(plotly)
-library(rgdal)
+# library(rgdal)
 
 new_drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>% 
   janitor::clean_names() %>% 
@@ -50,12 +50,21 @@ new_drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>
     year = as.numeric(year)
   )
 
+# nlevels(as.factor(geo_df$inj_geo_tidy))
+# # some different location may have same count, so their levels are different
+# nlevels(as.factor(geo_df$inj_geo_count))
 ```
 
 Column {.sidebar}
 -----------------------------------------------------------------------
+Map of your own selection!
 
 ```{r}
+
+
+
+
+
 # for chart A
 # races = new_drug_df %>% pull(race) %>% as.factor() %>% levels()
 # races = append(races, "All", after = 0)
@@ -102,7 +111,7 @@ Column {data-width=500}
 
 ### Geolocation of injury city
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 ######################### reactive df ######################### 
 
 # function that get the number of ppl in the same geo location
@@ -176,28 +185,32 @@ sub_drug_df = reactive({
 })
 
 ######################### plot ##########################
-ct = readOGR(dsn = "geo", layer = "cb_2018_09_cousub_500k", verbose = FALSE)
-# plot(ct)
 
+# geo info of CT
+# ct = readOGR(dsn = "geo", layer = "cb_2018_09_cousub_500k", verbose = FALSE)
 
 pal <- colorFactor(palette = "plasma", 
                    domain = fct_rev(as.factor(new_drug_df$drug_number)))
 
+
 renderLeaflet({
+    # Use leaflet() here, and only include aspects of the map that
+    # won't need to change dynamically (at least, not unless the
+    # entire map is being torn down and recreated).
     sub_drug_df() %>%
     # !!! This filter can't be deleted, not sure why
     filter(
       year %in% input$year_range[1]:input$year_range[2]
     ) %>%
     leaflet() %>% addTiles() %>%
-    addPolygons(
-      data = ct,
-      color = "#e1e1e1",
-      weight = 1, smoothFactor = 0.5,
-      opacity = 1.0, fillOpacity = 0.5,
-      label = ~paste(ct$NAME), 
-      highlightOptions = highlightOptions(color = "white",
-                                      weight = 2, bringToFront = TRUE)) %>%
+    # addPolygons(
+    #   data = ct,
+    #   color = "#e1e1e1",
+    #   weight = 1, smoothFactor = 0.5,
+    #   opacity = 1.0, fillOpacity = 0.5,
+    #   label = ~paste(ct$NAME), 
+    #   highlightOptions = highlightOptions(color = "white",
+    #                                   weight = 2, bringToFront = TRUE)) %>%
     # addProviderTiles(providers$CartoDB.Positron) %>%
     addMarkers(lat = ~inj_lat, lng = ~inj_long,
       clusterOptions = markerClusterOptions(iconCreateFunction =
