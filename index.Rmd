@@ -14,7 +14,7 @@ output: html_document
 
 <i>**Interactive Map**</i>: 
 
-<i>**Github reop & Data source**</i>: Click the icons at the right top corner to see the data source and our github repo.
+<i>**Github repo & Data source**</i>: Click the icons at the right top corner to see the data source and our github repo.
 
 </br>
 
