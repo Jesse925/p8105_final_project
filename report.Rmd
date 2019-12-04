@@ -552,6 +552,11 @@ POMs substitute for popular natural drugs causes doubled death in Connecticut in
 
 ## Discussion
 
+Actions should be taken to tackle the drug issue in Connecticut, especially for heroine, opioid and fentanyl, as they are now the most prevalent drugs in most of the areas. Police intervention should be considered in the areas or locations where drugs are abused. 
+
+There are still some limitations of  this dataset. It only includes the death cases but no controls (those who involved in drugs but still alive). Moreover, the dataset is more suitable for exploratory data analysis since there is no any meaningful outcome variable for modelling. The causes of death (‘cod’) might add useful findings but they were probably recorded by police officers, which are hard for categorization. Additional information regarding the diseases and lifestyle should be considered in future studies. Note that there are only 208 geographical coordinates for 5087 samples.
+
+
 ## Reference
 
 PARTNERSHIP NEWS SERVICE STAFF, (2019, April 25). Drug Poisoning Death Rates Rise in Teens and Young Adults – Partnership News Service from the Partnership for Drug-Free Kids. Retrieved from https://drugfree.org/learn/drug-and-alcohol-news/drug-poisoning-death-rates-rise-in-teens-and-young-adults/.
