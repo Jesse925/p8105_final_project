@@ -24,7 +24,6 @@ knitr::opts_chunk$set(
 theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
 ```
 
-
 <br>
 
 ## Introduction
@@ -38,6 +37,7 @@ Illicit drug use in the United States has been increasing and the number of rela
 ## Data Collection
 
 <br>
+
 The dataset was obtained from an investigation by the Office of the Chief Medical Examiner which includes the toxicity report, death certificate, as well as a scene investigation. 
 
 ```{r, include=FALSE}
@@ -86,8 +86,6 @@ drug_df =
     drug_name = as.factor(drug_name),
     drug_type = as.factor(drug_type)
   )
-
-
 ```
 The datasets contains `r length(unique(drug_df$id))` cases with `r length(names(drug_df))` columns. 
 <br>
@@ -125,7 +123,6 @@ Some important factors:
 
 ### Death count among age and race group
 
-
 <br>
 There were ten races included in this visualization. The subjects which race cannot be identified were indicated as unknown. Thirteen observations which doesn’t indicate the race in the datasets were dropped.  
 
@@ -159,19 +156,15 @@ bar_plot = drug_age_group %>%
     legend.text = element_text(size = 8)) + 
   guides(col = guide_legend(nrow = 2))
 
-
 ggplotly(bar_plot) %>%
   layout(legend = list(
       orientation = "h",
       xanchor = "center",
       yanchor = "top",
-      x=0.5,
+      x = 0.5,
       y = -0.3
     )
   )
-
-
-
 ```
 
 
@@ -292,8 +285,6 @@ voline_plot %>%
     )
 ```
 
-
-
 ###
 
 <br>
@@ -308,16 +299,13 @@ The fentanyl and opioid are the most common and “well-known” substitute for 
 
 According to the plot, fentanyl,opioid and heroin all have a heavier tail on the left, given the peak in the 30s around the first quartile. Therefore, we observed that POMs are more poisonous and widely spread in Connecticut than the natural drug.
 
-
 <br>
 
-
-### Death counts across years {.tabset}
+### Trends in death counts across years {.tabset}
 
 Whether the number of people who died due to the drug overdose was rising, declining, or steady is one of the most important questions. To discover the trend of death associated with drug overdose, two line graphs were made and shown below.
 
 #### Group by types of drug
-
 
 ```{r}
 spaghetti_plot1 = 
@@ -328,11 +316,24 @@ spaghetti_plot1 =
   count() %>% 
   ggplot(aes(x = date_in_month, y = n, color = drug_type)) +
   geom_line() +
-  xlab("Date") +
-  ylab("Number of death")+
-  theme_light()
+  xlab("Year") +
+  ylab("Number of death") +
+  theme_light() + 
+  theme(
+    plot.title = element_text(hjust = 0.5), 
+    legend.position = "bottom",
+    legend.text = element_text(size = 8)) + 
+  guides(col = guide_legend(nrow = 2))
 
-ggplotly(spaghetti_plot1)
+ggplotly(spaghetti_plot1) %>%
+  layout(legend = list(
+      orientation = "h",
+      xanchor = "center",
+      yanchor = "top",
+      x = 0.5,
+      y = -0.2
+    )
+  )
 ```
 
 #### Prevalence of Drugs
@@ -346,26 +347,37 @@ spaghetti_plot2 =
   count() %>% 
   ggplot(aes(x = date_in_month, y = n, color = drug_name)) +
   geom_line() +
-  xlab("Date") +
+  xlab("Year") +
   ylab("Number of death") +
   theme_light() +
   facet_wrap(~drug_name,nrow = 3,scales = "fixed",shrink = TRUE) +
   scale_x_continuous(breaks = c(2014,2018),
-                     labels = c("2014" = "14'","2018" = "18'" ))                            
-  
-spaghetti_plot2
+                     labels = c("2014" = "14'","2018" = "18'" )) + 
+  theme(
+    plot.title = element_text(hjust = 0.5), 
+    legend.position = "bottom",
+    legend.text = element_text(size = 8)) + 
+  guides(col = guide_legend(nrow = 2))
+
+ggplotly(spaghetti_plot2) %>%
+  layout(legend = list(
+      orientation = "h",
+      xanchor = "center",
+      yanchor = "top",
+      x = 0.5,
+      y = -0.3
+    )
+  )                            
 ```
 
 ###
-
-<br>
 
 The first graph was made based on the four main types of drugs. From this plot, clear trends can be seen for each type of drug. The trend in death count due to the overdose in drug type ‘other’ is overall steady and remains at a relatively low level. For drug type ‘Alcohol’, the death count is at a low level and the overall trend is slightly increasing. For drug type ‘Natural drugs’, the number of death has an obvious increasing trend from 2012 and it is slightly decreasing after the middle of 2017. As for drug type ‘POM’, there is a strongly increasing trend in the death count and it has the largest number of death among those four types of drugs since 2015. More specifically, there were two rapid growths in the death count related to drug type ‘POM’ between July 2014 and July 2015, and between September 2017 and March 2018. 
 
 The second graph shows the number of death due to each specific drug. It can be seen that the drug called ‘fentanyl’ has the strongest increasing trend among all drugs and in 2018 almost over 90 people died per month due to this drug. For drugs named ‘benzodiazepine’, ‘cocaine’, ‘ethanol’, and ‘heroin’, their related death number increased before 2017 and then slightly decreased after 2017. The drug ‘opioid’ has an overall increasing trend but there was a sudden drop in the second half of 2017. Other drugs have a relatively steady trend and the death counts remain at a low level.
 
 
-### Death counts across month (group by types of drug) {.tabset}
+### Death counts in each month (group by types of drug) {.tabset}
 
 ```{r}
 n_plot = 
@@ -375,7 +387,6 @@ n_plot =
   group_by(date, drug_type, year, month) %>% 
   count() 
 ```
-
 
 #### Type 1: POM
 
@@ -443,7 +454,7 @@ map_4 = n_plot %>%
   xlab("Month") +
   ylab("Year")
 
-ggplotly(map_4 )%>%
+ggplotly(map_4 ) %>%
   layout(showlegend = FALSE)
 ```
 
@@ -458,10 +469,11 @@ While the traditional drug causing less extreme over the years, the explosion th
 
 One of the reasons is that fentanyl is approximately 50 times as potent as heroin. While heroin is more than five times more toxic than morphine and more addictive. Therefore, it is actually an excessively happier but more deadly choice for addicts
 
-
 <br>
 
-###  Death count in each drug type across the year {.tabset}
+###  Severity comparison across the years {.tabset}
+
+It is important to know how severe the death situation is due to the overdose in each type of drug. Here two heat maps were made to show the severity across the years. The intensity of the color depends on the amount of death related to drug overdose and the y axis shows the time from 2012 to 2018.  
 
 #### Four Main Drug Types
 
@@ -474,7 +486,6 @@ heat_one = drug_df %>%
   ggplot(aes(x = drug_type, y = date)) +
   geom_bin2d() +
   scale_fill_gradient(low = "white", high = "steelblue") +
-  xlab("Date") +
   ylab("Number of death") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10), panel.background = element_blank()) 
 
@@ -492,12 +503,19 @@ heat_two = drug_df %>%
   ggplot(aes(x = drug_name, y = date)) +
   geom_bin2d() +
   scale_fill_gradient(low = "white", high = "steelblue") +
-  xlab("Date") +
   ylab("Number of death") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10), panel.background = element_blank()) 
 
 ggplotly(heat_two)
 ``` 
+
+###
+
+<br>
+
+In the first heat map, drugs were divided into four main groups. It can be clearly seen that from 2012 to 2018, the ‘natural drugs’ and ‘POM’ have the highest amount of death and the drug type ‘other’, which contains drugs outside those three main types, has the lowest amount of death. Further, by the end of 2018, the ‘POM’ had the highest amount of death compared to others.
+
+In the second heat map, situations of all drugs can be seen. It can be clearly noticed that the drug named ‘opioid’ had a very high amount of death starting from 2015 and it remains at the highest level amount all the drugs. Secondly, the drug named ‘heroin’ has a consistent but very high amount of death from 2012 to 2018. Last but not the least, the number of death related to the drug called ‘fentanyl’ shows a rapid growth from 2012 to 2018 and it has reached a very high level by the end of 2018.
 
 
 ### Interactive map
