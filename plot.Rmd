@@ -295,7 +295,7 @@ voline_plot %>%
 
 ###
 
-
+<br>
 
 The death caused by substance abuse in Connecticut  is nearly the same distribution between male and female, indicating that the gender would not affect people’s choice of becoming addicted to drugs. The plot for “Major Source of Drug” indicating that women aged 40 or older are at a higher risk of death when using all types of drug. Although women are more endangered of drug abusing, they are not willing to risk their life in their 80s than the man population would for drugs.
 
@@ -308,7 +308,7 @@ The fentanyl and opioid are the most common and “well-known” substitute for 
 According to the plot, fentanyl,opioid and heroin all have a heavier tail on the left, given the peak in the 30s around the first quartile. Therefore, we observed that POMs are more poisonous and widely spread in Connecticut than the natural drug.
 
 
-
+<br>
 
 
 ### Death counts across years {.tabset}
@@ -438,6 +438,19 @@ ggplotly(map_4)%>%
   layout(showlegend = FALSE)
 ```
 
+###
+
+<br>
+
+From the four bubble plots, we can strengthen the assumption that the people are reckless nowadays in Connecticut and has doubled the amount of death occur in 6 years.
+Moreover, we observe a peak of people dead due to  all types of drug in Connecticut during vacation time, mostly December and July. 
+
+While the traditional drug causing less extreme over the years, the explosion that people dead because of  the medicine is severe starting in year 2015, given average 25 people dead in a month. Along with the year passed, the POM dramatically dominate the leading cause of death. Though natural drugs still appeal to young population(<30), but not really a choice for older. 
+
+One of the reasons is that fentanyl is approximately 50 times as potent as heroin. While heroin is more than five times more toxic than morphine and more addictive. Therefore, it is actually an excessively happier but more deadly choice for addicts
+
+
+<br>
 
 ###  Death count in each drug type across the year {.tabset}
 
