@@ -2,12 +2,15 @@ name: "My personal website"
 output_dir: "."
 navbar:
   title: "Home"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 50947585ba71b58a36f979b3bcb0a226c52b29a2
   right:
-    - text: "Project Report"
-      href: plot.html
     - text: "Interactive Map"
       href: https://wq4rstudio.shinyapps.io/shiny_template
+    - text: "Project Report"
+      href: plot.html
     - icon: fa-github fa-lg
       href: https://github.com/Jesse925/p8105_final_project
     - icon: fa-database fa-lg

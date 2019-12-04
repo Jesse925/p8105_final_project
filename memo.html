@@ -12,7 +12,7 @@
 
 
 
-<title>Data Analysis</title>
+<title>Meeting memo</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -373,139 +373,54 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Data Analysis</h1>
+<h1 class="title toc-ignore">Meeting memo</h1>
 
 </div>
 
 
-<pre class="r"><code># Latest upated by Junxian Chen on 29/11/29
-drug_df = 
-  read_csv(&quot;./data/Accidental_Drug_Related_Deaths_2012-2018.csv&quot;) %&gt;% 
-  janitor::clean_names() %&gt;% 
-  separate(date, into = c(&quot;month&quot;, &quot;day&quot;, &quot;year&quot;), sep = &quot;/&quot;) %&gt;% 
-  separate(year, into = c(&quot;year&quot;, &quot;del&quot;, &quot;del_&quot;), sep = &quot; &quot;) %&gt;% 
-  select(-del, -del_) %&gt;% 
-  separate(injury_city_geo, into = c(&quot;injury_city&quot;, &quot;injury_geo&quot;), sep = &quot;CT&quot;) %&gt;% 
-  separate(injury_geo, into = c(&quot;inj_lat&quot;, &quot;inj_long&quot;), sep = &quot;,&quot;) %&gt;% 
-    mutate(
-    inj_lat = as.numeric(str_remove(inj_lat, &quot;\\(&quot;)),
-    inj_long = as.numeric(str_remove(inj_long, &quot;\\)&quot;)),
-    injury_city = str_remove(injury_city, &quot;\\,&quot;)
-  ) %&gt;% 
-  select(-date_type) %&gt;% 
-  pivot_longer(
-    heroin:any_opioid,
-    names_to = &quot;drug_name&quot;,
-    values_to = &quot;drug_use&quot;) %&gt;%  
-    drop_na(drug_use) %&gt;%
-  mutate(date = as.Date(with(., paste(year, month, day, sep = &quot;-&quot;)), &quot;%Y-%m-%d&quot;),
-         drug_name = case_when(drug_name == &quot;any_opioid&quot; ~ &quot;opioid&quot;,
-                          drug_name == &quot;opiate_nos&quot; ~ &quot;opioid&quot;,
-                          drug_name == &quot;fentanyl_analogue&quot; ~ &quot;fentanyl&quot;,
-                          TRUE ~ as.character(drug_name)),
-         drug_type = case_when(drug_name == &quot;heroin&quot; ~ &quot;Natural drugs&quot;,
-                            drug_name == &quot;cocaine&quot; ~ &quot;Natural drugs&quot;,
-                            drug_name == &quot;morphine_not_heroin&quot; ~ &quot;Natural drugs&quot;,
-                            drug_name == &quot;ethanol&quot; ~ &quot;Alcohol&quot;,
-                            drug_name == &quot;hydrocodone&quot; ~ &quot;POM&quot;,
-                            drug_name == &quot;oxymorphone&quot; ~ &quot;POM&quot;,
-                            drug_name == &quot;hydromorphone&quot; ~ &quot;POM&quot;,
-                            drug_name == &quot;amphet&quot; ~ &quot;POM&quot;,
-                            drug_name == &quot;tramad&quot; ~ &quot;POM&quot;,
-                            drug_name == &quot;methadone&quot; ~ &quot;POM&quot;,
-                            drug_name == &quot;oxycodone&quot; ~ &quot;POM&quot;,
-                            drug_name == &quot;benzodiazepine&quot; ~ &quot;POM&quot;,
-                            drug_name == &quot;opioid&quot; ~ &quot;POM&quot;,
-                            drug_name == &quot;fentanyl&quot; ~ &quot;POM&quot;,
-                            TRUE ~ as.character(drug_name)),
-           drug_name = as.factor(drug_name),
-           drug_type = as.factor(drug_type))</code></pre>
-<p>First to read data from the website. It may take a minute.</p>
-<pre class="r"><code># By Xinyu Shen
-# drug_df = read_csv(&quot;./data/Accidental_Drug_Related_Deaths_2012-2018.csv&quot;) %&gt;% janitor::clean_names() %&gt;% mutate(
-#   date = as.character(date)
-# ) %&gt;% separate(date, into = c(&quot;month&quot;, &quot;day&quot;, &quot;year&quot;), sep = &quot;/&quot;) %&gt;% mutate(
-#   year = unlist(strsplit(year, &quot; &quot;))[1],
-#   year = ifelse(is.na(month), NA, as.numeric(year)),
-#   day = as.numeric(day),
-#   month = factor(month.name[as.numeric(month)], levels = month.name),
-#   race = as.factor(race),
-#   sex = as.factor(sex)
-# ) %&gt;% separate(injury_city_geo, into = c(&quot;injury_city&quot;, &quot;injury_geo&quot;), sep = &quot;CT&quot;) %&gt;% separate(injury_geo, into = c(&quot;inj_latitude&quot;, &quot;inj_longitude&quot;), sep = &quot;,&quot;) %&gt;% mutate(
-#   inj_latitude = as.numeric(str_remove(inj_latitude, &quot;\\(&quot;)),
-#   inj_longitude = as.numeric(str_remove(inj_longitude, &quot;\\)&quot;)),
-#   injury_city = str_remove(injury_city, &quot;\\,&quot;)
-# ) %&gt;% select(-date_type) %&gt;% pivot_longer(heroin:any_opioid,
-#                                           names_to = &quot;drug_name&quot;,
-#                                           values_to = &quot;drug_use&quot;) %&gt;% drop_na(drug_use)</code></pre>
-<div id="this-website-is-intended-for-p8105-data-science-final-project-only." class="section level4">
-<h4>This website is intended for p8105 Data Science Final Project only.</h4>
-<pre class="r"><code># drug_df = 
-#   read_csv(&quot;./data/Accidental_Drug_Related_Deaths_2012-2018.csv&quot;) %&gt;%
-#   janitor::clean_names() %&gt;% 
-#   mutate(
-#     date = as.character(date)
-#   ) %&gt;% 
-#   separate(date, into = c(&quot;month&quot;, &quot;day&quot;, &quot;year&quot;), sep = &quot;/&quot;) %&gt;% 
-#   mutate(
-#     year = unlist(strsplit(year, &quot; &quot;))[1],
-#     year = ifelse(is.na(month), NA, as.numeric(year)),
-#     day = as.numeric(day),
-#     month = factor(month.name[as.numeric(month)], levels = month.name),
-#     race = as.factor(race),
-#     sex = as.factor(sex)
-#   ) %&gt;% 
-#   separate(injury_city_geo, into = c(&quot;injury_city&quot;, &quot;injury_geo&quot;), sep = &quot;CT&quot;) %&gt;% 
-#   separate(injury_geo, into = c(&quot;inj_lat&quot;, &quot;inj_long&quot;), sep = &quot;,&quot;) %&gt;% 
-#   mutate(
-#     inj_lat = as.numeric(str_remove(inj_lat, &quot;\\(&quot;)),
-#     inj_long = as.numeric(str_remove(inj_long, &quot;\\)&quot;)),
-#     injury_city = str_remove(injury_city, &quot;\\,&quot;)
-#   ) %&gt;% 
-#   select(-date_type) %&gt;% 
-#   pivot_longer(
-#     heroin:any_opioid,
-#     names_to = &quot;drug_name&quot;,
-#     values_to = &quot;drug_use&quot;) %&gt;% 
-#   drop_na(drug_use)
-
-
-## wwqi, 11/29/2019
-# correct some issues about all years being 2014
-# and drugs are now combined in &quot;one&quot; rows
-# Under certain circumstances, maybe you only need to copy part of the code below for you analysis purposes. 
-# drug_df = 
-#   read_csv(&quot;./data/Accidental_Drug_Related_Deaths_2012-2018.csv&quot;) %&gt;% 
-#   janitor::clean_names() %&gt;% 
-#   separate(date, into = c(&quot;month&quot;, &quot;day&quot;, &quot;year&quot;), sep = &quot;/&quot;) %&gt;% 
-#   separate(year, into = c(&quot;year&quot;, &quot;del&quot;, &quot;del_&quot;), sep = &quot; &quot;) %&gt;% 
-#   select(-del, -del_) %&gt;% 
-#   separate(injury_city_geo, into = c(&quot;injury_city&quot;, &quot;injury_geo&quot;), sep = &quot;CT&quot;) %&gt;% 
-#   separate(injury_geo, into = c(&quot;inj_lat&quot;, &quot;inj_long&quot;), sep = &quot;,&quot;) %&gt;% 
-#     mutate(
-#     inj_lat = as.numeric(str_remove(inj_lat, &quot;\\(&quot;)),
-#     inj_long = as.numeric(str_remove(inj_long, &quot;\\)&quot;)),
-#     injury_city = str_remove(injury_city, &quot;\\,&quot;)
-#   ) %&gt;% 
-#   select(-date_type) %&gt;% 
-#     pivot_longer(
-#     heroin:any_opioid,
-#     names_to = &quot;drug_name&quot;,
-#     values_to = &quot;drug_use&quot;) %&gt;% 
-#   drop_na(drug_use) %&gt;% 
-#   select(-drug_use) 
-  
-
-  # # below combine the drugs and un-longer the df above
-  # group_by(id) %&gt;% 
-  # mutate(drug_name = as.factor(drug_name), 
-  #        drug_name = sort(drug_name)) %&gt;% 
-  # mutate(
-  #   drug_names = paste(drug_name, collapse = &quot;, &quot;), 
-  #   drug_number = length(drug_name)
-  # ) %&gt;% 
-  # select(-drug_name) %&gt;% 
-  # distinct()</code></pre>
+<p>11/12/2019 memo</p>
+<div id="plots" class="section level2">
+<h2>plots:</h2>
+<div id="heatmap-x---longitude-y---latitude-color-number-of-accident" class="section level4">
+<h4>heatmap: x - longitude, y - latitude, color = number of accident</h4>
+</div>
+<div id="density-plot-x---timeie.-12am-to-12-pm-y---accidents" class="section level4">
+<h4>density plot: x - time(ie. 12am to 12 pm), y - accidents …</h4>
+</div>
+<div id="bar-plot-x---accidents-type-y---killinjury-number-of-ppl" class="section level4">
+<h4>bar plot: x - accidents type, y - kill/injury, number of ppl</h4>
+</div>
+<div id="barplot-x---vehicle-type-y---accidents-rate" class="section level4">
+<h4>barplot: x - vehicle type, y - accidents rate</h4>
+</div>
+<div id="barplot-x---accidents-factor-y---injury" class="section level4">
+<h4>barplot: x - accidents factor, y - injury</h4>
+</div>
+<div id="logistic-regression-factors" class="section level4">
+<h4>logistic regression: factors;</h4>
+</div>
+</div>
+<div id="logistic-regression" class="section level2">
+<h2>logistic regression:</h2>
+<div id="dataset-size" class="section level4">
+<h4>dataset size:</h4>
+<p>11/15/2019 TA meeting</p>
+<p><strong>regression and model</strong></p>
+<p><strong>data size isn’t a major concern</strong></p>
+<p><strong>drop_na and filter</strong>: good to go</p>
+<p><strong>show all relative code(eg. API)</strong></p>
+<p><strong>don’t show too many plots</strong></p>
+<p><strong>interaction</strong>: Shiny (could be tricky and time-consuming)</p>
+<p><strong>video recording could be quick</strong></p>
+</div>
+</div>
+<div id="update-crash-dataset-might-have-crashed" class="section level2">
+<h2>update: “crash dataset” might have crashed</h2>
+<p>Backup plan 1:</p>
+<p><a href="https://data.sfgov.org/Health-and-Social-Services/Restaurant-Scores-LIVES-Standard/pyih-qa8i">Restaurant score</a></p>
+<p>Backup plan 2:</p>
+<p><a href="https://www.kaggle.com/camnugent/california-housing-prices">California Housing price</a></p>
+<p>ideas: crime, education, company, healthcare… interaction with original dataset (price)</p>
 </div>
 
 <br><br>
