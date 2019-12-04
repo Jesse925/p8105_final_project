@@ -481,6 +481,7 @@ heat_one = drug_df %>%
   ggplot(aes(x = drug_type, y = date)) +
   geom_bin2d() +
   scale_fill_gradient(low = "white", high = "steelblue") +
+  xlab(" ") +
   ylab("Number of death") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10), panel.background = element_blank()) 
 
@@ -498,6 +499,7 @@ heat_two = drug_df %>%
   ggplot(aes(x = drug_name, y = date)) +
   geom_bin2d() +
   scale_fill_gradient(low = "white", high = "steelblue") +
+  xlab(" ") +
   ylab("Number of death") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10), panel.background = element_blank()) 
 
@@ -552,4 +554,5 @@ POMs substitute for popular natural drugs causes doubled death in Connecticut in
 
 ## Reference
 
+PARTNERSHIP NEWS SERVICE STAFF, (2019, April 25). Drug Poisoning Death Rates Rise in Teens and Young Adults – Partnership News Service from the Partnership for Drug-Free Kids. Retrieved from https://drugfree.org/learn/drug-and-alcohol-news/drug-poisoning-death-rates-rise-in-teens-and-young-adults/.
 
