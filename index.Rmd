@@ -6,9 +6,21 @@ output: html_document
 
 <center><img src="drug related death.jpeg" style="width:50%"></center>
 
-### Welcome
+</br>
 
-This website is for our data science final project, in which we analyzed the data that contain lists of accidental death associated with drug use in Connecticut from 2012 to 2018. 
+### Website overview
+
+<i>**Project Report**</i>: Contains a detailed report of our project including motivation, analyses, and conclusions.
+
+<i>**Interactive Map**</i>: Contains an interactive map showing the geographical distribution of death due to drug overdose. It will also show the corresponding age and drug type distribution.
+
+<i>**Github repo & Data source**</i>: Click the icons at the right top corner to see the data source and our github repo.
+
+</br>
+
+For a brief overview of our website and project, please view our screencast:
+
+(video here)
 
 </br>
 
@@ -26,7 +38,7 @@ The dataset contains a listing of accidental death associated with drug overdose
 
 </br>
 
-### Research questions
+### Initial questions
 
 * What was the distribution in race, gender, and age among death related to drug use?
 * Was the number of death due to drug use rising, declining, or steady?
@@ -35,14 +47,8 @@ The dataset contains a listing of accidental death associated with drug overdose
 
 </br>
 
-### Main findings
+### Main findings and conclusions
 
 * ...
 * ...
 
-
-</br>
-
-### Website overview
-
-(video here)
