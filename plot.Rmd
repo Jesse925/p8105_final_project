@@ -107,6 +107,15 @@ Some important factors:
 	
 * `inj_long`: Longitude of the location where the person took the drug.
 
+* `drug_name`: Name of drug the dead has taken.
+
+* `drug_type`: Four major drug classifications. 
+  + POM = Prescription Only Medicine 
+  + Natural drugs = heroin, morphine,cocaine,etc
+  + Alcohol = ethanol
+  + Other = all of the drugs, besides the three types above
+
+
 <br>
 
 ## Main Analyses
@@ -281,6 +290,24 @@ voline_plot %>%
     colorway = c('#cd7eaf','blue')
     )
 ```
+
+
+
+###
+
+
+
+The death caused by substance abuse in Connecticut  is nearly the same distribution between male and female, indicating that the gender would not affect people’s choice of becoming addicted to drugs. The plot for “Major Source of Drug” indicating that women aged 40 or older are at a higher risk of death when using all types of drug. Although women are more endangered of drug abusing, they are not willing to risk their life in their 80s than the man population would for drugs.
+
+Public media often pose the a broad image of adolescent using drugs that leads to death(Partnership news service staff, 2019). Surprisingly, there is noticeable evidence in the  “Major Source of Drug” plot that show more cases took place in the population that older than 35 in Connecticut. Alcohol abusing is a remarkable cause of death in this case, trending up with aging.
+
+Despite the similar averages for 4 types of drug, the death from POM for less popular medicines is around age of 50, which could be explained as older people tend to get the prescription more easily. 
+
+The fentanyl and opioid are the most common and “well-known” substitute for heroin and morphine, no wonder why they are listed In the top 3 fatalized drugs, even surpasses the poison of heroin over 2012 to 2018.
+
+According to the plot, fentanyl,opioid and heroin all have a heavier tail on the left, given the peak in the 30s around the first quartile. Therefore, we observed that POMs are more poisonous and widely spread in Connecticut than the natural drug.
+
+
 
 
 
