@@ -2,18 +2,13 @@ name: "My personal website"
 output_dir: "."
 navbar:
   title: "Home"
-  left:
-    - text: "About"
-      href: about.html
   right:
-    - text: "Project Report"
-      href: plot.html
     - text: "Interactive Map"
       href: https://wq4rstudio.shinyapps.io/shiny_template
+    - text: "Project Report"
+      href: plot.html
     - icon: fa-github fa-lg
       href: https://github.com/Jesse925/p8105_final_project
-    - text: "Meeting Memo"
-      href: memo.html
     - icon: fa-database fa-lg
       href: https://catalog.data.gov/dataset/accidental-drug-related-deaths-january-2012-sept-2015
 output:

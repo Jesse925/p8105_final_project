@@ -10,9 +10,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="wq2151" />
 
 
-<title>About</title>
+<title>Untitled</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -273,25 +274,20 @@ $(document).ready(function () {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="about.html">About</a>
-</li>
+        
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="plot.html">Project Report</a>
+  <a href="https://wq4rstudio.shinyapps.io/shiny_template">Interactive Map</a>
 </li>
 <li>
-  <a href="https://wq4rstudio.shinyapps.io/shiny_template">Interactive Map</a>
+  <a href="plot.html">Project Report</a>
 </li>
 <li>
   <a href="https://github.com/Jesse925/p8105_final_project">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="memo.html">Meeting Memo</a>
 </li>
 <li>
   <a href="https://catalog.data.gov/dataset/accidental-drug-related-deaths-january-2012-sept-2015">
@@ -308,14 +304,68 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">About</h1>
+<h1 class="title toc-ignore">Untitled</h1>
+<h4 class="author">wq2151</h4>
+<h4 class="date">12/3/2019</h4>
 
 </div>
 
 
-<div id="this-website-is-intended-for-p8105-data-science-final-project-only." class="section level4">
-<h4>This website is intended for p8105 Data Science Final Project only.</h4>
-</div>
+<pre class="r"><code>new_drug_df %&gt;% 
+  ggplot(aes(x = age)) +
+  geom_bar() +
+  facet_wrap(~drug_number)</code></pre>
+<pre><code>## Warning: Removed 3 rows containing non-finite values (stat_count).</code></pre>
+<p><img src="shiny_analysis_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>new_drug_df %&gt;% 
+  ggplot(aes(x = age)) +
+  geom_bar() +
+  facet_wrap(~year)</code></pre>
+<pre><code>## Warning: Removed 3 rows containing non-finite values (stat_count).</code></pre>
+<p><img src="shiny_analysis_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<pre class="r"><code>new_drug_df %&gt;% group_by(year) %&gt;% count() %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">year</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2012</td>
+<td align="right">354</td>
+</tr>
+<tr class="even">
+<td align="right">2013</td>
+<td align="right">486</td>
+</tr>
+<tr class="odd">
+<td align="right">2014</td>
+<td align="right">557</td>
+</tr>
+<tr class="even">
+<td align="right">2015</td>
+<td align="right">724</td>
+</tr>
+<tr class="odd">
+<td align="right">2016</td>
+<td align="right">917</td>
+</tr>
+<tr class="even">
+<td align="right">2017</td>
+<td align="right">1035</td>
+</tr>
+<tr class="odd">
+<td align="right">2018</td>
+<td align="right">1012</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
 
 <br><br>
 <footer>

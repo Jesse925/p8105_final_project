@@ -343,25 +343,20 @@ div.tocify {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="about.html">About</a>
-</li>
+        
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="plot.html">Project Report</a>
+  <a href="https://wq4rstudio.shinyapps.io/shiny_template">Interactive Map</a>
 </li>
 <li>
-  <a href="https://wq4rstudio.shinyapps.io/shiny_template">Interactive Map</a>
+  <a href="plot.html">Project Report</a>
 </li>
 <li>
   <a href="https://github.com/Jesse925/p8105_final_project">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="memo.html">Meeting Memo</a>
 </li>
 <li>
   <a href="https://catalog.data.gov/dataset/accidental-drug-related-deaths-january-2012-sept-2015">
@@ -425,14 +420,6 @@ drug_df =
                             TRUE ~ as.character(drug_name)),
            drug_name = as.factor(drug_name),
            drug_type = as.factor(drug_type))</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_character(),
-##   Age = col_double()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre><code>## Warning: Expected 2 pieces. Additional pieces discarded in 9 rows [267,
-## 1069, 1482, 1812, 2121, 3003, 3036, 5077, 5105].</code></pre>
 <p>First to read data from the website. It may take a minute.</p>
 <pre class="r"><code># By Xinyu Shen
 # drug_df = read_csv(&quot;./data/Accidental_Drug_Related_Deaths_2012-2018.csv&quot;) %&gt;% janitor::clean_names() %&gt;% mutate(
