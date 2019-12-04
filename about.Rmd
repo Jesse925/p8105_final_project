@@ -1,8 +1,0 @@
----
-title: "About"
-output: 
-  html_document
----
-
-
-#### This website is intended for p8105 Data Science Final Project only. 
