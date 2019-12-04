@@ -6,9 +6,11 @@ output: html_document
 
 <center><img src="drug related death.jpeg" style="width:50%"></center>
 
-### Welcome
+</br>
 
-This website is for our data science final project, in which we analyzed the data that contain lists of accidental death associated with drug use in Connecticut from 2012 to 2018. 
+### Website overview
+
+(video here)
 
 </br>
 
@@ -35,14 +37,8 @@ The dataset contains a listing of accidental death associated with drug overdose
 
 </br>
 
-### Main findings
+### Main findings and conclusions
 
 * ...
 * ...
 
-
-</br>
-
-### Website overview
-
-(video here)
