@@ -4,7 +4,7 @@ navbar:
   title: "Home"
   right:
     - text: "Project Report"
-      href: plot.html
+      href: report.html
     - text: "Interactive Map"
       href: https://wq4rstudio.shinyapps.io/shiny_template
     - icon: fa-github fa-lg
