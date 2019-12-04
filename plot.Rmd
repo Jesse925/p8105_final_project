@@ -515,6 +515,25 @@ In the second heat map, situations of all drugs can be seen. It can be clearly n
 
 ### Interactive map
 
+1. Map guidance
+
+The size of points represents the number of cases of drug-related death, and their color scale represents the number of drugs one used. The cluster shows the total number of people in the given area. The larger radius means more people in the area. The right side shows the age distribution and drug usage. 
+
+As a news report [https://www.middletownpress.com/news/article/The-changing-face-of-drug-addiction-in-Middletown-11815124.php] claimed in mid-2014, Connecticut was on the high end of cocaine use across the nation on a state by state basis; and the south-central part is the region with the highest cocaine use. Our map confirms it: the map shows that a spot near the west side of Middletown gathers the most number of people in drug use, regardless of gender, race or age group. The second-largest place of drug use is near Hartford, the capital of  Connecticut. It is clear from the cluster that most of the drug usage was located near the center or southwest of the state of Connecticut. Other locations with high drug-related death regions include Waterbury, New Haven, and Bridgeport. 
+
+2. Age distribution
+
+The second chart is a histogram showing the distribution of the age of the cases. Race, number of drugs used, gender and year range can be changed at the side bar.
+
+Still regardless of race, the number of drug used, gender and year range, the second chart implies that the distribution of age is approximately normal, with center at around 40. 
+
+Since 2012, the number of people using drugs has been increasing from 354 to 1035 till 2017, the very number is 1012 in 2018.
+
+3. Drug type distribution
+
+The third chart gives the frequency rank of different types of drug used. The top 3 is heroin, opioid, and fentanyl almost in any group. 
+
+
 <br>
 
 ## Results
