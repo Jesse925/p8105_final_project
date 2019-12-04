@@ -8,7 +8,7 @@ output: html_document
 
 ### Welcome
 
-This website is for Data Science Final Project, where we analyze the dataset based on the lists of each accidental death associated with drug overdose in Connecticut from 2012 to 2018.
+This website is for our data science final project, in which we analyzed the data that contain lists of accidental death associated with drug use in Connecticut from 2012 to 2018. 
 
 </br>
 
@@ -20,13 +20,26 @@ Illicit drug use in the United States has been increasing and the number of rela
 
 ### Data
 
-**data source**: [Accidental Drug Related Deaths 2012-2018](https://catalog.data.gov/dataset/accidental-drug-related-deaths-january-2012-sept-2015)
+The dataset contains a listing of accidental death associated with drug overdose in Connecticut from 2012 to 2018. It twas obtained from an investigation by the Office of the Chief Medical Examiner which includes the toxicity report, death certificate, as well as a scene investigation. 
+
+**Link to the data source**: [Accidental Drug Related Deaths 2012-2018](https://catalog.data.gov/dataset/accidental-drug-related-deaths-january-2012-sept-2015)
+
+</br>
 
 ### Research questions
+
+* What was the distribution in race, gender, and age among death related to drug use?
+* Was the number of death due to drug use rising, declining, or steady?
+* Which drug caused the most of death?
+* Was there any pattern of geographical distribution among death due to drug use?
 
 </br>
 
 ### Main findings
+
+* ...
+* ...
+
 
 </br>
 
