@@ -10,6 +10,16 @@ output: html_document
 
 ### Website overview
 
+<i>**Projecr Report**</i>: Contains a detailed report of our project including motivation, analyses, and conclusions.
+
+<i>**Interactive Map**</i>: 
+
+<i>**Github & Data source**</i>: Click the icons at the right top corner to see the data source and our github repo.
+
+</br>
+
+For a brief overview of our website and project, please view our screencast:
+
 (video here)
 
 </br>
