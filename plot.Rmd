@@ -32,6 +32,7 @@ theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
 Illicit drug use in the United States has been increasing and the number of related death is also growing. In the United States, 70,200 people died from drug overdoses in 2017, which was an increase of about 10 percent over 2016. Since 2000, the U.S. drug overdose death rate has gone from 6.2 per 100,000 people in 2000 to 14.7 per 100,000 in 2014. It is unknown that which factors contribute most to the death caused by drugs. Therefore, studying the relationship between drug use and related death is important to discourage drug use and prevent death. In this project, we are going to analyze the data in drug use and related death in  Connecticut from 2012 to 2018 and intend to discover some critical factors in drug use that will arise high chance to be dead.
 <br>
 
+## Initial Questions
 <br>
 
 ## Data Collection
@@ -313,6 +314,8 @@ According to the plot, fentanyl,opioid and heroin all have a heavier tail on the
 
 ### Death counts across years {.tabset}
 
+Whether the number of people who died due to the drug overdose was rising, declining, or steady is one of the most important questions. To discover the trend of death associated with drug overdose, two line graphs were made and shown below.
+
 #### Group by types of drug
 
 
@@ -345,16 +348,22 @@ spaghetti_plot2 =
   geom_line() +
   xlab("Date") +
   ylab("Number of death") +
-  theme_light()+
-  facet_wrap(~drug_name,nrow = 3,scales = "fixed",shrink = TRUE)+
-  scale_x_continuous(breaks=c(2014,2018),
-                     labels=c("2014" = "14'","2018" = "18'" ))                            
+  theme_light() +
+  facet_wrap(~drug_name,nrow = 3,scales = "fixed",shrink = TRUE) +
+  scale_x_continuous(breaks = c(2014,2018),
+                     labels = c("2014" = "14'","2018" = "18'" ))                            
   
-  
-
-
 spaghetti_plot2
 ```
+
+###
+
+<br>
+
+The first graph was made based on the four main types of drugs. From this plot, clear trends can be seen for each type of drug. The trend in death count due to the overdose in drug type ‘other’ is overall steady and remains at a relatively low level. For drug type ‘Alcohol’, the death count is at a low level and the overall trend is slightly increasing. For drug type ‘Natural drugs’, the number of death has an obvious increasing trend from 2012 and it is slightly decreasing after the middle of 2017. As for drug type ‘POM’, there is a strongly increasing trend in the death count and it has the largest number of death among those four types of drugs since 2015. More specifically, there were two rapid growths in the death count related to drug type ‘POM’ between July 2014 and July 2015, and between September 2017 and March 2018. 
+
+The second graph shows the number of death due to each specific drug. It can be seen that the drug called ‘fentanyl’ has the strongest increasing trend among all drugs and in 2018 almost over 90 people died per month due to this drug. For drugs named ‘benzodiazepine’, ‘cocaine’, ‘ethanol’, and ‘heroin’, their related death number increased before 2017 and then slightly decreased after 2017. The drug ‘opioid’ has an overall increasing trend but there was a sudden drop in the second half of 2017. Other drugs have a relatively steady trend and the death counts remain at a low level.
+
 
 ### Death counts across month (group by types of drug) {.tabset}
 
@@ -372,8 +381,8 @@ n_plot =
 
 ```{r}
 
-map_1= n_plot%>%
-  filter(drug_type == "POM")%>%
+map_1 = n_plot %>%
+  filter(drug_type == "POM") %>%
   ggplot(aes(x = month, y = year)) + 
   geom_point(aes(color = drug_type,size = n), alpha = 0.2) +
   scale_color_manual(values = c('#cd7eaf', '#a262a9', '#6f4d96', '#3d3b72')) +
@@ -382,15 +391,15 @@ map_1= n_plot%>%
   xlab("Month") +
   ylab("Year")
 
-ggplotly(map_1)%>%
+ggplotly(map_1) %>%
   layout(showlegend = FALSE)
 ```
 
 #### Type 2: Natural drugs
 
 ```{r}
-map_2= n_plot%>%
-  filter(drug_type == "Natural drugs")%>%
+map_2 = n_plot %>%
+  filter(drug_type == "Natural drugs") %>%
   ggplot(aes(x = month, y = year)) + 
   geom_point(aes(color = drug_type,size = n), alpha = 0.2) +
   scale_color_manual(values = c('#a262a9', '#6f4d96', '#3d3b72')) +
@@ -399,15 +408,15 @@ map_2= n_plot%>%
   xlab("Month") +
   ylab("Year")
 
-ggplotly(map_2)%>%
+ggplotly(map_2) %>%
   layout(showlegend = FALSE)
 ```
 
 #### Type 3: Alcohol
 
 ```{r}
-map_3= n_plot%>%
-  filter(drug_type == "Alcohol")%>%
+map_3 = n_plot %>%
+  filter(drug_type == "Alcohol") %>%
   ggplot(aes(x = month, y = year)) + 
   geom_point(aes(color = drug_type,size = n), alpha = 0.2) +
   scale_color_manual(values = c('#6f4d96')) +
@@ -416,7 +425,7 @@ map_3= n_plot%>%
   xlab("Month") +
   ylab("Year")
 
-ggplotly(map_3)%>%
+ggplotly(map_3) %>%
   layout(showlegend = FALSE)
 
 ```
@@ -424,8 +433,8 @@ ggplotly(map_3)%>%
 #### Type 4: Others
 
 ```{r}
-map_4= n_plot%>%
-  filter(drug_type == "other")%>%
+map_4 = n_plot %>%
+  filter(drug_type == "other") %>%
   ggplot(aes(x = month, y = year)) + 
   geom_point(aes(color = drug_type,size = n), alpha = 0.2) +
   scale_color_manual(values = c('#3d3b72')) +
@@ -434,7 +443,7 @@ map_4= n_plot%>%
   xlab("Month") +
   ylab("Year")
 
-ggplotly(map_4)%>%
+ggplotly(map_4 )%>%
   layout(showlegend = FALSE)
 ```
 

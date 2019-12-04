@@ -26,7 +26,7 @@ The dataset contains a listing of accidental death associated with drug overdose
 
 </br>
 
-### Research questions
+### Initial questions
 
 * What was the distribution in race, gender, and age among death related to drug use?
 * Was the number of death due to drug use rising, declining, or steady?
