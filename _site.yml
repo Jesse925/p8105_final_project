@@ -2,10 +2,6 @@ name: "My personal website"
 output_dir: "."
 navbar:
   title: "Home"
-<<<<<<< HEAD
-
-=======
->>>>>>> 50947585ba71b58a36f979b3bcb0a226c52b29a2
   right:
     - text: "Project Report"
       href: plot.html
