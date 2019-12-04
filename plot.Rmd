@@ -352,22 +352,9 @@ spaghetti_plot2 =
   theme_light() +
   facet_wrap(~drug_name,nrow = 3,scales = "fixed",shrink = TRUE) +
   scale_x_continuous(breaks = c(2014,2018),
-                     labels = c("2014" = "14'","2018" = "18'" )) + 
-  theme(
-    plot.title = element_text(hjust = 0.5), 
-    legend.position = "bottom",
-    legend.text = element_text(size = 8)) + 
-  guides(col = guide_legend(nrow = 2))
+                     labels = c("2014" = "14'","2018" = "18'" )) 
 
-ggplotly(spaghetti_plot2) %>%
-  layout(legend = list(
-      orientation = "h",
-      xanchor = "center",
-      yanchor = "top",
-      x = 0.5,
-      y = -0.3
-    )
-  )                            
+ggplotly(spaghetti_plot2)
 ```
 
 ###
