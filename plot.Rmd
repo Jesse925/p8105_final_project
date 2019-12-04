@@ -26,7 +26,7 @@ theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
 
 <br>
 
-## Introduction
+## Motivation
 <br>
 Illicit drug use in the United States has been increasing and the number of related death is also growing. In the United States, 70,200 people died from drug overdoses in 2017, which was an increase of about 10 percent over 2016. Since 2000, the U.S. drug overdose death rate has gone from 6.2 per 100,000 people in 2000 to 14.7 per 100,000 in 2014. It is unknown that which factors contribute most to the death caused by drugs. Therefore, studying the relationship between drug use and related death is important to discourage drug use and prevent death. In this project, we are going to analyze the data in drug use and related death in  Connecticut from 2012 to 2018 and intend to discover some critical factors in drug use that will arise high chance to be dead.
 
@@ -515,13 +515,13 @@ In the second heat map, situations of all drugs can be seen. It can be clearly n
 
 ### Interactive map
 
-1. Map guidance
+#### 1. Map guidance
 
 The size of points represents the number of cases of drug-related death, and their color scale represents the number of drugs one used. The cluster shows the total number of people in the given area. The larger radius means more people in the area. The right side shows the age distribution and drug usage. 
 
-As a news report [https://www.middletownpress.com/news/article/The-changing-face-of-drug-addiction-in-Middletown-11815124.php] claimed in mid-2014, Connecticut was on the high end of cocaine use across the nation on a state by state basis; and the south-central part is the region with the highest cocaine use. Our map confirms it: the map shows that a spot near the west side of Middletown gathers the most number of people in drug use, regardless of gender, race or age group. The second-largest place of drug use is near Hartford, the capital of  Connecticut. It is clear from the cluster that most of the drug usage was located near the center or southwest of the state of Connecticut. Other locations with high drug-related death regions include Waterbury, New Haven, and Bridgeport. 
+As a [news report](https://www.middletownpress.com/news/article/The-changing-face-of-drug-addiction-in-Middletown-11815124.php) claimed in mid-2014, Connecticut was on the high end of cocaine use across the nation on a state by state basis; and the south-central part is the region with the highest cocaine use. Our map confirms it: the map shows that a spot near the west side of Middletown gathers the most number of people in drug use, regardless of gender, race or age group. The second-largest place of drug use is near Hartford, the capital of  Connecticut. It is clear from the cluster that most of the drug usage was located near the center or southwest of the state of Connecticut. Other locations with high drug-related death regions include Waterbury, New Haven, and Bridgeport. 
 
-2. Age distribution
+#### 2. Age distribution
 
 The second chart is a histogram showing the distribution of the age of the cases. Race, number of drugs used, gender and year range can be changed at the side bar.
 
@@ -529,7 +529,7 @@ Still regardless of race, the number of drug used, gender and year range, the se
 
 Since 2012, the number of people using drugs has been increasing from 354 to 1035 till 2017, the very number is 1012 in 2018.
 
-3. Drug type distribution
+#### 3. Drug type distribution
 
 The third chart gives the frequency rank of different types of drug used. The top 3 is heroin, opioid, and fentanyl almost in any group. 
 
@@ -542,5 +542,6 @@ The third chart gives the frequency rank of different types of drug used. The to
 
 ## Discussion
 
+## Reference
 
 
