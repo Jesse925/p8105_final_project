@@ -1,7 +1,7 @@
 ---
 title: "Project Report"
-author: "Bingkun Luo, Junxian Chen, Qimin Zhang, Weiwei Qi, Xinyu Shen"
-date: "2019/11/23"
+author: <i>Bingkun Luo, Junxian Chen, Qimin Zhang, Weiwei Qi, Xinyu Shen</i>
+date: "2019/12/3"
 output:
     html_document:
       code_folding: hide
@@ -29,9 +29,18 @@ theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
 ## Introduction
 <br>
 Illicit drug use in the United States has been increasing and the number of related death is also growing. In the United States, 70,200 people died from drug overdoses in 2017, which was an increase of about 10 percent over 2016. Since 2000, the U.S. drug overdose death rate has gone from 6.2 per 100,000 people in 2000 to 14.7 per 100,000 in 2014. It is unknown that which factors contribute most to the death caused by drugs. Therefore, studying the relationship between drug use and related death is important to discourage drug use and prevent death. In this project, we are going to analyze the data in drug use and related death in  Connecticut from 2012 to 2018 and intend to discover some critical factors in drug use that will arise high chance to be dead.
+
 <br>
 
 ## Initial Questions
+
+<br>
+
+* What was the distribution in race, gender, and age among death related to drug use?
+* Was the number of death due to drug use rising, declining, or steady?
+* Which drug caused the most of death?
+* Was there any pattern of geographical distribution among death due to drug use?
+
 <br>
 
 ## Data Collection
@@ -60,7 +69,6 @@ drug_df =
     names_to = "drug_name",
     values_to = "drug_use") %>%  
   drop_na(drug_use) %>%
-  #all opiates are opioids, not all opioids are opiates.
   mutate(
     date_in_month = zoo::as.yearmon(paste(year, month, sep = "-"), "%Y-%m"),
     date = as.Date(with(., paste(year, month, day, sep = "-")), "%Y-%m-%d"),
@@ -90,7 +98,7 @@ drug_df =
 The datasets contains `r length(unique(drug_df$id))` cases with `r length(names(drug_df))` columns. 
 <br>
 
-Some important factors:
+Important variables:
 
 * `id`: Unique ID for each case.
 	
@@ -109,10 +117,10 @@ Some important factors:
 * `drug_name`: Name of drug the dead has taken.
 
 * `drug_type`: Four major drug classifications. 
-  + POM = Prescription Only Medicine 
-  + Natural drugs = heroin, morphine,cocaine,etc
-  + Alcohol = ethanol
-  + Other = all of the drugs, besides the three types above
+  + `POM` = Prescription Only Medicine 
+  + `Natural` drugs = heroin, morphine,cocaine,etc
+  + `Alcohol` = ethanol
+  + `Other` = all of the drugs, besides the three types above
 
 
 <br>
@@ -174,7 +182,7 @@ The age group of 30 to 40 year old have most amount of death caused by drugs. Th
 
 ###  Gender difference in drug-related deaths {.tabset}
 
-```{r include=FALSE}
+```{r}
 voline_plot = 
   drug_df %>%
   group_by(drug_name) %>%
@@ -506,6 +514,8 @@ In the second heat map, situations of all drugs can be seen. It can be clearly n
 
 
 ### Interactive map
+
+<br>
 
 ## Results
 
