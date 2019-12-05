@@ -28,7 +28,7 @@ theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
 
 ## Motivation
 <br>
-Illicit drug use in the United States has been increasing and the number of related death is also growing. In the United States, 70,200 people died from drug overdoses in 2017, which was an increase of about 10 percent over 2016. Since 2000, the U.S. drug overdose death rate has gone from 6.2 per 100,000 people in 2000 to 14.7 per 100,000 in 2014. It is unknown that which factors contribute most to the death caused by drugs. Therefore, studying the relationship between drug use and related death is important to discourage drug use and prevent death. In this project, we are going to analyze the data in drug use and related death in  Connecticut from 2012 to 2018 and intend to discover some critical factors in drug use that will arise high chance to be dead.
+According to [a study](https://www.cdc.gov/nchs/data/databriefs/db329-h.pdf), illicit drug use in the United States has been increasing and the number of related death is also growing. In the United States, 70,200 people died from drug overdoses in 2017, which was an increase of about 10 percent over 2016. Since 2000, the U.S. drug overdose death rate has gone from 6.2 per 100,000 people in 2000 to 14.7 per 100,000 in 2014. It is unknown that which factors contribute most to the death caused by drugs. Therefore, studying the relationship between drug use and related death is important to discourage drug use and prevent death. In this project, we are going to analyze the data in drug use and related death in  Connecticut from 2012 to 2018 and intend to discover some critical factors in drug use that will arise high chance to be dead.
 
 <br>
 
