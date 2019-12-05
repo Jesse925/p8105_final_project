@@ -57,14 +57,15 @@ new_drug_df = read_csv("./data/Accidental_Drug_Related_Deaths_2012-2018.csv") %>
 
 Column {.sidebar}
 -----------------------------------------------------------------------
+[Home](https://jesse925.github.io/p8105_final_project/index.html)
+
 Map of your own selection!
 
+The radius of circles are determined by the number of people in the certain location. 
+
+The number in polygon of the cluster represents the number of people in the given area. 
+
 ```{r}
-
-
-
-
-
 # for chart A
 # races = new_drug_df %>% pull(race) %>% as.factor() %>% levels()
 # races = append(races, "All", after = 0)
@@ -212,7 +213,7 @@ renderLeaflet({
     #   highlightOptions = highlightOptions(color = "white",
     #                                   weight = 2, bringToFront = TRUE)) %>%
     # addProviderTiles(providers$CartoDB.Positron) %>%
-    addMarkers(lat = ~inj_lat, lng = ~inj_long,
+    addMarkers(lat = ~inj_lat, lng = ~inj_long, label = ~race, 
       clusterOptions = markerClusterOptions(iconCreateFunction =
                                       JS("
                                           function(cluster) {
@@ -226,7 +227,8 @@ renderLeaflet({
       radius = ~(log(inj_geo_count))^2,
       color = ~pal(drug_number),
       stroke = FALSE,
-      popup = paste(new_drug_df$drug_names),
+      # popup = paste(new_drug_df$drug_names),
+      label = ~race, 
       fillOpacity = .5
     ) %>%
     addLegend("bottomright", 
