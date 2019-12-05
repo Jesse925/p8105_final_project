@@ -49,6 +49,8 @@ The dataset contains a listing of accidental death associated with drug overdose
 
 ### Main findings and conclusions
 
-* ...
-* ...
+* People in 30 to 40 years old have most drugs related deaths.
+* More than 80% death caused by overdose of drugs involves Fentanyl. 
+* Women older than 40 years old have higher risk of death when using drugs.
+* POMs substitute for popular natural drugs causes doubled death in Connecticut in 6 years.
 
