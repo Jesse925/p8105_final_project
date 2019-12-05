@@ -540,6 +540,8 @@ The third chart gives the frequency rank of different types of drug used. The to
 
 ## Results
 
+<br>
+
 From the analysis above, people in age 30 to 40 years old have most drug related death. And the death increased while the age increase whereas there is a significant decreasing for people age more than 60 years old. 
  
 Approximately 80% of drug related deaths in 2018 in Connecticut were caused by Fentanyl and it was still rapidly increasing. Moreover, Heroin and Opioid all contributed to a very high level of death due to overdose.
@@ -551,6 +553,8 @@ POMs substitute for popular natural drugs causes doubled death in Connecticut in
 <br>
 
 ## Discussion
+
+<br>
 
 Actions should be taken to tackle the drug issue in Connecticut, especially for heroine, opioid and fentanyl, as they are now the most prevalent drugs in most of the areas. Police intervention should be considered in the areas or locations where drugs are abused. 
 
