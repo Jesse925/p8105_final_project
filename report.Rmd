@@ -28,7 +28,7 @@ theme_set(theme_gray(base_size = 10) + theme(legend.position = "bottom"))
 
 ## Motivation
 <br>
-Illicit drug use in the United States has been increasing and the number of related death is also growing. In the United States, 70,200 people died from drug overdoses in 2017, which was an increase of about 10 percent over 2016. Since 2000, the U.S. drug overdose death rate has gone from 6.2 per 100,000 people in 2000 to 14.7 per 100,000 in 2014. It is unknown that which factors contribute most to the death caused by drugs. Therefore, studying the relationship between drug use and related death is important to discourage drug use and prevent death. In this project, we are going to analyze the data in drug use and related death in  Connecticut from 2012 to 2018 and intend to discover some critical factors in drug use that will arise high chance to be dead.
+According to [a study](https://www.cdc.gov/nchs/data/databriefs/db329-h.pdf), illicit drug use in the United States has been increasing and the number of related death is also growing. In the United States, 70,200 people died from drug overdoses in 2017, which was an increase of about 10 percent over 2016. Since 2000, the U.S. drug overdose death rate has gone from 6.2 per 100,000 people in 2000 to 14.7 per 100,000 in 2014. It is unknown that which factors contribute most to the death caused by drugs. Therefore, studying the relationship between drug use and related death is important to discourage drug use and prevent death. In this project, we are going to analyze the data in drug use and related death in  Connecticut from 2012 to 2018 and intend to discover some critical factors in drug use that will arise high chance to be dead.
 
 <br>
 
@@ -371,6 +371,7 @@ The first graph was made based on the four main types of drugs. From this plot, 
 
 The second graph shows the number of death due to each specific drug. It can be seen that the drug called ‘fentanyl’ has the strongest increasing trend among all drugs and in 2018 almost over 90 people died per month due to this drug. For drugs named ‘benzodiazepine’, ‘cocaine’, ‘ethanol’, and ‘heroin’, their related death number increased before 2017 and then slightly decreased after 2017. The drug ‘opioid’ has an overall increasing trend but there was a sudden drop in the second half of 2017. Other drugs have a relatively steady trend and the death counts remain at a low level.
 
+<br>
 
 ### Death counts in each month (group by types of drug) {.tabset}
 
@@ -514,8 +515,11 @@ In the first heat map, drugs were divided into four main groups. It can be clear
 
 In the second heat map, situations of all drugs can be seen. It can be clearly noticed that the drug named ‘opioid’ had a very high amount of death starting from 2015 and it remains at the highest level amount all the drugs. Secondly, the drug named ‘heroin’ has a consistent but very high amount of death from 2012 to 2018. Last but not the least, the number of death related to the drug called ‘fentanyl’ shows a rapid growth from 2012 to 2018 and it has reached a very high level by the end of 2018.
 
+<br>
 
 ### Interactive map
+
+<br>
 
 #### 1. Map guidance
 
@@ -540,6 +544,8 @@ The third chart gives the frequency rank of different types of drug used. The to
 
 ## Results
 
+<br>
+
 From the analysis above, people in age 30 to 40 years old have most drug related death. And the death increased while the age increase whereas there is a significant decreasing for people age more than 60 years old. 
  
 Approximately 80% of drug related deaths in 2018 in Connecticut were caused by Fentanyl and it was still rapidly increasing. Moreover, Heroin and Opioid all contributed to a very high level of death due to overdose.
@@ -552,12 +558,17 @@ POMs substitute for popular natural drugs causes doubled death in Connecticut in
 
 ## Discussion
 
+<br>
+
 Actions should be taken to tackle the drug issue in Connecticut, especially for heroine, opioid and fentanyl, as they are now the most prevalent drugs in most of the areas. Police intervention should be considered in the areas or locations where drugs are abused. 
 
 There are still some limitations of  this dataset. It only includes the death cases but no controls (those who involved in drugs but still alive). Moreover, the dataset is more suitable for exploratory data analysis since there is no any meaningful outcome variable for modelling. The causes of death (‘cod’) might add useful findings but they were probably recorded by police officers, which are hard for categorization. Additional information regarding the diseases and lifestyle should be considered in future studies. Note that there are only 208 geographical coordinates for 5087 samples.
 
+<br>
 
 ## Reference
+
+<br>
 
 PARTNERSHIP NEWS SERVICE STAFF, (2019, April 25). Drug Poisoning Death Rates Rise in Teens and Young Adults – Partnership News Service from the Partnership for Drug-Free Kids. Retrieved from https://drugfree.org/learn/drug-and-alcohol-news/drug-poisoning-death-rates-rise-in-teens-and-young-adults/.
 

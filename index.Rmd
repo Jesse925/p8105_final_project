@@ -26,7 +26,7 @@ For a brief overview of our website and project, please view our screencast:
 
 ### Motivations
 
-Illicit drug use in the United States has been increasing and the number of related death is also growing. Therefore, studying the relationship between drug use and related death is important to discourage drug use and prevent death. In this project, we are going to analyze the data in drug use and related death in  Connecticut from 2012 to 2018 and intend to discover some critical factors in drug use that will arise high chance to be dead.
+According to [a study](https://www.cdc.gov/nchs/data/databriefs/db329-h.pdf), illicit drug use in the United States has been increasing and the number of related death is also growing. Therefore, studying the relationship between drug use and related death is important to discourage drug use and prevent death. In this project, we are going to analyze the data in drug use and related death in  Connecticut from 2012 to 2018 and intend to discover some critical factors in drug use that will arise high chance to be dead.
 
 </br>
 
@@ -49,6 +49,16 @@ The dataset contains a listing of accidental death associated with drug overdose
 
 ### Main findings and conclusions
 
-* ...
-* ...
+* People in 30 to 40 years old have most drugs related deaths.
+* More than 80% death caused by overdose of drugs involves Fentanyl. 
+* Women older than 40 years old have higher risk of death when using drugs.
+* POMs substitute for popular natural drugs causes doubled death in Connecticut in 6 years.
+
+<br>
+
+### Discussion
+
+Actions should be taken to tackle the drug issue in Connecticut, especially for heroine, opioid and fentanyl, as they are now the most prevalent drugs in most of the areas. Police intervention should be considered in the areas or locations where drugs are abused. 
+
+There are still some limitations of  this dataset. It only includes the death cases but no controls (those who involved in drugs but still alive). Moreover, the dataset is more suitable for exploratory data analysis since there is no any meaningful outcome variable for modelling. The causes of death (‘cod’) might add useful findings but they were probably recorded by police officers, which are hard for categorization. Additional information regarding the diseases and lifestyle should be considered in future studies. Note that there are only 208 geographical coordinates for 5087 samples.
 
