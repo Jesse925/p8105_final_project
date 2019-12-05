@@ -371,6 +371,7 @@ The first graph was made based on the four main types of drugs. From this plot, 
 
 The second graph shows the number of death due to each specific drug. It can be seen that the drug called ‘fentanyl’ has the strongest increasing trend among all drugs and in 2018 almost over 90 people died per month due to this drug. For drugs named ‘benzodiazepine’, ‘cocaine’, ‘ethanol’, and ‘heroin’, their related death number increased before 2017 and then slightly decreased after 2017. The drug ‘opioid’ has an overall increasing trend but there was a sudden drop in the second half of 2017. Other drugs have a relatively steady trend and the death counts remain at a low level.
 
+<br>
 
 ### Death counts in each month (group by types of drug) {.tabset}
 
@@ -518,6 +519,8 @@ In the second heat map, situations of all drugs can be seen. It can be clearly n
 
 ### Interactive map
 
+<br>
+
 #### 1. Map guidance
 
 The size of points represents the number of cases of drug-related death, and their color scale represents the number of drugs one used. The cluster shows the total number of people in the given area. The larger radius means more people in the area. The right side shows the age distribution and drug usage. 
@@ -564,6 +567,8 @@ There are still some limitations of  this dataset. It only includes the death ca
 <br>
 
 ## Reference
+
+<br>
 
 PARTNERSHIP NEWS SERVICE STAFF, (2019, April 25). Drug Poisoning Death Rates Rise in Teens and Young Adults – Partnership News Service from the Partnership for Drug-Free Kids. Retrieved from https://drugfree.org/learn/drug-and-alcohol-news/drug-poisoning-death-rates-rise-in-teens-and-young-adults/.
 
