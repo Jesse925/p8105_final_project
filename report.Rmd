@@ -365,7 +365,7 @@ spaghetti_plot2 =
   scale_x_continuous(breaks = c(2014,2018),
                      labels = c("2014" = "14'","2018" = "18'" )) 
 
-ggplotly(spaghetti_plot2)
+spaghetti_plot2
 ```
 
 ###
