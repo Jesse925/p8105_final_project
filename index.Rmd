@@ -20,7 +20,12 @@ output: html_document
 
 For a brief overview of our website and project, please view our screencast:
 
-(video here)
+```{r echo=FALSE}
+library("htmltools")
+library("vembedr")
+embed_url("https://www.youtube.com/watch?v=7tEiZqX-DDY")
+```
+
 
 </br>
 
