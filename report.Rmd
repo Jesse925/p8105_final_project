@@ -514,6 +514,7 @@ In the first heat map, drugs were divided into four main groups. It can be clear
 
 In the second heat map, situations of all drugs can be seen. It can be clearly noticed that the drug named ‘opioid’ had a very high amount of death starting from 2015 and it remains at the highest level amount all the drugs. Secondly, the drug named ‘heroin’ has a consistent but very high amount of death from 2012 to 2018. Last but not the least, the number of death related to the drug called ‘fentanyl’ shows a rapid growth from 2012 to 2018 and it has reached a very high level by the end of 2018.
 
+<br>
 
 ### Interactive map
 
