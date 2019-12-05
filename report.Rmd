@@ -37,8 +37,11 @@ According to [a study](https://www.cdc.gov/nchs/data/databriefs/db329-h.pdf), il
 <br>
 
 * What was the distribution in race, gender, and age among death related to drug use?
+
+* Has the patterns of drug changed over recent years?
+
 * Was the number of death due to drug use rising, declining, or steady?
-* Which drug caused the most of death?
+
 * Was there any pattern of geographical distribution among death due to drug use?
 
 <br>
