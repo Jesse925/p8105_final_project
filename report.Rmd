@@ -556,6 +556,7 @@ Actions should be taken to tackle the drug issue in Connecticut, especially for 
 
 There are still some limitations of  this dataset. It only includes the death cases but no controls (those who involved in drugs but still alive). Moreover, the dataset is more suitable for exploratory data analysis since there is no any meaningful outcome variable for modelling. The causes of death (‘cod’) might add useful findings but they were probably recorded by police officers, which are hard for categorization. Additional information regarding the diseases and lifestyle should be considered in future studies. Note that there are only 208 geographical coordinates for 5087 samples.
 
+<br>
 
 ## Reference
 
